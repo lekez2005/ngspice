@@ -148,13 +148,19 @@ MOS1temp(GENmodel *inModel, CKTcircuit *ckt)
                 here->MOS1m = ckt->CKTdefaultMosM;
             }
             if(!here->MOS1lGiven) {
-                here->MOS1l = ckt->CKTdefaultMosL;
+                if(!model->MOS1lpGiven)
+                    here->MOS1l = ckt->CKTdefaultMosL;
+                else
+                    here->MOS1l = model->MOS1lp;
             }
             if(!here->MOS1sourceAreaGiven) {
                 here->MOS1sourceArea = ckt->CKTdefaultMosAS;
             }
             if(!here->MOS1wGiven) {
-                here->MOS1w = ckt->CKTdefaultMosW;
+                if(!model->MOS1wpGiven)
+                    here->MOS1w = ckt->CKTdefaultMosW;
+                else
+                    here->MOS1w = model->MOS1wp;
             }
 
             if(here->MOS1l - 2 * model->MOS1latDiff <=0) {

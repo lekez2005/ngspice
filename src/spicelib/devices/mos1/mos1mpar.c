@@ -147,6 +147,14 @@ MOS1mParam(int param, IFvalue *value, GENmodel *inModel)
 	    model->MOS1fNexp = value->rValue;
 	    model->MOS1fNexpGiven = TRUE;
 	    break;
+    case MOS1_MOD_L:
+        model->MOS1lp = value->rValue;
+        model->MOS1lpGiven = TRUE;
+        break;
+    case MOS1_MOD_W:
+        model->MOS1wp = value->rValue;
+        model->MOS1wpGiven = TRUE;
+        break;
         default:
             return(E_BADPARM);
     }
