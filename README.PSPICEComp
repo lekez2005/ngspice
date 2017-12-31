@@ -3,12 +3,21 @@ README for PSPICE-compatible NGSPICE
 
 Due to very many commercial decive libs available as PSPICE compatible
 descriptions, and due to the inclusion of ngspice into EAGLE and KiCad,
+with their increasing usage of discrete devices,
 it is useful to enhance ngspice to PSPICE compatibility.
 
-Items:
+Items done:
 Add 'res' as resistor model type (in addition to 'r')
 .model MyRe RES (R=100)
 
 Add W (channel witdth) and L (channel length) to MOS1 (level=1) model
 parameters.
 
+
+Items still to do:
+Add W (channel witdth) and L (channel length) to MOS3 (level=3) model
+parameters.
+
+Add function inside of the .include statement to translate PSPICE
+device libraries to ngspice syntax, especially for all statements that
+would be ambiguous or overly complex if directly integrated into ngspice.
