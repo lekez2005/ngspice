@@ -6,6 +6,8 @@ descriptions, and due to the inclusion of ngspice into EAGLE and KiCad,
 with their increasing usage of discrete devices,
 it is useful to enhance ngspice to PSPICE compatibility.
 
+Some example files are available in directory p-to-n-examples.
+
 Items done:
 Add 'res' as resistor model type (in addition to 'r')
 .model MyRe RES (R=100)
