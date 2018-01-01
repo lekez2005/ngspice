@@ -144,6 +144,7 @@ static char *inp_pathresolve(const char *name);
 static char *inp_pathresolve_at(char *name, char *dir);
 static char *search_plain_identifier(char *str, const char *identifier);
 void tprint(struct line *deck);
+static struct line *pspice_compat(struct line *newcard);
 
 struct inp_read_t
 { struct line *cc;
@@ -847,6 +848,8 @@ inp_read(FILE *fp, int call_depth, char *dir_name, bool comfile, bool intfile)
             }
 
             if (newcard) {
+                if (inp_compat_mode == COMPATMODE_PS)
+                    newcard = pspice_compat(newcard);
                 int line_number_inc = 1;
                 end->li_next = newcard;
                 /* Renumber the lines */
@@ -6041,4 +6044,10 @@ inp_quote_params(struct line *c, struct line *end_c, struct dependency *deps, in
             }
         }
     }
+}
+
+static struct line *
+pspice_compat(struct line *newcard)
+{
+    return newcard;
 }
