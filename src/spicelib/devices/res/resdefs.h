@@ -98,6 +98,7 @@ typedef struct sRESmodel {       /* model structure for a resistor */
     RESinstance * RESinstances; /* pointer to list of instances that have this
                                  * model */
     IFuid RESmodName;       /* pointer to character string naming this model */
+    struct wordlist *defaults;
 
     /* --- end of generic struct GENmodel --- */
 

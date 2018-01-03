@@ -43,6 +43,7 @@ typedef struct sURCmodel {       /* model structure for a resistor */
     URCinstance * URCinstances; /* pointer to list of instances that have this
                                  * model */
     IFuid URCmodName;       /* pointer to character string naming this model */
+    struct wordlist *defaults;
 
     /* --- end of generic struct GENmodel --- */
 

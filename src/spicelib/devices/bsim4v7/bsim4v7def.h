@@ -817,6 +817,7 @@ typedef struct sBSIM4v7model
     struct sBSIM4v7model *BSIM4v7nextModel;
     BSIM4v7instance *BSIM4v7instances;
     IFuid BSIM4v7modName;
+    struct wordlist *defaults;
 
     /* --- end of generic struct GENmodel --- */
 

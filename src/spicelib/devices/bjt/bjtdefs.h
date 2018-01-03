@@ -329,6 +329,7 @@ typedef struct sBJTmodel {          /* model structure for a bjt */
     BJTinstance * BJTinstances; /* pointer to list of instances
                                  * that have this model */
     IFuid BJTmodName; /* pointer to character string naming this model */
+    struct wordlist *defaults;
 
     /* --- end of generic struct GENmodel --- */
 

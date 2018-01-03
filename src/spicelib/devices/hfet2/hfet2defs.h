@@ -89,6 +89,7 @@ typedef struct sHFET2model {
     int HFET2modType;
     struct sHFET2model *HFET2nextModel;
     HFET2instance * HFET2instances;
+    struct wordlist *defaults;
 
     /* --- end of generic struct GENmodel --- */
 

@@ -62,6 +62,7 @@ typedef struct sSWmodel {      /* model structure for a switch */
     SWinstance *SWinstances; /* pointer to list of instances that have this
                                  * model */
     IFuid SWmodName;   /* pointer to character string naming this model */
+    struct wordlist *defaults;
 
     /* --- end of generic struct GENmodel --- */
 

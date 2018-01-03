@@ -400,6 +400,7 @@ typedef struct sBSIM3v32model
     struct sBSIM3v32model *BSIM3v32nextModel;
     BSIM3v32instance *BSIM3v32instances;
     IFuid BSIM3v32modName;
+    struct wordlist *defaults;
 
     /* --- end of generic struct GENmodel --- */
 

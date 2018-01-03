@@ -34,16 +34,42 @@ static int INPfindParm(char *name, IFparm *table, int numParms);
 extern INPmodel *modtab;
 
 
+static IFparm *
+findParm(const char *name, IFdevice *device)
+{
+    IFparm *p = device->modelParms;
+    IFparm *p_end = p + *(device->numModelParms);
+
+    for (; p < p_end; p++)
+        if (strcmp(name, p->keyword) == 0)
+            return p;
+
+    return NULL;
+}
+
+
+static IFparm *
+findInstParm(const char *name, IFdevice *device)
+{
+    IFparm *p = device->instanceParms;
+    IFparm *p_end = p + *(device->numInstanceParms);
+
+    for (; p < p_end; p++)
+        if (strcmp(name, p->keyword) == 0)
+            return p;
+
+    return NULL;
+}
+
+
 /*
  * code moved from INPgetMod
  */
 static int
-create_model(CKTcircuit *ckt, INPmodel *modtmp, INPtables *tab)
+create_model(CKTcircuit *ckt, INPmodel * const modtmp, INPtables *tab)
 {
-    IFvalue *val;
     char    *err = NULL, *line, *parm, *endptr;
-    int     error, j;
-    double  dval;
+    int     error;
 
     /* not already defined, so create & give parameters */
     error = ft_sim->newModel(ckt, modtmp->INPmodType, &(modtmp->INPmodfast), modtmp->INPmodName);
@@ -53,11 +79,10 @@ create_model(CKTcircuit *ckt, INPmodel *modtmp, INPtables *tab)
 #ifdef CIDER
     /* Handle Numerical Models Differently */
     if (modtmp->INPmodType == INPtypelook("NUMD") ||
-        modtmp->INPmodType == INPtypelook("NBJT") ||
-        modtmp->INPmodType == INPtypelook("NUMD2") ||
-        modtmp->INPmodType == INPtypelook("NBJT2") ||
-        modtmp->INPmodType == INPtypelook("NUMOS"))
-    {
+            modtmp->INPmodType == INPtypelook("NBJT") ||
+            modtmp->INPmodType == INPtypelook("NUMD2") ||
+            modtmp->INPmodType == INPtypelook("NBJT2") ||
+            modtmp->INPmodType == INPtypelook("NUMOS")) {
         error = INPparseNumMod(ckt, modtmp, tab, &err);
         if (error)
             return error;
@@ -65,6 +90,8 @@ create_model(CKTcircuit *ckt, INPmodel *modtmp, INPtables *tab)
         return 0;
     }
 #endif
+
+    IFdevice *device = ft_sim->devices[modtmp->INPmodType];
 
     /* parameter isolation, identification, binding */
 
@@ -86,43 +113,47 @@ create_model(CKTcircuit *ckt, INPmodel *modtmp, INPtables *tab)
             continue;
         }
 
-        for (j = 0; j < *(ft_sim->devices[modtmp->INPmodType]->numModelParms); j++) {
-
-            if (strcmp(parm, "txl") == 0)
-                if (strcmp("cpl", ft_sim->devices[modtmp->INPmodType]->modelParms[j].keyword) == 0)
-                    strcpy(parm, "cpl");
-
-            if (strcmp(parm, ft_sim->devices[modtmp->INPmodType]->modelParms[j].keyword) == 0) {
-
-                val = INPgetValue(ckt, &line, ft_sim->devices[modtmp->INPmodType]->modelParms[j].dataType, tab);
-
-                error = ft_sim->setModelParm(ckt, modtmp->INPmodfast,
-                                             ft_sim->devices[modtmp->INPmodType]->modelParms[j].id,
-                                             val, NULL);
-                if (error)
-                    return error;
-                break;
-            }
-        }
-
-        if (strcmp(parm, "level") == 0) {
+        IFparm *p = findParm(parm, device);
+        if (p) {
+            IFvalue *val = INPgetValue(ckt, &line, p->dataType, tab);
+            error = ft_sim->setModelParm(ckt, modtmp->INPmodfast, p->id, val, NULL);
+            if (error)
+                return error;
+        } else if (strcmp(parm, "level") == 0) {
             /* just grab the level number and throw away */
             /* since we already have that info from pass1 */
-            val = INPgetValue(ckt, &line, IF_REAL, tab);
-        } else if (j >= *(ft_sim->devices[modtmp->INPmodType]->numModelParms)) {
+            INPgetValue(ckt, &line, IF_REAL, tab);
+        } else {
 
-            /* want only the parameter names in output - not the values */
-            errno = 0;    /* To distinguish success/failure after call */
-            dval = strtod(parm, &endptr);
-            /* Check for various possible errors */
-            if ((errno == ERANGE && dval == HUGE_VAL) || errno != 0) {
-                perror("strtod");
-                controlled_exit(EXIT_FAILURE);
+            p = findInstParm(parm, device);
+
+            if (p) {
+                char *value;
+                INPgetTok(&line, &value, 1);
+                if (ft_ngdebug)
+                    fprintf(stderr, "mod param \"%s\" is an instance default (%s)\n",
+                        parm, value);
+                modtmp->INPmodfast->defaults =
+                    wl_cons(copy(parm),
+                            wl_cons(value,
+                                    modtmp->INPmodfast->defaults));
+            } else {
+
+                double dval;
+
+                /* want only the parameter names in output - not the values */
+                errno = 0;    /* To distinguish success/failure after call */
+                dval = strtod(parm, &endptr);
+                /* Check for various possible errors */
+                if ((errno == ERANGE && dval == HUGE_VAL) || errno != 0) {
+                    perror("strtod");
+                    controlled_exit(EXIT_FAILURE);
+                }
+                if (endptr == parm) /* it was no number - it is really a string */
+                    err = INPerrCat(err,
+                                    tprintf("unrecognized parameter (%s) - ignored",
+                                            parm));
             }
-            if (endptr == parm) /* it was no number - it is really a string */
-                err = INPerrCat(err,
-                                tprintf("unrecognized parameter (%s) - ignored",
-                                        parm));
         }
         FREE(parm);
     }
@@ -213,17 +244,16 @@ INPgetModBin(CKTcircuit *ckt, char *name, INPmodel **model, INPtables *tab, char
 
         /* skip if not binnable */
         if (modtmp->INPmodType != INPtypelook("BSIM3") &&
-            modtmp->INPmodType != INPtypelook("BSIM3v32") &&
-            modtmp->INPmodType != INPtypelook("BSIM3v0") &&
-            modtmp->INPmodType != INPtypelook("BSIM3v1") &&
-            modtmp->INPmodType != INPtypelook("BSIM4") &&
-            modtmp->INPmodType != INPtypelook("BSIM4v5") &&
-            modtmp->INPmodType != INPtypelook("BSIM4v6") &&
-            modtmp->INPmodType != INPtypelook("BSIM4v7") &&
-            modtmp->INPmodType != INPtypelook("HiSIM2") &&
-            modtmp->INPmodType != INPtypelook("HiSIMHV1") &&
-            modtmp->INPmodType != INPtypelook("HiSIMHV2"))
-        {
+                modtmp->INPmodType != INPtypelook("BSIM3v32") &&
+                modtmp->INPmodType != INPtypelook("BSIM3v0") &&
+                modtmp->INPmodType != INPtypelook("BSIM3v1") &&
+                modtmp->INPmodType != INPtypelook("BSIM4") &&
+                modtmp->INPmodType != INPtypelook("BSIM4v5") &&
+                modtmp->INPmodType != INPtypelook("BSIM4v6") &&
+                modtmp->INPmodType != INPtypelook("BSIM4v7") &&
+                modtmp->INPmodType != INPtypelook("HiSIM2") &&
+                modtmp->INPmodType != INPtypelook("HiSIMHV1") &&
+                modtmp->INPmodType != INPtypelook("HiSIMHV2")) {
             continue;
         }
 
@@ -236,8 +266,10 @@ INPgetModBin(CKTcircuit *ckt, char *name, INPmodel **model, INPtables *tab, char
         if (!parse_line(modtmp->INPmodLine->line, model_tokens, 4, parse_values, parse_found))
             continue;
 
-        lmin = parse_values[0]; lmax = parse_values[1];
-        wmin = parse_values[2]; wmax = parse_values[3];
+        lmin = parse_values[0];
+        lmax = parse_values[1];
+        wmin = parse_values[2];
+        wmax = parse_values[3];
 
         if (in_range(l, lmin, lmax) && in_range(w, wmin, wmax)) {
             /* create unless model is already defined */

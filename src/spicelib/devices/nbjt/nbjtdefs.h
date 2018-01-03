@@ -92,6 +92,7 @@ typedef struct sNBJTmodel {	/* model structure for a bjt */
 					 * linked list */
   NBJTinstance *NBJTinstances;	/* pointer to list of instances that have
 				 * this model */
+    struct wordlist *defaults;
 
   /* --- end of generic struct GENmodel --- */
 

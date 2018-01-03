@@ -122,6 +122,7 @@ typedef struct sNUMOSmodel {	/* model structure for a numerical device */
   struct sNUMOSmodel *NUMOSnextModel;	/* pointer to next model in list */
   NUMOSinstance *NUMOSinstances;/* pointer to list of instances */
   IFuid NUMOSmodName;		/* pointer to string naming this model */
+    struct wordlist *defaults;
 
   /* --- end of generic struct GENmodel --- */
 

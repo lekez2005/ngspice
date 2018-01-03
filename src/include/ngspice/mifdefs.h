@@ -93,6 +93,7 @@ struct MIFmodel {
     struct MIFmodel *MIFnextModel;    /* pointer to next possible model in linked list */
     struct MIFinstance *MIFinstances; /* pointer to list of instances that have this model */
     IFuid            MIFmodName;      /* pointer to character string naming this model */
+    struct wordlist *defaults;
 
     /* --- end of generic struct GENmodel --- */
 

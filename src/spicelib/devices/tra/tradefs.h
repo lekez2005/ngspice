@@ -92,6 +92,7 @@ typedef struct sTRAmodel {       /* model structure for a transmission lines */
     TRAinstance * TRAinstances; /* pointer to list of instances that have this
                                  * model */
     IFuid TRAmodName;       /* pointer to character string naming this model */
+    struct wordlist *defaults;
 
     /* --- end of generic struct GENmodel --- */
 

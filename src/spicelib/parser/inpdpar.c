@@ -20,6 +20,20 @@ Author: 1985 Thomas L. Quarles
 #include "ngspice/fteext.h"
 #include "inpxx.h"
 
+static IFparm *
+findInstanceParm(char *name, IFdevice *device)
+{
+    IFparm *p = device->instanceParms;
+    IFparm *p_end = p + *(device->numInstanceParms);
+
+    for (; p < p_end; p++)
+        if (strcmp(name, p->keyword) == 0)
+            return p;
+    return NULL;
+}
+
+
+//
 char *
 INPdevParse(char **line, CKTcircuit *ckt, int dev, GENinstance *fast,
             double *leading, int *waslead, INPtables *tab)
@@ -30,10 +44,11 @@ INPdevParse(char **line, CKTcircuit *ckt, int dev, GENinstance *fast,
 /* the optional leading numeric parameter */
 /* flag - 1 if leading double given, 0 otherwise */
 {
+    IFdevice *device = ft_sim->devices[dev];
+
     int error;                  /* int to store evaluate error return codes in */
     char *parm = NULL;
     char *errbuf;
-    int i;
     IFvalue *val;
     char *rtn = NULL;
 
@@ -46,6 +61,49 @@ INPdevParse(char **line, CKTcircuit *ckt, int dev, GENinstance *fast,
     else
         *leading = 0.0;
 
+    GENmodel *m = fast->GENmodPtr;
+    wordlist *x = m->defaults;
+    if(ft_ngdebug && x)
+        fprintf(stderr, "its mee!!! %p\n", x);
+    for (; x; x=x->wl_next->wl_next) {
+        char *parameter = x->wl_word;
+        char *value = x->wl_next->wl_word;
+        if(ft_ngdebug)
+            fprintf(stderr, "%s %s\n", parameter, value);
+
+        IFparm *p = findInstanceParm(parameter, device);
+
+        if (!p) {
+            errbuf = tprintf(" unknown parameter (%s) \n", parameter);
+            rtn = errbuf;
+            goto quit;
+        }
+
+        val = INPgetValue(ckt, &value, p->dataType, tab);
+        if (!val) {
+            rtn = INPerror(E_PARMVAL);
+            goto quit;
+        }
+
+        error = ft_sim->setInstanceParm (ckt, fast, p->id, val, NULL);
+        if (error) {
+            rtn = INPerror(error);
+            goto quit;
+        }
+
+        /* delete the union val */
+        switch (p->dataType & IF_VARTYPES) {
+        case IF_REALVEC:
+            tfree(val->v.vec.rVec);
+            break;
+        case IF_INTVEC:
+            tfree(val->v.vec.iVec);
+            break;
+        default:
+            break;
+        }
+    }
+
     while (**line != '\0') {
         error = INPgetTok(line, &parm, 1);
         if (!*parm) {
@@ -56,46 +114,41 @@ INPdevParse(char **line, CKTcircuit *ckt, int dev, GENinstance *fast,
             rtn  = INPerror(error);
             goto quit;
         }
-        for (i = 0; i < *(ft_sim->devices[dev]->numInstanceParms); i++) {
-            if (strcmp(parm, ft_sim->devices[dev]->instanceParms[i].keyword) == 0) {
 
-                int type;
+        IFparm *p = findInstanceParm(parm, device);
 
-                val = INPgetValue(ckt, line,
-                                  ft_sim->devices[dev]->instanceParms[i].dataType,
-                                  tab);
-                if (!val) {
-                    rtn = INPerror(E_PARMVAL);
-                    goto quit;
-                }
-                error = ft_sim->setInstanceParm (ckt, fast,
-                                                 ft_sim->devices[dev]->instanceParms[i].id,
-                                                 val, NULL);
-                if (error) {
-                    rtn = INPerror(error);
-                    goto quit;
-                }
-
-                /* delete the union val */
-                type = ft_sim->devices[dev]->instanceParms[i].dataType;
-                type &= IF_VARTYPES;
-                if (type == IF_REALVEC)
-                    tfree(val->v.vec.rVec);
-                else if (type == IF_INTVEC)
-                    tfree(val->v.vec.iVec);
-
-                break;
-            }
-        }
-        if (i == *(ft_sim->devices[dev]->numInstanceParms)) {
+        if (!p) {
             errbuf = tprintf(" unknown parameter (%s) \n", parm);
             rtn = errbuf;
             goto quit;
         }
+
+        val = INPgetValue(ckt, line, p->dataType, tab);
+        if (!val) {
+            rtn = INPerror(E_PARMVAL);
+            goto quit;
+        }
+        error = ft_sim->setInstanceParm (ckt, fast, p->id, val, NULL);
+        if (error) {
+            rtn = INPerror(error);
+            goto quit;
+        }
+
+        /* delete the union val */
+        switch (p->dataType & IF_VARTYPES) {
+        case IF_REALVEC:
+            tfree(val->v.vec.rVec);
+            break;
+        case IF_INTVEC:
+            tfree(val->v.vec.iVec);
+            break;
+        default:
+            break;
+        }
         FREE(parm);
     }
 
- quit:
+quit:
     FREE(parm);
     return rtn;
 }

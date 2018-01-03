@@ -24,6 +24,7 @@ IFparm CPLmPTable[] = { /* model parameters */
  IOP( "g",    CPL_G, IF_REALVEC,"conductance per length"),
  IOP( "length",    CPL_length, IF_REAL,"length"),
  IP( "cpl",  CPL_MOD_R,   IF_FLAG,"Device is a cpl model"),
+ IPR( "txl",  CPL_MOD_R,   IF_FLAG,"Device is a cpl model"),
 };
 
 char *CPLnames[] = {

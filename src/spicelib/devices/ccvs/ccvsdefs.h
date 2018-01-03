@@ -57,6 +57,7 @@ typedef struct sCCVSmodel {       /* model structure for a CCVsource */
     CCVSinstance * CCVSinstances;    /* pointer to list of instances 
                                              that have this model */
     IFuid CCVSmodName;       /* pointer to character string naming this model */
+    struct wordlist *defaults;
 
     /* --- end of generic struct GENmodel --- */
 

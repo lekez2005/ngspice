@@ -23,6 +23,7 @@ typedef struct sGENnumModel {	/* model structure for a numerical device */
     struct sGENnumModel *GENnextModel;	/* pointer to next model in list */
     GENinstance *GENinstances;	/* pointer to list of instances */
     IFuid GENmodName;		/* pointer to string naming this model */
+    struct wordlist *defaults;
 
     /* --- end of generic struct GENmodel --- */
 

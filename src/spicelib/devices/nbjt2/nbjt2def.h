@@ -96,6 +96,7 @@ typedef struct sNBJT2model {	/* model structure for a bjt */
 				 * this model */
   IFuid NBJT2modName;		/* pointer to character string naming this
 				 * model */
+    struct wordlist *defaults;
 
   /* --- end of generic struct GENmodel --- */
 

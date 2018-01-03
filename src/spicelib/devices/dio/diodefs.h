@@ -170,6 +170,7 @@ typedef struct sDIOmodel {       /* model structure for a diode */
     DIOinstance * DIOinstances; /* pointer to list of instances 
                                 * that have this model */
     IFuid DIOmodName; /* pointer to character string naming this model */
+    struct wordlist *defaults;
 
     /* --- end of generic struct GENmodel --- */
 

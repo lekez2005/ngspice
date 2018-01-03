@@ -6255,7 +6255,7 @@ pspice_compat(struct line *oldcard)
                 for (modcard = subcktline; ; modcard = modcard->li_next) {
                     char *str;
                     if (ciprefix(".ends", modcard->li_line)) {
-                        fprintf(stderr, "no model found for %s\n", cut_line);
+                        fprintf(stderr, "no model found for %s\n", card->li_line);
                         break;
                     }
                     if (ciprefix(".model", modcard->li_line) && strstr(modcard->li_line, stoks[5]) && strstr(modcard->li_line, "vswitch")) {
@@ -6282,6 +6282,7 @@ pspice_compat(struct line *oldcard)
                             stoks[5], modpar[0], modpar[1], modpar[2], modpar[3], modpar[4], modpar[5]);
                         for (i = 0; i < 6; i++)
                             tfree(modpar[i]);
+                        break;
                     }
                 }
             else

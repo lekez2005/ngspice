@@ -132,6 +132,7 @@ typedef struct sHFETAmodel {
     struct sHFETAmodel *HFETAnextModel; 
     HFETAinstance *HFETAinstances;
     IFuid HFETAmodName;
+    struct wordlist *defaults;
 
     /* --- end of generic struct GENmodel --- */
 

@@ -357,6 +357,7 @@ typedef struct sVBICmodel {           /* model structure for a vbic */
                                          this model */
     IFuid VBICmodName;                /* pointer to character string naming 
                                          this model */
+    struct wordlist *defaults;
 
     /* --- end of generic struct GENmodel --- */
 
