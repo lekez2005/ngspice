@@ -323,8 +323,6 @@ typedef struct sMOS1model {       /* model structure for a resistor */
     /* --- end of generic struct GENmodel --- */
 
     int MOS1type;       /* device type : 1 = nmos,  -1 = pmos */
-    double MOS1lp;      /* the length of the channel region */
-    double MOS1wp;      /* the width of the channel region */
     double MOS1tnom;        /* temperature at which parameters measured */
     double MOS1latDiff;
     double MOS1jctSatCurDensity;    /* input - use tSatCurDens */
@@ -388,8 +386,7 @@ typedef struct sMOS1model {       /* model structure for a resistor */
     unsigned MOS1tnomGiven  :1;
     unsigned MOS1fNcoefGiven  :1;
     unsigned MOS1fNexpGiven   :1;
-    unsigned MOS1lpGiven   :1;
-    unsigned MOS1wpGiven   :1;
+
 } MOS1model;
 
 #ifndef NMOS
@@ -454,8 +451,6 @@ typedef struct sMOS1model {       /* model structure for a resistor */
 #define MOS1_MOD_KF 131
 #define MOS1_MOD_AF 132
 #define MOS1_MOD_TYPE 133
-#define MOS1_MOD_L 134
-#define MOS1_MOD_W 135
 
 /* device questions */
 #define MOS1_CGS                201
