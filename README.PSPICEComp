@@ -28,8 +28,10 @@ parameters.
 * replace | by ||
 * add .functions limit, pwr, pwrs, stp
 
+Robert's patch added to enable model parameters becoming default instance
+parameters (is enabled in PSPICE for L and W of MOS transistors)
+
 Items still to do:
-Add W (channel witdth) and L (channel length) to MOS3 (level=3) model
-parameters. Better find a general solution to check if model parameters
-may act as instance parameters, if not overridden.
+Replace Meyer capacitance model for MOS1 and MOS3 by Yang-Chatterjee-Model
+with continuous charge for improved transient convergence.
 
