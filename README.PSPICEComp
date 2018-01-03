@@ -15,11 +15,21 @@ Add 'res' as resistor model type (in addition to 'r')
 Add W (channel witdth) and L (channel length) to MOS1 (level=1) model
 parameters.
 
+* add predefined params TEMP, VT, GMIN to beginning of deck and each subckt call
+* replace IF by ternary_fcn
+* replace
+  S1 D S DG GND SWN
+ .MODEL SWN VSWITCH(VON = { 0.55 } VOFF = { 0.49 } RON = { 1 / (2 * M*(W / LE)*(KPN / 2) * 10) }  ROFF = { 1G })
+* by
+  as1 %vd(DG GND) % gd(D S) aswn
+  .model aswn aswitch(cntl_off={0.49} cntl_on={0.55} r_off={1G}
+  + r_on={ 1 / (2 * M*(W / LE)*(KPN / 2) * 10) } log = TRUE)
+* replace & by &&
+* replace | by ||
+* add .functions limit, pwr, pwrs, stp
 
 Items still to do:
 Add W (channel witdth) and L (channel length) to MOS3 (level=3) model
-parameters.
+parameters. Better find a general solution to check if model parameters
+may act as instance parameters, if not overridden.
 
-Add function inside of the .include statement to translate PSPICE
-device libraries to ngspice syntax, especially for all statements that
-would be ambiguous or overly complex if directly integrated into ngspice.
