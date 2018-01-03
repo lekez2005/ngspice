@@ -79,6 +79,7 @@ typedef struct sLTRAmodel {       /* model structure for a transmission lines */
     LTRAinstance * LTRAinstances; /* pointer to list of instances that have this
                                  * model */
     IFuid LTRAmodName;       /* pointer to character string naming this model */
+    struct wordlist *defaults;
 
     /* --- end of generic struct GENmodel --- */
 

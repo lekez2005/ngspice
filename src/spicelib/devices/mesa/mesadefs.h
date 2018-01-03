@@ -220,6 +220,7 @@ typedef struct sMESAmodel {       /* model structure for a MESAfet */
     MESAinstance * MESAinstances; /* pointer to list of instances 
                                    * that have this model */
     IFuid MESAmodName; /* pointer to character string naming this model */
+    struct wordlist *defaults;
 
     /* --- end of generic struct GENmodel --- */
 

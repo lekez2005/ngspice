@@ -269,6 +269,7 @@ typedef struct s$(module)model {         /* model structure */
   struct s$(module)model *$(module)nextModel; /* pointer to next possible model in linked list */
   $(module)instance * $(module)instances;  /* pointer to list of instances that have this model */
   IFuid $(module)modName;         /* pointer to the name of this model */
+  struct wordlist *defaults;
 
   /* --- end of generic struct GENmodel --- */
 

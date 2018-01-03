@@ -63,6 +63,7 @@ typedef struct sCSWmodel {      /* model structure for a switch */
     CSWinstance *CSWinstances; /* pointer to list of instances that have this
                                  * model */
     IFuid CSWmodName;   /* pointer to character string naming this model */
+    struct wordlist *defaults;
 
     /* --- end of generic struct GENmodel --- */
 

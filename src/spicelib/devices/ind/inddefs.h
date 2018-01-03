@@ -90,6 +90,7 @@ struct sINDmodel {             /* model structure for an inductor */
     INDinstance *INDinstances; /* pointer to list of instances that have this
                                 * model */
     IFuid INDmodName;          /* pointer to character string naming this model */
+    struct wordlist *defaults;
 
     /* --- end of generic struct GENmodel --- */
 
@@ -153,6 +154,7 @@ struct sMUTmodel {             /* model structure for a mutual inductor */
     MUTinstance *MUTinstances; /* pointer to list of instances that have this
                                 * model */
     IFuid MUTmodName;          /* pointer to character string naming this model */
+    struct wordlist *defaults;
 
 /* --- end of generic struct GENmodel --- */
 };

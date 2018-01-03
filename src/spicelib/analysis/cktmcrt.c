@@ -31,6 +31,7 @@ CKTmodCrt(CKTcircuit *ckt, int type, GENmodel **modfast, IFuid name)
     if (!model)
         return E_NOMEM;
 
+    model->defaults = NULL;
     model->GENmodType = type;
     model->GENmodName = name;
     model->GENnextModel = ckt->CKThead[type];

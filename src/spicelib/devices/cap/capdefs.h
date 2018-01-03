@@ -79,6 +79,7 @@ typedef struct sCAPmodel {      /* model structure for a capacitor */
     CAPinstance * CAPinstances; /* pointer to list of instances that have this
                                  * model */
     IFuid CAPmodName;   /* pointer to character string naming this model */
+    struct wordlist *defaults;
 
     /* --- end of generic struct GENmodel --- */
 

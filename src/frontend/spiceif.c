@@ -926,6 +926,7 @@ if_setparam(CKTcircuit *ckt, char **name, char *param, struct dvec *val, int do_
         return;
     }
     device = ft_sim->devices[typecode];
+    //
     opt = parmlookup(device, &dev, param, do_model, 1);
     if (!opt) {
         if (param)

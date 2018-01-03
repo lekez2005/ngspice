@@ -403,6 +403,7 @@ typedef struct sBSIM3model
     struct sBSIM3model *BSIM3nextModel;
     BSIM3instance *BSIM3instances;
     IFuid BSIM3modName;
+    struct wordlist *defaults;
 
     /* --- end of generic struct GENmodel --- */
 

@@ -243,6 +243,7 @@ typedef struct sBSIM2model {       	/* model structure for a resistor */
     B2instance * B2instances;	/* pointer to list of instances 
                                    	 * that have this model */
     IFuid B2modName;       		/* pointer to the name of this model */
+    struct wordlist *defaults;
 
     /* --- end of generic struct GENmodel --- */
 

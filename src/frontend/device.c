@@ -1552,6 +1552,8 @@ check_ifparm(IFdevice *device, int instance_flag)
         }
     }
 
+// check dup keyword too !
+
 #ifdef HAVE_TDESTROY
     tdestroy (root, check_ifparm_freenode);
 #endif

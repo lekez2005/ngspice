@@ -591,6 +591,7 @@ typedef struct sB3SOIPDmodel
     struct sB3SOIPDmodel *B3SOIPDnextModel;
     B3SOIPDinstance *B3SOIPDinstances;
     IFuid B3SOIPDmodName; 
+    struct wordlist *defaults;
 
     /* --- end of generic struct GENmodel --- */
 

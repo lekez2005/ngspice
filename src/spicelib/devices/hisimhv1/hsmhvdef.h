@@ -917,6 +917,7 @@ typedef struct sHSMHVmodel {     /* model structure for a resistor */
   HSMHVinstance * HSMHVinstances;	/* pointer to list of instances 
 				   that have this model */
   IFuid HSMHVmodName;       	/* pointer to the name of this model */
+  struct wordlist *defaults;
 
   /* --- end of generic struct GENmodel --- */
 

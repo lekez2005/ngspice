@@ -422,6 +422,7 @@ typedef struct sSOI3model {       /* model structure for an SOI3 MOSFET  */
     SOI3instance * SOI3instances; /* pointer to list of instances
                                    * that have this model */
     IFuid SOI3modName;       /* pointer to character string naming this model */
+    struct wordlist *defaults;
 
     /* --- end of generic struct GENmodel --- */
 

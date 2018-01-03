@@ -61,6 +61,7 @@ typedef struct sVCCSmodel {       /* model structure for a source */
     VCCSinstance * VCCSinstances;    /* pointer to list of instances 
                                       * that have this model */
     IFuid VCCSmodName;       /* pointer to character string naming this model */
+    struct wordlist *defaults;
 
     /* --- end of generic struct GENmodel --- */
 

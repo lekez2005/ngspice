@@ -249,6 +249,7 @@ typedef struct sMOS6model {       /* model structure for a resistor */
     MOS6instance * MOS6instances; /* pointer to list of instances 
                                    * that have this model */
     IFuid MOS6modName;       /* pointer to character string naming this model */
+    struct wordlist *defaults;
 
     /* --- end of generic struct GENmodel --- */
 

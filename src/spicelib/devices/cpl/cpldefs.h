@@ -69,6 +69,7 @@ typedef struct sCPLmodel {       /* model structure for a cpl */
     CPLinstance * CPLinstances; /* pointer to list of instances that have this
                                  * model */
     IFuid CPLmodName;       /* pointer to character string naming this model */
+    struct wordlist *defaults;
 
     /* --- end of generic struct GENmodel --- */
 
