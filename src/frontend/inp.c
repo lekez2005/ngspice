@@ -1310,6 +1310,9 @@ create_circbyline(char *line)
     FILE *fp = NULL;
     if (!circarray)
         circarray = TMALLOC(char*, memlen);
+    char *p = skip_ws(line);
+    if (line < p)
+        memmove(line, p, strlen(p) + 1);
     circarray[linec++] = line;
     if (linec < memlen) {
         if (ciprefix(".end", line) && (line[4] == '\0' || isspace_c(line[4]))) {
