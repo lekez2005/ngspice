@@ -6121,10 +6121,14 @@ pspice_compat(struct line *oldcard)
     nextcard = insert_new_line(nextcard, new_str, 4, 0);
     new_str = copy(".func pwr(x, a) { abs(x) ** a }");
     nextcard = insert_new_line(nextcard, new_str, 5, 0);
-    new_str = copy(".func pwrs(x, a) { sgn(x) * PWR(x, a) }");
+    new_str = copy(".func pwrs(x, a) { sgn(x) * pwr(x, a) }");
     nextcard = insert_new_line(nextcard, new_str, 6, 0);
     new_str = copy(".func stp(x) { u(x) }");
     nextcard = insert_new_line(nextcard, new_str, 7, 0);
+    new_str = copy(".func if(a, b, c) {ternary_fcn( a , b , c )}");
+    nextcard = insert_new_line(nextcard, new_str, 8, 0);
+    new_str = copy(".func int(x) { sign(x)*floor(abs(x)) }");
+    nextcard = insert_new_line(nextcard, new_str, 9, 0);
     nextcard->li_next = oldcard;
     /* add predefined parameters TEMP, VT after each subckt call */
     /* FIXME: This should not be necessary if we had a better sense of hierarchy
@@ -6157,6 +6161,9 @@ pspice_compat(struct line *oldcard)
         else if (skip_control > 0) {
             continue;
         }
+#if (0)
+        /* the following is replaced by
+        .func if(a, b, c) {ternary_fcn( a , b , c )} */
         if (strstr(cut_line, "if")) {
             card->li_line = inp_remove_ws(card->li_line);
             t = strstr(card->li_line, "if(");
@@ -6170,6 +6177,7 @@ pspice_compat(struct line *oldcard)
                 t = strstr(card->li_line, "if(");
             }
         }
+#endif
         if ((t = strstr(card->li_line, "&")) != NULL) {
             while (t && (t[1] != '&')) {
                 char *tt = NULL;
