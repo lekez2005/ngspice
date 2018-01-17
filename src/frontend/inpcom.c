@@ -6116,7 +6116,7 @@ pspice_compat(struct line *oldcard)
     nextcard = insert_new_line(newcard, new_str, 2, 0);
     new_str = copy(".param gmin = 1e-12");
     nextcard = insert_new_line(nextcard, new_str, 3, 0);
-    /* add funcs limit, pwr, pwrs, stp */
+    /* add funcs limit, pwr, pwrs, stp, if, int */
     new_str = copy(".func limit(x, a, b) { min(max(x, a), b) }");
     nextcard = insert_new_line(nextcard, new_str, 4, 0);
     new_str = copy(".func pwr(x, a) { abs(x) ** a }");
@@ -6129,6 +6129,9 @@ pspice_compat(struct line *oldcard)
     nextcard = insert_new_line(nextcard, new_str, 8, 0);
     new_str = copy(".func int(x) { sign(x)*floor(abs(x)) }");
     nextcard = insert_new_line(nextcard, new_str, 9, 0);
+    /* add resistor model res */
+    new_str = copy(".model res r");
+    nextcard = insert_new_line(nextcard, new_str, 10, 0);
     nextcard->li_next = oldcard;
     /* add predefined parameters TEMP, VT after each subckt call */
     /* FIXME: This should not be necessary if we had a better sense of hierarchy
