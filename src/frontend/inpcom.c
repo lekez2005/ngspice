@@ -6298,6 +6298,61 @@ pspice_compat(struct card *oldcard)
             nextcard = insert_new_line(nextcard, new_str, 1, 0);
         }
     }
+    /* replace & with && and | with || */
+    for (card = newcard; card; card = card->nextcard) {
+        char *t;
+        char *cut_line = card->line;
 
+        if (*cut_line == '*')
+            continue;
+        /* exclude any command inside .control ... .endc */
+        if (ciprefix(".control", cut_line)) {
+            skip_control++;
+            continue;
+        }
+        else if (ciprefix(".endc", cut_line)) {
+            skip_control--;
+            continue;
+        }
+        else if (skip_control > 0) {
+            continue;
+        }
+        if ((t = strstr(card->line, "&")) != NULL) {
+            while (t && (t[1] != '&')) {
+                char *tt = NULL;
+                char *tn = copy(t + 1);/*skip |*/
+                char *strbeg = copy_substring(card->line, t);
+                tfree(card->line);
+                card->line = tprintf("%s&&%s", strbeg, tn);
+                tfree(strbeg);
+                tfree(tn);
+                t = card->line;
+                while ((t = strstr(t, "&&")) != NULL)
+                    tt = t = t + 2;
+                if (!tt)
+                    break;
+                else
+                    t = strstr(tt, "&");
+            }
+        }
+        if ((t = strstr(card->line, "|")) != NULL) {
+            while (t && (t[1] != '|')) {
+                char *tt = NULL;
+                char *tn = copy(t + 1);/*skip |*/
+                char *strbeg = copy_substring(card->line, t);
+                tfree(card->line);
+                card->line = tprintf("%s||%s", strbeg, tn);
+                tfree(strbeg);
+                tfree(tn);
+                t = card->line;
+                while ((t = strstr(t, "||")) != NULL)
+                    tt = t = t + 2;
+                if (!tt)
+                    break;
+                else
+                    t = strstr(tt, "|");
+            }
+        }
+    }
     return newcard;
 }
