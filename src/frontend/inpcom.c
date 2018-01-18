@@ -6251,10 +6251,67 @@ inp_meas_current(struct card *deck)
     }
 }
 
+/* in       out
+   von      cntl_on
+   voff     cntl_off
+   ron      r_on
+   roff     r_off
+*/
+int
+rep_spar(char *inpar[6])
+{
+    int i;
+    for (i = 0; i < 6; i++) {
+        char *t, *strend;
+        char *tok = inpar[i];
+        if ((t = strstr(tok, "von")) != NULL) {
+            strend = copy(t + 1);
+            tfree(inpar[i]);
+            inpar[i] = tprintf("cntl_%s", strend);
+            tfree(strend);
+        }
+        else if ((t = strstr(tok, "voff")) != NULL) {
+            strend = copy(t + 1);
+            tfree(inpar[i]);
+            inpar[i] = tprintf("cntl_%s", strend);
+            tfree(strend);
+        }
+        else if ((t = strstr(tok, "ron")) != NULL) {
+            strend = copy(t + 1);
+            tfree(inpar[i]);
+            inpar[i] = tprintf("r_%s", strend);
+            tfree(strend);
+        }
+        else if ((t = strstr(tok, "roff")) != NULL) {
+            strend = copy(t + 1);
+            tfree(inpar[i]);
+            inpar[i] = tprintf("r_%s", strend);
+            tfree(strend);
+        }
+        else if (*tok == '(' || *tok == ')')
+            continue;
+        else {
+            fprintf(stderr, "Bad vswitch parameter %s\n", tok);
+            return 1;
+        }
+    }
+    return 0;
+}
+
+
 /**** PSPICE to ngspice **************
 * add predefined params TEMP, VT, GMIN to beginning of deck
+* add predefined params TEMP, VT, GMIN to beginning of each .subckt call
 * add .functions limit, pwr, pwrs, stp, if, int
-* add .model for RES */
+* replace
+  S1 D S DG GND SWN
+ .MODEL SWN VSWITCH(VON = { 0.55 } VOFF = { 0.49 } RON = { 1 / (2 * M*(W / LE)*(KPN / 2) * 10) }  ROFF = { 1G })
+* by
+  as1 %vd(DG GND) % gd(D S) aswn
+  .model aswn aswitch(cntl_off={0.49} cntl_on={0.55} r_off={1G}
+  + r_on={ 1 / (2 * M*(W / LE)*(KPN / 2) * 10) } log = TRUE)
+* replace & by &&
+* replace | by || */
 static struct card *
 pspice_compat(struct card *oldcard)
 {
@@ -6281,9 +6338,6 @@ pspice_compat(struct card *oldcard)
     nextcard = insert_new_line(nextcard, new_str, 8, 0);
     new_str = copy(".func int(x) { sign(x)*floor(abs(x)) }");
     nextcard = insert_new_line(nextcard, new_str, 9, 0);
-    /* add resistor model res */
-    new_str = copy(".model res r");
-    nextcard = insert_new_line(nextcard, new_str, 10, 0);
     nextcard->nextcard = oldcard;
 
     /* add predefined parameters TEMP, VT after each subckt call */
@@ -6353,6 +6407,123 @@ pspice_compat(struct card *oldcard)
                     t = strstr(tt, "|");
             }
         }
+    }
+/* replace
+* S1 D S DG GND SWN
+* .MODEL SWN VSWITCH ( VON = {0.55} VOFF = {0.49} RON={1/(2*M*(W/LE)*(KPN/2)*10)}  ROFF={1G} )
+* by
+* a1 %v(DG) %gd(D S) swa
+* .MODEL SWA aswitch(cntl_off=0.49 cntl_on=0.55 r_off=1G r_on={1/(2*M*(W/LE)*(KPN/2)*10)} log=TRUE) */
+    for (card = newcard; card; card = card->nextcard) {
+        static struct card *subcktline = NULL;
+        static int nesting = 0;
+        char *cut_line = card->line;
+        if (*cut_line == '*')
+            continue;
+        // exclude any command inside .control ... .endc
+        if (ciprefix(".control", cut_line)) {
+            skip_control++;
+            continue;
+        }
+        else if (ciprefix(".endc", cut_line)) {
+            skip_control--;
+            continue;
+        }
+        else if (skip_control > 0) {
+            continue;
+        }
+        if (ciprefix(".subckt", cut_line)) {
+            subcktline = card;
+            nesting++;
+        }
+        if (ciprefix(".ends", cut_line))
+            nesting--;
+
+        if (ciprefix("s", cut_line)) {
+            /* check for the model name */
+            int i;
+            struct card *modcard;
+            char *stoks[6];
+            for (i = 0; i < 6; i++)
+                stoks[i] = gettok(&cut_line);
+
+            /* find the corresponding model */
+            if(nesting > 0)
+                /* inside of subckt, only same level */
+                for (modcard = subcktline; ; modcard = modcard->nextcard) {
+                    char *str;
+                    if (ciprefix(".ends", modcard->line)) {
+                        fprintf(stderr, "no model found for %s\n", card->line);
+                        break;
+                    }
+                    if (ciprefix(".model", modcard->line) && strstr(modcard->line, stoks[5]) && strstr(modcard->line, "vswitch")) {
+                        char *delstr;
+                        char *modpar[6];
+                        delstr = str = inp_remove_ws(modcard->line);
+                        str = nexttok(str); /* throw away '.model' */
+                        str = nexttok(str); /* throw away 'modname' */
+                        if (!ciprefix("vswitch", str))
+                            goto next_loop;
+                        str = nexttok(str); /* throw away 'mod type' */
+                        for (i = 0; i < 6; i++)
+                            modpar[i] = gettok(&str);
+                        tfree(delstr);
+                        /* .model is now in modcard, tokens in modpar, call to s in card, tokens in stoks */
+                        /* rewrite s line */
+                        tfree(card->line);
+                        card->line = tprintf("a%s %%vd(%s %s) %%gd(%s %s) a%s",
+                            stoks[0], stoks[3], stoks[4], stoks[1], stoks[2], stoks[5]);
+                        /* rewrite .model line (modcard->li_line already freed in inp_remove_ws())
+                        Replace VON by cntl_on, VOFF by cntl_off, RON by r_on, and ROFF by r_off */
+                        rep_spar(modpar);
+                        modcard->line = tprintf(".model a%s aswitch %s %s %s %s %s  log=TRUE %s",
+                            stoks[5], modpar[0], modpar[1], modpar[2], modpar[3], modpar[4], modpar[5]);
+                        for (i = 0; i < 6; i++)
+                            tfree(modpar[i]);
+                        break;
+                    }
+                }
+            else
+                /* at top level only or if no model is found at sub-level */
+                for (modcard = newcard; modcard; modcard = modcard->nextcard) {
+                    static int inesting = 0;
+                    char *str;
+                    if (ciprefix(".subckt", modcard->line)) {
+                        inesting++;
+                    }
+                    if (ciprefix(".ends", modcard->line))
+                        inesting--;
+                    if ((inesting == 0) && ciprefix(".model", modcard->line) && strstr(modcard->line, stoks[5]) && strstr(modcard->line, "vswitch")) {
+                        char *delstr;
+                        char *modpar[6];
+                        delstr = str = inp_remove_ws(modcard->line);
+                        str = nexttok(str); /* throw away '.model' */
+                        str = nexttok(str); /* throw away 'modname' */
+                        if (!ciprefix("vswitch", str))
+                            goto next_loop;
+                        str = nexttok(str); /* throw away 'mod type' */
+                        for (i = 0; i < 6; i++)
+                            modpar[i] = gettok(&str);
+                        tfree(delstr);
+                        /* .model is now in modcard, tokens in modpar, call to s in card, tokens in stoks */
+                        /* rewrite s line */
+                        tfree(card->line);
+                        card->line = tprintf("a%s %%vd(%s %s) %%gd(%s %s) a%s",
+                            stoks[0], stoks[3], stoks[4], stoks[1], stoks[2], stoks[5]);
+                        /* rewrite .model line (already freed in inp_remove_ws())
+                        Replace VON by cntl_on, VOFF by cntl_off, RON by r_on, and ROFF by r_off */
+                        rep_spar(modpar);
+                        modcard->line = tprintf(".model a%s aswitch %s %s %s %s %s  log=TRUE %s",
+                            stoks[5], modpar[0], modpar[1], modpar[2], modpar[3], modpar[4], modpar[5]);
+                        for (i = 0; i < 6; i++)
+                            tfree(modpar[i]);
+                    }
+                }
+            for (i = 1; i < 6; i++)
+                tfree(stoks[i]);
+        }
+    next_loop:
+        continue;
     }
     return newcard;
 }
