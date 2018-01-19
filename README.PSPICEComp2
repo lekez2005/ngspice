@@ -1,0 +1,34 @@
+README for PSPICE-compatible NGSPICE
+==================
+
+Due to very many commercial decive libs available as PSPICE compatible
+descriptions, and due to the inclusion of ngspice into EAGLE and KiCad,
+with their increasing usage of discrete devices,
+it is useful to enhance ngspice to PSPICE compatibility.
+
+Some example files are available in directory p-to-n-examples.
+
+Items done:
+* Add 'res' as resistor model type (in addition to 'r')
+  .model MyRe RES (R=100)
+* add function i() to measure current in node 1 of a device
+* add predefined params TEMP, VT, GMIN to beginning of deck and each subckt call
+* replace IF() by ternary_fcn()
+* replace
+  S1 D S DG GND SWN
+ .MODEL SWN VSWITCH(VON = { 0.55 } VOFF = { 0.49 } RON = { 1 / (2 * M*(W / LE)*(KPN / 2) * 10) }  ROFF = { 1G })
+* by
+  as1 %vd(DG GND) % gd(D S) aswn
+  .model aswn aswitch(cntl_off={0.49} cntl_on={0.55} r_off={1G}
+  + r_on={ 1 / (2 * M*(W / LE)*(KPN / 2) * 10) } log = TRUE)
+* replace & by &&
+* replace | by ||
+* add .functions limit, pwr, pwrs, stp, int
+
+Robert's patch added to enable model parameters becoming default instance
+parameters (is enabled in PSPICE for L and W of MOS transistors)
+
+Items still to do:
+Replace Meyer capacitance model for MOS1 and MOS3 by Yang-Chatterjee-Model
+with continuous charge for improved transient convergence.
+
