@@ -673,7 +673,6 @@ inp_read(FILE *fp, int call_depth, char *dir_name, bool comfile, bool intfile)
     for (;;) {
         /* derive lines from circarray */
         if (intfile) {
-            char *p;
             buffer = circarray[cirlinecount++];
             if (!buffer) {
                 tfree(circarray);
