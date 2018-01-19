@@ -6558,7 +6558,7 @@ pspice_compat(struct card *oldcard)
                             goto next_loop;
 #ifndef XSPICE
                         else {
-                            fprintf(stderr, "vswitch device requires XSPICE \n");
+                            fprintf(stderr, "Error: vswitch device requires XSPICE \n");
                             controlled_exit(1);
                         }
 #endif
