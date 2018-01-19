@@ -24,6 +24,7 @@ Items done:
 * replace & by &&
 * replace | by ||
 * add .functions limit, pwr, pwrs, stp, int
+* enable '-' as valid charecter in subcircuit name
 
 Robert's patch added to enable model parameters becoming default instance
 parameters (is enabled in PSPICE for L and W of MOS transistors)
