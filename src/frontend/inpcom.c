@@ -6556,6 +6556,12 @@ pspice_compat(struct card *oldcard)
                         str = nexttok(str); /* throw away 'modname' */
                         if (!ciprefix("vswitch", str))
                             goto next_loop;
+#ifndef XSPICE
+                        else {
+                            fprintf(stderr, "vswitch device requires XSPICE \n");
+                            controlled_exit(1);
+                        }
+#endif
                         str = nexttok(str); /* throw away 'mod type' */
                         for (i = 0; i < 6; i++)
                             modpar[i] = gettok(&str);
