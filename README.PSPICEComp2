@@ -6,9 +6,22 @@ descriptions, and due to the inclusion of ngspice into EAGLE and KiCad,
 with their increasing usage of discrete devices,
 it is useful to enhance ngspice to PSPICE compatibility.
 
+This option is invoked by setting the PSPICE compatibility flag
+set ngbehavior=ps
+either in spinit or .spiceinit.
+
+It becomes active only when a PSPICE compatible device file is included
+into the ngspice netlist by the '.include devicefile' command.
+The patches and additions are then executed on the contents of
+'devicefile'. This option is not ment to run complete PSPICE
+input decks. For general netlists the ngspice syntax always prevails!
+
+The XSPICE compile option has to be activated (for poly sources and the
+vswitch replacement).
+
 Some example files are available in directory p-to-n-examples.
 
-Items done:
+Items handled:
 * Add 'res' as resistor model type (in addition to 'r')
   .model MyRe RES (R=100)
 * add function i() to measure current in node 1 of a device
