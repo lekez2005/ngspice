@@ -6613,7 +6613,7 @@ pspice_compat(struct card *oldcard)
                             tfree(modpar[i]);
                     }
                 }
-            for (i = 1; i < 6; i++)
+            for (i = 0; i < 6; i++)
                 tfree(stoks[i]);
         }
     next_loop:
