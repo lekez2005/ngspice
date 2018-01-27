@@ -6112,7 +6112,7 @@ inp_meas_current(struct card *deck)
 {
     struct card *card, *subc_start = NULL, *subc_prev = NULL;
     struct replace_currm *new_rep, *act_rep = NULL, *rep = NULL;
-    char *s, *t, *u, *v;
+    char *s, *t, *u, *v, *w;
     int skip_control = 0, subs = 0;
 
     /* scan through deck and find i(xyz), replace by i(v_xyz) */
@@ -6153,7 +6153,7 @@ inp_meas_current(struct card *deck)
         if (!strstr(curr_line, "i("))
             continue;
 
-        s = v = stripWhiteSpacesInsideParens(curr_line);
+        s = v = w = stripWhiteSpacesInsideParens(curr_line);
         while (s) {
             /* i( may occur more than once in a line */
             s = u = strstr(s, "i(");
@@ -6191,8 +6191,7 @@ inp_meas_current(struct card *deck)
                         new_str = tprintf("%s%s%s", beg_str, "v_", s);
                         if (ft_ngdebug)
                             printf("converted to\n%s\n\n", new_str);
-                        tfree(curr_line);
-                        tfree(v);
+                        tfree(card->line);
                         card->line = s = v = new_str;
                         s++;
                         tfree(beg_str);
@@ -6202,6 +6201,7 @@ inp_meas_current(struct card *deck)
                     s++;
             }
         }
+        tfree(w);
     }
 
     /* return if we did not find any i( */
@@ -6252,8 +6252,10 @@ inp_meas_current(struct card *deck)
                where i(xyz) has been found */
             tok = gettok(&curr_line);
             /* done when end of subcircuit is reached */
-            if (eq(".ends", tok) && rep->s_start)
+            if (eq(".ends", tok) && rep->s_start){
+                tfree(tok);
                 break;
+            }
             if (eq(rep->rtoken, tok)) {
                 /* special treatment if we have an e (VCVS) or h (CCVS) source:
                 check if it is a simple linear source, if yes, don't do a
@@ -6271,6 +6273,7 @@ inp_meas_current(struct card *deck)
                             printf("i(%s) moved back to i(%s) in\n%s\n\n", searchstr, tok, rep->cline->line);
                     }
                     tfree(searchstr);
+                    tfree(tok);
                     continue;
                 }
                 node1 = gettok(&curr_line);
