@@ -6313,10 +6313,10 @@ inp_meas_current(struct card *deck)
    roff     r_off
 */
 int
-rep_spar(char *inpar[6])
+rep_spar(char *inpar[4])
 {
     int i;
-    for (i = 0; i < 6; i++) {
+    for (i = 0; i < 4; i++) {
         char *t, *strend;
         char *tok = inpar[i];
         if ((t = strstr(tok, "von")) != NULL) {
@@ -6343,8 +6343,6 @@ rep_spar(char *inpar[6])
             inpar[i] = tprintf("r_%s", strend);
             tfree(strend);
         }
-        else if (*tok == '(' || *tok == ')')
-            continue;
         else {
             fprintf(stderr, "Bad vswitch parameter %s\n", tok);
             return 1;
@@ -6501,39 +6499,52 @@ pspice_compat(struct card *oldcard)
             char *stoks[6];
             for (i = 0; i < 6; i++)
                 stoks[i] = gettok(&cut_line);
-
+            /* rewrite s line */
+            tfree(card->line);
+            card->line = tprintf("a%s %%vd(%s %s) %%gd(%s %s) a%s",
+                stoks[0], stoks[3], stoks[4], stoks[1], stoks[2], stoks[5]);
             /* find the corresponding model */
             if(nesting > 0)
                 /* inside of subckt, only same level */
                 for (modcard = subcktline; ; modcard = modcard->nextcard) {
                     char *str;
-                    if (ciprefix(".ends", modcard->line)) {
-                        fprintf(stderr, "no model found for %s\n", card->line);
+                    if (ciprefix(".ends", modcard->line))
                         break;
-                    }
                     if (ciprefix(".model", modcard->line) && strstr(modcard->line, stoks[5]) && strstr(modcard->line, "vswitch")) {
                         char *delstr;
-                        char *modpar[6];
+                        char *modpar[4];
                         delstr = str = inp_remove_ws(modcard->line);
                         str = nexttok(str); /* throw away '.model' */
                         str = nexttok(str); /* throw away 'modname' */
                         if (!ciprefix("vswitch", str))
                             goto next_loop;
-                        str = nexttok(str); /* throw away 'mod type' */
-                        for (i = 0; i < 6; i++)
-                            modpar[i] = gettok(&str);
+#ifndef XSPICE
+                        else {
+                            fprintf(stderr, "Error: vswitch device requires XSPICE \n");
+                            controlled_exit(1);
+                        }
+#endif
+                        /* we have to find 4 parameters, identified by '=', separated by spaces */
+                        char *equalptr[4];
+                        equalptr[0] = strstr(str, "=");
+                        for (i = 1; i < 4; i++)
+                            equalptr[i] = strstr(equalptr[i-1] + 1, "=");
+                        for (i = 0; i < 4; i++) {
+                            equalptr[i] = skip_back_ws(equalptr[i], str);
+                            equalptr[i] = skip_back_non_ws(equalptr[i], str);
+                        }
+                        for (i = 0; i < 3; i++)
+                            modpar[i] = copy_substring(equalptr[i], equalptr[i + 1] - 1);
+                        modpar[3] = copy_substring(equalptr[3], strrchr(equalptr[3], ')'));
+
                         tfree(delstr);
                         /* .model is now in modcard, tokens in modpar, call to s in card, tokens in stoks */
-                        /* rewrite s line */
-                        tfree(card->line);
-                        card->line = tprintf("a%s %%vd(%s %s) %%gd(%s %s) a%s",
-                            stoks[0], stoks[3], stoks[4], stoks[1], stoks[2], stoks[5]);
                         /* rewrite .model line (modcard->li_line already freed in inp_remove_ws())
                         Replace VON by cntl_on, VOFF by cntl_off, RON by r_on, and ROFF by r_off */
                         rep_spar(modpar);
-                        modcard->line = tprintf(".model a%s aswitch %s %s %s %s %s  log=TRUE %s",
-                            stoks[5], modpar[0], modpar[1], modpar[2], modpar[3], modpar[4], modpar[5]);
-                        for (i = 0; i < 6; i++)
+                        modcard->line = tprintf(".model a%s aswitch(%s %s %s %s  log=TRUE)",
+                            stoks[5], modpar[0], modpar[1], modpar[2], modpar[3]);
+                        for (i = 0; i < 4; i++)
                             tfree(modpar[i]);
                         break;
                     }
@@ -6550,7 +6561,7 @@ pspice_compat(struct card *oldcard)
                         inesting--;
                     if ((inesting == 0) && ciprefix(".model", modcard->line) && strstr(modcard->line, stoks[5]) && strstr(modcard->line, "vswitch")) {
                         char *delstr;
-                        char *modpar[6];
+                        char *modpar[4];
                         delstr = str = inp_remove_ws(modcard->line);
                         str = nexttok(str); /* throw away '.model' */
                         str = nexttok(str); /* throw away 'modname' */
@@ -6562,21 +6573,27 @@ pspice_compat(struct card *oldcard)
                             controlled_exit(1);
                         }
 #endif
-                        str = nexttok(str); /* throw away 'mod type' */
-                        for (i = 0; i < 6; i++)
-                            modpar[i] = gettok(&str);
+                        /* we have to find 4 parameters, identified by '=', separated by spaces */
+                        char *equalptr[4];
+                        equalptr[0] = strstr(str, "=");
+                        for (i = 1; i < 4; i++)
+                            equalptr[i] = strstr(equalptr[i - 1] + 1, "=");
+                        for (i = 0; i < 4; i++) {
+                            equalptr[i] = skip_back_ws(equalptr[i], str);
+                            equalptr[i] = skip_back_non_ws(equalptr[i], str);
+                        }
+                        for (i = 0; i < 3; i++)
+                            modpar[i] = copy_substring(equalptr[i], equalptr[i + 1] - 1);
+                        modpar[3] = copy_substring(equalptr[3], strrchr(equalptr[3], ')'));
+
                         tfree(delstr);
                         /* .model is now in modcard, tokens in modpar, call to s in card, tokens in stoks */
-                        /* rewrite s line */
-                        tfree(card->line);
-                        card->line = tprintf("a%s %%vd(%s %s) %%gd(%s %s) a%s",
-                            stoks[0], stoks[3], stoks[4], stoks[1], stoks[2], stoks[5]);
                         /* rewrite .model line (already freed in inp_remove_ws())
                         Replace VON by cntl_on, VOFF by cntl_off, RON by r_on, and ROFF by r_off */
                         rep_spar(modpar);
-                        modcard->line = tprintf(".model a%s aswitch %s %s %s %s %s  log=TRUE %s",
-                            stoks[5], modpar[0], modpar[1], modpar[2], modpar[3], modpar[4], modpar[5]);
-                        for (i = 0; i < 6; i++)
+                        modcard->line = tprintf(".model a%s aswitch ( %s %s %s %s  log=TRUE )",
+                            stoks[5], modpar[0], modpar[1], modpar[2], modpar[3]);
+                        for (i = 0; i < 4; i++)
                             tfree(modpar[i]);
                     }
                 }
