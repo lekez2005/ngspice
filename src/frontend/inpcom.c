@@ -6461,6 +6461,21 @@ pspice_compat(struct card *oldcard)
             }
         }
     }
+    /* replace T_ABS by temp and T_REL_GLOBAL by dtemp in .model cards */
+    for (card = newcard; card; card = card->nextcard) {
+        char *cut_line = card->line;
+
+        if (*cut_line == '*')
+            continue;
+
+        if (ciprefix(".model", cut_line)) {
+            char *t_str;
+            if((t_str = strstr(cut_line, "t_abs")) != NULL)
+                memcpy(t_str, " temp", 5);
+            else if((t_str = strstr(cut_line, "t_rel_global")) != NULL)
+                memcpy(t_str, "       dtemp", 12);
+        }
+    }
 /* replace
 * S1 D S DG GND SWN
 * .MODEL SWN VSWITCH ( VON = {0.55} VOFF = {0.49} RON={1/(2*M*(W/LE)*(KPN/2)*10)}  ROFF={1G} )
