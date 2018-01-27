@@ -6464,10 +6464,6 @@ pspice_compat(struct card *oldcard)
     /* replace T_ABS by temp and T_REL_GLOBAL by dtemp in .model cards */
     for (card = newcard; card; card = card->nextcard) {
         char *cut_line = card->line;
-
-        if (*cut_line == '*')
-            continue;
-
         if (ciprefix(".model", cut_line)) {
             char *t_str;
             if((t_str = strstr(cut_line, "t_abs")) != NULL)
