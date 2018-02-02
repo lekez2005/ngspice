@@ -6481,6 +6481,62 @@ pspice_compat(struct card *oldcard)
                 memcpy(t_str, "       dtemp", 12);
         }
     }
+    /* get the area factor for diodes and bipolar devices
+    d1 n1 n2 dmod 7 --> d1 n1 n2 dmod area=7
+    q2 n1 n2 n3 [n4] bjtmod 1.35 --> q2 n1 n2 n3 n4 bjtmod area=1.35
+    */
+    for (card = newcard; card; card = card->nextcard) {
+        static struct card *subcktline = NULL;
+        static int nesting = 0;
+        char *cut_line = card->line;
+        if (*cut_line == '*')
+            continue;
+        // exclude any command inside .control ... .endc
+        if (ciprefix(".control", cut_line)) {
+            skip_control++;
+            continue;
+        }
+        else if (ciprefix(".endc", cut_line)) {
+            skip_control--;
+            continue;
+        }
+        else if (skip_control > 0) {
+            continue;
+        }
+        if (*cut_line == 'q') {
+            cut_line = nexttok(cut_line); //.model
+            cut_line = nexttok(cut_line); // node1
+            cut_line = nexttok(cut_line); // node2
+            cut_line = nexttok(cut_line); // node3
+            if (*cut_line == '[') { //node4
+                *cut_line = ' ';
+                cut_line = strchr(cut_line, ']');
+                *cut_line = ' ';
+                cut_line = skip_ws(cut_line);
+            }
+            cut_line = nexttok(cut_line); // model name
+            if (cut_line && *cut_line) { // size of area
+                char *tmpstr1 = copy_substring(card->line, cut_line);
+                char *tmpstr2 = tprintf("%s area=%s", tmpstr1, cut_line);
+                tfree(tmpstr1);
+                tfree(card->line);
+                card->line = tmpstr2;
+            }
+        }
+        else if (*cut_line == 'd') {
+            cut_line = nexttok(cut_line); //.model
+            cut_line = nexttok(cut_line); // node1
+            cut_line = nexttok(cut_line); // node2
+            cut_line = nexttok(cut_line); // model name
+            if (cut_line && *cut_line) { // size of area
+                char *tmpstr1 = copy_substring(card->line, cut_line);
+                char *tmpstr2 = tprintf("%s area=%s", tmpstr1, cut_line);
+                tfree(tmpstr1);
+                tfree(card->line);
+                card->line = tmpstr2;
+            }
+        }
+    }
 /* replace
 * S1 D S DG GND SWN
 * .MODEL SWN VSWITCH ( VON = {0.55} VOFF = {0.49} RON={1/(2*M*(W/LE)*(KPN/2)*10)}  ROFF={1G} )
