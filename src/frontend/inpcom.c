@@ -6508,13 +6508,21 @@ pspice_compat(struct card *oldcard)
             cut_line = nexttok(cut_line); // node1
             cut_line = nexttok(cut_line); // node2
             cut_line = nexttok(cut_line); // node3
-            if (*cut_line == '[') { //node4
+            if (*cut_line == '[') { // node4 not a number
                 *cut_line = ' ';
                 cut_line = strchr(cut_line, ']');
                 *cut_line = ' ';
                 cut_line = skip_ws(cut_line);
+                cut_line = nexttok(cut_line); // model name
             }
-            cut_line = nexttok(cut_line); // model name
+            else { // if a number, it is node4
+                bool is_node4 = TRUE;
+                while (!isspace(*cut_line))
+                    if (!isdigit(*cut_line++))
+                        is_node4 = FALSE; // already model name
+                if(is_node4)
+                    cut_line = nexttok(cut_line); // model name
+            }
             if (cut_line && *cut_line) { // size of area
                 char *tmpstr1 = copy_substring(card->line, cut_line);
                 char *tmpstr2 = tprintf("%s area=%s", tmpstr1, cut_line);
