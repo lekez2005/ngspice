@@ -6484,6 +6484,7 @@ pspice_compat(struct card *oldcard)
     /* get the area factor for diodes and bipolar devices
     d1 n1 n2 dmod 7 --> d1 n1 n2 dmod area=7
     q2 n1 n2 n3 [n4] bjtmod 1.35 --> q2 n1 n2 n3 n4 bjtmod area=1.35
+    q3 1 2 3 4 bjtmod 1.45 --> q2 1 2 3 4 bjtmod area=1.45
     */
     for (card = newcard; card; card = card->nextcard) {
         static struct card *subcktline = NULL;
