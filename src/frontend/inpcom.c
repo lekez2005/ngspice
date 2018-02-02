@@ -6414,10 +6414,18 @@ pspice_compat(struct card *oldcard)
             nextcard = insert_new_line(nextcard, new_str, 1, 0);
         }
     }
-    /* replace & with && and | with || */
+    /* replace & with && and | with || and *# with * # */
     for (card = newcard; card; card = card->nextcard) {
         char *t;
         char *cut_line = card->line;
+
+        /* we don't have command lines in a PSPICE model */
+        if (ciprefix("*#", cut_line)) {
+            char *tmpstr = tprintf("* #%s", cut_line + 2);
+            tfree(card->line);
+            card->line = tmpstr;
+            continue;
+        }
 
         if (*cut_line == '*')
             continue;
