@@ -6315,6 +6315,83 @@ inp_meas_current(struct card *deck)
     }
 }
 
+/* do the .model replacement required by ako (a kind of)
+* with a recursive function.
+* .model qorig npn (BF=48 IS=2e-7)
+* .model qbip1 ako:qorig NPN (BF=60 IKF=45m)
+* after the replacement we have
+* .model qbip1 NPN (BF=48 IS=2e-7 BF=60 IKF=45m)
+* and we benefit from the fact that if parameters have
+* doubled, the last entry of a parameter (e.g. BF=60)
+* overwrites the previous one (BF=48).
+*/
+static struct card*
+ako_model(struct card *startcard, int nesting)
+{
+    struct card *card, *returncard = NULL;
+    for (card = startcard; card; card = card->nextcard) {
+        char *akostr, *searchname;
+        char *newmname, *newmtype, *origmname, *origmtype;
+        char *cut_line = card->line;
+        if (ciprefix(".subckt", cut_line)) {
+            card = card->nextcard;
+            returncard = ako_model(card, nesting + 1);
+        }
+        if (ciprefix(".model", cut_line) &&
+            ((akostr = strstr(cut_line, "ako:")) != NULL) && isspace_c(akostr[-1])) {
+            akostr += 4;
+            searchname = gettok(&akostr);
+            cut_line = nexttok(cut_line);
+            newmname = gettok(&cut_line);
+            newmtype = gettok_noparens(&akostr);
+            /* search for a model in the current level */
+            struct card *nomod;
+            int nesting2 = 0;
+            for (nomod = startcard; nomod; nomod = nomod->nextcard) {
+                char *origmodline = nomod->line;
+                if (ciprefix(".subckt", origmodline))
+                    nesting2++;
+                if (ciprefix(".ends", origmodline))
+                    nesting2--;
+                /* skip any subcircuit */
+                if (nesting2 > 0)
+                    continue;
+                if (ciprefix(".model", origmodline)) {
+                    origmodline = nexttok(origmodline);
+                    origmname = gettok(&origmodline);
+                    origmtype = gettok_noparens(&origmodline);
+                    if (cieq(origmname, searchname)) {
+                        if (!eq(origmtype, newmtype)) {
+                            fprintf(stderr, "Error: Original (%s) and new (%s) type for AKO model disagree\n", origmtype, newmtype);
+                            controlled_exit(1);
+                        }
+                        /* we have got it */
+                        char *newmodcard = tprintf(".model %s %s %s%s", newmname, newmtype, origmodline, akostr);
+                        char *tmpstr = strstr(newmodcard, ")(");
+                        tmpstr[0] = ' ';
+                        tmpstr[1] = ' ';
+                        tfree(card->line);
+                        card->line = newmodcard;
+                        tfree(origmname);
+                        tfree(origmtype);
+                        returncard = NULL;
+                        break;
+                    }
+                    tfree(origmname);
+                    tfree(origmtype);
+                }
+                /* return if we are at end of subcircuit and did not find a model */
+                if (nesting2 == -1) {
+                    returncard = card;
+                    break;
+                }
+            }
+        }
+    }
+    return returncard;
+}
+
+
 /* in       out
    von      cntl_on
    voff     cntl_off
@@ -6554,6 +6631,161 @@ pspice_compat(struct card *oldcard)
             }
         }
     }
+    /* .model replacement in ako (a kond of) model descriptions
+    * using a recursive function */
+    struct card *errcard;
+    if ((errcard = ako_model(newcard, 0)) != NULL) {
+        fprintf(stderr, "Error: no model found for %s\n", errcard->line);
+        controlled_exit(1);
+    }
+#if (0)
+    /* do the .model replacement required by ako (a kind of)
+    * .model qorig npn (BF=48 IS=2e-7)
+    * .model qbip1 ako:qorig NPN (BF=60 IKF=45m)
+    * after the replacement we have
+    * .model qbip1 NPN (BF=48 IS=2e-7 BF=60 IKF=45m)
+    * and we benefit from the fact that if parameters have
+    * doubled, the last entry of a parameter (e.g. BF=60)
+    * overwrites the previous one (BF=48).
+    */
+    for (card = newcard; card; card = card->nextcard) {
+        char *akostr, *searchname;
+        char *newmname, *newmtype, *origmname, *origmtype;
+        static struct card *subcktline = NULL;
+        struct card *origmod = NULL;
+        static int nesting = 0;
+        char *cut_line = card->line;
+        if (ciprefix(".subckt", cut_line)) {
+            subcktline = card;
+            nesting++;
+        }
+        if (ciprefix(".ends", cut_line))
+            nesting--;
+        if (ciprefix(".model", cut_line) &&
+            ((akostr = strstr(cut_line, "ako:")) != NULL) && isspace_c(akostr[-1])) {
+            akostr += 4;
+            searchname = gettok(&akostr);
+            cut_line = nexttok(cut_line);
+            newmname = gettok(&cut_line);
+            newmtype = gettok_noparens(&akostr);
+            /* search for the original model */
+            if (nesting == 0 && subcktline == NULL) {
+                /* search for a model in the top level */
+                struct card *nomod;
+                int nesting2 = 0;
+                for (nomod = newcard; nomod; nomod = nomod->nextcard) {
+                    char *origmodline = nomod->line;
+                    if (ciprefix(".subckt", origmodline))
+                        nesting2++;
+                    if (ciprefix(".ends", origmodline))
+                        nesting2--;
+                    /* skip any subcircuit */
+                    if (nesting2 > 0)
+                        continue;
+                    if (ciprefix(".model", origmodline)) {
+                        origmodline = nexttok(origmodline);
+                        origmname = gettok(&origmodline);
+                        origmtype = gettok_noparens(&origmodline);
+                        if (cieq(origmname, searchname)) {
+                            if (!eq(origmtype, newmtype)) {
+                                fprintf(stderr, "Error: Original (%s) and new (%s) type for AKO model disagree\n", origmtype, newmtype);
+                                controlled_exit(1);
+                            }
+                            /* we have got it */
+                            char *newmodcard = tprintf(".model %s %s %s%s", newmname, newmtype, origmodline, akostr);
+                            char *tmpstr = strstr(newmodcard, ")(");
+                            tmpstr[0] = ' ';
+                            tmpstr[1] = ' ';
+                            tfree(card->line);
+                            card->line = newmodcard;
+                            tfree(origmname);
+                            tfree(origmtype);
+                            goto finished;
+                        }
+                        tfree(origmname);
+                        tfree(origmtype);
+                    }
+                }
+                //                break;
+            }
+            else {
+                /* search for a model in subcircuit or top-level */
+                for (origmod = subcktline; ; origmod = origmod->nextcard) {
+                    char *origmodline = origmod->line;
+                    if (cieq(origmodline, ".ends")) {
+                        /* search for a model in the level above */
+                        struct card *nomod;
+                        int nesting2 = 0;
+                        for (nomod = newcard; nomod; nomod = nomod->nextcard) {
+                            origmodline = nomod->line;
+                            if (ciprefix(".subckt", origmodline))
+                                nesting2++;
+                            if (ciprefix(".ends", origmodline))
+                                nesting2--;
+                            /* FIXME: We currently only aknowledge one level above */
+                            if (nesting2 != nesting - 1)
+                                continue;
+                            if (ciprefix(".model", origmodline)) {
+                                origmodline = nexttok(origmodline);
+                                origmname = gettok(&origmodline);
+                                origmtype = gettok_noparens(&origmodline);
+                                if (cieq(origmname, searchname)) {
+                                    if (!eq(origmtype, newmtype)) {
+                                        fprintf(stderr, "Error: Original (%s) and new (%s) type for AKO model disagree\n", origmtype, newmtype);
+                                        controlled_exit(1);
+                                    }
+                                    /* we have got it */
+                                    char *newmodcard = tprintf(".model %s %s %s%s", newmname, newmtype, origmodline, akostr);
+                                    char *tmpstr = strstr(newmodcard, ")(");
+                                    tmpstr[0] = ' ';
+                                    tmpstr[1] = ' ';
+                                    tfree(card->line);
+                                    card->line = newmodcard;
+                                    tfree(origmname);
+                                    tfree(origmtype);
+                                    goto finished;
+                                }
+                                tfree(origmname);
+                                tfree(origmtype);
+                            }
+                        }
+                        break;
+                    }
+                    if (ciprefix(".model", origmodline)) {
+                        origmodline = nexttok(origmodline);
+                        origmname = gettok(&origmodline);
+                        origmtype = gettok_noparens(&origmodline);
+                        if (cieq(origmname, searchname)) {
+                            if (!eq(origmtype, newmtype)) {
+                                fprintf(stderr, "Error: Original (%s) and new (%s) type for AKO model disagree\n", origmtype, newmtype);
+                                controlled_exit(1);
+                            }
+                            /* we have got it */
+                            char *newmodcard = tprintf(".model %s %s %s%s", newmname, newmtype, origmodline, akostr);
+                            char *tmpstr = strstr(newmodcard, ")(");
+                            tmpstr[0] = ' ';
+                            tmpstr[1] = ' ';
+                            tfree(card->line);
+                            card->line = newmodcard;
+                            tfree(origmname);
+                            tfree(origmtype);
+                            goto finished;
+                        }
+                        tfree(origmname);
+                        tfree(origmtype);
+                    }
+                }
+            }
+            fprintf(stderr, "Error: no model found for %s\n", card->line);
+            controlled_exit(1);
+            /* if o.k. */
+        finished:;
+            tfree(newmname);
+            tfree(newmtype);
+            tfree(searchname);
+        }
+    }
+#endif
 /* replace
 * S1 D S DG GND SWN
 * .MODEL SWN VSWITCH ( VON = {0.55} VOFF = {0.49} RON={1/(2*M*(W/LE)*(KPN/2)*10)}  ROFF={1G} )

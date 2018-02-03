@@ -38,6 +38,15 @@ Items handled:
 * replace | by ||
 * add .functions limit, pwr, pwrs, stp, int
 * enable '-' as valid charecter in subcircuit name
+* area factor for diodes and bipolar devices
+* replace T_ABS by temp and T_REL_GLOBAL by dtemp in .model cards
+* replace '*#' (which has a special meaning in ngspice (see manual
+  chapter 17.5.71) by '* #'
+* .model replacement required by ako (a kind of)
+  .model qorig npn (BF=48 IS=2e-7) and
+  .model qbip1 ako:qorig NPN (BF=60 IKF=45m) to
+  .model qbip1 NPN (BF=48 IS=2e-7 BF=60 IKF=45m)
+
 
 Robert's patch added to enable model parameters becoming default instance
 parameters (is enabled in PSPICE for L and W of MOS transistors)
