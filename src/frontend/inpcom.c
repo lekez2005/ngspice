@@ -6387,6 +6387,11 @@ ako_model(struct card *startcard, int nesting)
                 }
             }
         }
+        /* leave ako_model at end of subcircuit if no ako is found */
+        if (nesting > 0 && ciprefix(".ends", cut_line)) {
+            returncard = NULL;
+            break;
+        }
     }
     return returncard;
 }
