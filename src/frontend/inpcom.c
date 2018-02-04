@@ -6606,15 +6606,15 @@ pspice_compat(struct card *oldcard)
                 cut_line = skip_ws(cut_line);
                 cut_line = nexttok(cut_line); // model name
             }
-            else { // if a number, it is node4
+            else { // if an integer number, it is node4
                 bool is_node4 = TRUE;
-                while (!isspace(*cut_line))
+                while (*cut_line && !isspace(*cut_line))
                     if (!isdigit(*cut_line++))
                         is_node4 = FALSE; // already model name
                 if(is_node4)
                     cut_line = nexttok(cut_line); // model name
             }
-            if (cut_line && *cut_line) { // size of area
+            if (*cut_line && atof(cut_line) > 0.0) { // size of area
                 char *tmpstr1 = copy_substring(card->line, cut_line);
                 char *tmpstr2 = tprintf("%s area=%s", tmpstr1, cut_line);
                 tfree(tmpstr1);
@@ -6627,7 +6627,7 @@ pspice_compat(struct card *oldcard)
             cut_line = nexttok(cut_line); // node1
             cut_line = nexttok(cut_line); // node2
             cut_line = nexttok(cut_line); // model name
-            if (cut_line && *cut_line) { // size of area
+            if (*cut_line && atof(cut_line) > 0.0) { // size of area
                 char *tmpstr1 = copy_substring(card->line, cut_line);
                 char *tmpstr2 = tprintf("%s area=%s", tmpstr1, cut_line);
                 tfree(tmpstr1);
