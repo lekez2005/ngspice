@@ -6178,7 +6178,7 @@ inp_meas_current(struct card *deck)
                         /* token containing name of devices to be measured */
                         t = copy_substring(s, --u);
                         if (ft_ngdebug)
-                            printf("i(%s) found in\n%s\n\n", t, curr_line);
+                            printf("i(%s) found in\n%s\n\n", t, v);
 
                         /* new entry to the end of struct rep */
                         new_rep = TMALLOC(struct replace_currm, 1);
