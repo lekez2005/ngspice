@@ -6381,17 +6381,13 @@ ako_model(struct card *startcard, int nesting)
                     tfree(origmtype);
                 }
                 /* return if we are at end of subcircuit and did not find a model */
-                if (nesting2 == -1) {
-                    returncard = card;
-                    break;
-                }
+                if (nesting2 == -1)
+                    return card;
             }
         }
         /* leave ako_model at end of subcircuit if no ako is found */
-        if (nesting > 0 && ciprefix(".ends", cut_line)) {
-            returncard = NULL;
-            break;
-        }
+        if (nesting > 0 && ciprefix(".ends", cut_line))
+            return NULL;
     }
     return returncard;
 }
