@@ -6480,7 +6480,7 @@ pspice_compat(struct card *oldcard)
     struct card *card, *newcard, *nextcard;
     int skip_control = 0;
 
-    /* .model replacement in ako (a kond of) model descriptions
+    /* .model replacement in ako (a kind of) model descriptions
     * in first .subckt and top level only */
     struct card *errcard;
     if ((errcard = ako_model(oldcard)) != NULL) {
