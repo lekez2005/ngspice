@@ -6357,6 +6357,8 @@ replace_table(struct card *startcard)
         }
     }
 }
+
+/* find the model requested by ako:model and do the replacement */
 static struct card*
 find_model(struct card *startcard, struct card *changecard, char *searchname, char *newmname, char *newmtype, char *endstr)
 {
