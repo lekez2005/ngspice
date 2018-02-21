@@ -6320,7 +6320,7 @@ inp_meas_current(struct card *deck)
 static struct card*
 find_model(struct card *startcard, struct card *changecard, char *searchname, char *newmname, char *newmtype, char *endstr)
 {
-    struct card *nomod, *returncard;
+    struct card *nomod, *returncard = changecard;
     char *origmname, *origmtype;
     char *beginline = startcard->line;
     if (ciprefix(".subckt", beginline))
