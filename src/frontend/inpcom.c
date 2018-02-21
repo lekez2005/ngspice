@@ -6317,6 +6317,46 @@ inp_meas_current(struct card *deck)
     }
 }
 
+/* replace the E source TABLE function by a B source pwl
+   (used by ST OpAmps and comparators).
+   E_RO_3 VB_3 VB_4  VALUE={ TABLE( V(VCCP,VCCN), 2 , 35 , 3.3 , 15 , 5 , 10 )*I(VreadIo)}
+   will become
+   BE_RO_3_1 TABLE_NEW_1 0 v = pwl( V(VCCP,VCCN), 2 , 35 , 3.3 , 15 , 5 , 10 )
+   E_RO_3 VB_3 VB_4  VALUE={ V(TABLE_NEW_1)*I(VreadIo)}
+*/
+static void
+replace_table(struct card *startcard)
+{
+    struct card *card;
+    static int numb = 0;
+    for (card = startcard; card; card = card->nextcard) {
+        char *cut_line = card->line;
+        if (*cut_line == 'e') {
+            char *valp = strstr(cut_line, "value={");
+            if (valp) {
+                char *ftablebeg = strstr(cut_line, "table(");
+                while (ftablebeg) {
+                    /* get the beginning of the line */
+                    char *begline = copy_substring(cut_line, ftablebeg);
+                    /* get the table function */
+                    char *tabfun = gettok_char(&ftablebeg, ')', TRUE, TRUE);
+                    /* the new e line */
+                    char *neweline = tprintf("%s v(table_new_%d)%s", begline, numb, ftablebeg);
+                    char *newbline = tprintf("btable_new_%d table_new_%d 0 v=pwl%s", numb, numb, tabfun+5);
+                    numb++;
+                    tfree(tabfun);
+                    tfree(begline);
+                    tfree(card->line);
+                    card->line = cut_line = neweline;
+                    insert_new_line(card, newbline, 0, 0);
+                    /* read next TABLE function in cut_line */
+                    ftablebeg = strstr(cut_line, "table(");
+                }
+                continue;
+            }
+        }
+    }
+}
 static struct card*
 find_model(struct card *startcard, struct card *changecard, char *searchname, char *newmname, char *newmtype, char *endstr)
 {
@@ -6462,6 +6502,8 @@ rep_spar(char *inpar[4])
 
 
 /**** PSPICE to ngspice **************
+* .model replacement in ako (a kind of) model descriptions
+* replace the E source TABLE function by a B source pwl
 * add predefined params TEMP, VT, GMIN to beginning of deck
 * add predefined params TEMP, VT, GMIN to beginning of each .subckt call
 * add .functions limit, pwr, pwrs, stp, if, int
@@ -6487,6 +6529,8 @@ pspice_compat(struct card *oldcard)
         fprintf(stderr, "Error: no model found for %s\n", errcard->line);
         controlled_exit(1);
     }
+    /* replace TABLE function in E source */
+    replace_table(oldcard);
 
     /* add predefined params TEMP, VT, GMIN to beginning of deck */
     char *new_str = copy(".param temp = 'temper - 273.15'");
