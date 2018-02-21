@@ -6737,8 +6737,11 @@ pspice_compat(struct card *oldcard)
                         }
                         for (i = 0; i < 3; i++)
                             modpar[i] = copy_substring(equalptr[i], equalptr[i + 1] - 1);
-                        modpar[3] = copy_substring(equalptr[3], strrchr(equalptr[3], ')'));
-
+                        if (strrchr(equalptr[3], ')'))
+                            modpar[3] = copy_substring(equalptr[3], strrchr(equalptr[3], ')'));
+                        else
+                            /* vswitch defined without parens */
+                            modpar[3] = copy(equalptr[3]);
                         tfree(delstr);
                         /* .model is now in modcard, tokens in modpar, call to s in card, tokens in stoks */
                         /* rewrite .model line (modcard->li_line already freed in inp_remove_ws())
