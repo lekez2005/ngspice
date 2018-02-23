@@ -381,7 +381,9 @@ static char *two2three_translate(
 #endif
 
         tok = MIFgettok(&card); /* read and discard POLY */
+        tfree(tok);
         tok = MIFgettok(&card); /* read and discard dimension */
+        tfree(tok);
     }
 
 
