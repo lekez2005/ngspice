@@ -34,10 +34,10 @@ SOI3bindCSC (GENmodel *inModel, CKTcircuit *ckt)
     nz = (size_t)ckt->CKTmatrix->CKTklunz ;
 
     /* loop through all the SOI3 models */
-    for ( ; model != NULL ; model = model->SOI3nextModel)
+    for ( ; model != NULL ; model = SOI3nextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->SOI3instances ; here != NULL ; here = here->SOI3nextInstance)
+        for (here = SOI3instances(model); here != NULL ; here = SOI3nextInstance(here))
         {
             CREATE_KLU_BINDING_TABLE(SOI3D_dPtr, SOI3D_dBinding, SOI3dNode, SOI3dNode);
             CREATE_KLU_BINDING_TABLE(SOI3D_dpPtr, SOI3D_dpBinding, SOI3dNode, SOI3dNodePrime);
@@ -129,10 +129,10 @@ SOI3bindCSCComplex (GENmodel *inModel, CKTcircuit *ckt)
     NG_IGNORE (ckt) ;
 
     /* loop through all the SOI3 models */
-    for ( ; model != NULL ; model = model->SOI3nextModel)
+    for ( ; model != NULL ; model = SOI3nextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->SOI3instances ; here != NULL ; here = here->SOI3nextInstance)
+        for (here = SOI3instances(model); here != NULL ; here = SOI3nextInstance(here))
         {
             CONVERT_KLU_BINDING_TABLE_TO_COMPLEX(SOI3D_dPtr, SOI3D_dBinding, SOI3dNode, SOI3dNode);
             CONVERT_KLU_BINDING_TABLE_TO_COMPLEX(SOI3D_dpPtr, SOI3D_dpBinding, SOI3dNode, SOI3dNodePrime);
@@ -224,10 +224,10 @@ SOI3bindCSCComplexToReal (GENmodel *inModel, CKTcircuit *ckt)
     NG_IGNORE (ckt) ;
 
     /* loop through all the SOI3 models */
-    for ( ; model != NULL ; model = model->SOI3nextModel)
+    for ( ; model != NULL ; model = SOI3nextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->SOI3instances ; here != NULL ; here = here->SOI3nextInstance)
+        for (here = SOI3instances(model); here != NULL ; here = SOI3nextInstance(here))
         {
             CONVERT_KLU_BINDING_TABLE_TO_REAL(SOI3D_dPtr, SOI3D_dBinding, SOI3dNode, SOI3dNode);
             CONVERT_KLU_BINDING_TABLE_TO_REAL(SOI3D_dpPtr, SOI3D_dpBinding, SOI3dNode, SOI3dNodePrime);

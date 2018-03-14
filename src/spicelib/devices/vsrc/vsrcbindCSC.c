@@ -34,10 +34,10 @@ VSRCbindCSC (GENmodel *inModel, CKTcircuit *ckt)
     nz = (size_t)ckt->CKTmatrix->CKTklunz ;
 
     /* loop through all the VSRC models */
-    for ( ; model != NULL ; model = model->VSRCnextModel)
+    for ( ; model != NULL ; model = VSRCnextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->VSRCinstances ; here != NULL ; here = here->VSRCnextInstance)
+        for (here = VSRCinstances(model); here != NULL ; here = VSRCnextInstance(here))
         {
             CREATE_KLU_BINDING_TABLE(VSRCposIbrPtr, VSRCposIbrBinding, VSRCposNode, VSRCbranch);
             CREATE_KLU_BINDING_TABLE(VSRCnegIbrPtr, VSRCnegIbrBinding, VSRCnegNode, VSRCbranch);
@@ -69,10 +69,10 @@ VSRCbindCSCComplex (GENmodel *inModel, CKTcircuit *ckt)
     NG_IGNORE (ckt) ;
 
     /* loop through all the VSRC models */
-    for ( ; model != NULL ; model = model->VSRCnextModel)
+    for ( ; model != NULL ; model = VSRCnextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->VSRCinstances ; here != NULL ; here = here->VSRCnextInstance)
+        for (here = VSRCinstances(model); here != NULL ; here = VSRCnextInstance(here))
         {
             CONVERT_KLU_BINDING_TABLE_TO_COMPLEX(VSRCposIbrPtr, VSRCposIbrBinding, VSRCposNode, VSRCbranch);
             CONVERT_KLU_BINDING_TABLE_TO_COMPLEX(VSRCnegIbrPtr, VSRCnegIbrBinding, VSRCnegNode, VSRCbranch);
@@ -101,10 +101,10 @@ VSRCbindCSCComplexToReal (GENmodel *inModel, CKTcircuit *ckt)
     NG_IGNORE (ckt) ;
 
     /* loop through all the VSRC models */
-    for ( ; model != NULL ; model = model->VSRCnextModel)
+    for ( ; model != NULL ; model = VSRCnextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->VSRCinstances ; here != NULL ; here = here->VSRCnextInstance)
+        for (here = VSRCinstances(model); here != NULL ; here = VSRCnextInstance(here))
         {
             CONVERT_KLU_BINDING_TABLE_TO_REAL(VSRCposIbrPtr, VSRCposIbrBinding, VSRCposNode, VSRCbranch);
             CONVERT_KLU_BINDING_TABLE_TO_REAL(VSRCnegIbrPtr, VSRCnegIbrBinding, VSRCnegNode, VSRCbranch);

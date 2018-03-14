@@ -34,10 +34,10 @@ NBJT2bindCSC (GENmodel *inModel, CKTcircuit *ckt)
     nz = (size_t)ckt->CKTmatrix->CKTklunz ;
 
     /* loop through all the NBJT2 models */
-    for ( ; model != NULL ; model = model->NBJT2nextModel)
+    for ( ; model != NULL ; model = NBJT2nextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->NBJT2instances ; here != NULL ; here = here->NBJT2nextInstance)
+        for (here = NBJT2instances(model); here != NULL ; here = NBJT2nextInstance(here))
         {
             CREATE_KLU_BINDING_TABLE(NBJT2colColPtr, NBJT2colColBinding, NBJT2colNode, NBJT2colNode);
             CREATE_KLU_BINDING_TABLE(NBJT2colBasePtr, NBJT2colBaseBinding, NBJT2colNode, NBJT2baseNode);
@@ -63,10 +63,10 @@ NBJT2bindCSCComplex (GENmodel *inModel, CKTcircuit *ckt)
     NG_IGNORE (ckt) ;
 
     /* loop through all the NBJT2 models */
-    for ( ; model != NULL ; model = model->NBJT2nextModel)
+    for ( ; model != NULL ; model = NBJT2nextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->NBJT2instances ; here != NULL ; here = here->NBJT2nextInstance)
+        for (here = NBJT2instances(model); here != NULL ; here = NBJT2nextInstance(here))
         {
             CONVERT_KLU_BINDING_TABLE_TO_COMPLEX(NBJT2colColPtr, NBJT2colColBinding, NBJT2colNode, NBJT2colNode);
             CONVERT_KLU_BINDING_TABLE_TO_COMPLEX(NBJT2colBasePtr, NBJT2colBaseBinding, NBJT2colNode, NBJT2baseNode);
@@ -92,10 +92,10 @@ NBJT2bindCSCComplexToReal (GENmodel *inModel, CKTcircuit *ckt)
     NG_IGNORE (ckt) ;
 
     /* loop through all the NBJT2 models */
-    for ( ; model != NULL ; model = model->NBJT2nextModel)
+    for ( ; model != NULL ; model = NBJT2nextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->NBJT2instances ; here != NULL ; here = here->NBJT2nextInstance)
+        for (here = NBJT2instances(model); here != NULL ; here = NBJT2nextInstance(here))
         {
             CONVERT_KLU_BINDING_TABLE_TO_REAL(NBJT2colColPtr, NBJT2colColBinding, NBJT2colNode, NBJT2colNode);
             CONVERT_KLU_BINDING_TABLE_TO_REAL(NBJT2colBasePtr, NBJT2colBaseBinding, NBJT2colNode, NBJT2baseNode);

@@ -36,10 +36,10 @@ CPLbindCSC (GENmodel *inModel, CKTcircuit *ckt)
     nz = (size_t)ckt->CKTmatrix->CKTklunz ;
 
     /* loop through all the CPL models */
-    for ( ; model != NULL ; model = model->CPLnextModel)
+    for ( ; model != NULL ; model = CPLnextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->CPLinstances ; here != NULL ; here = here->CPLnextInstance)
+        for (here = CPLinstances(model); here != NULL ; here = CPLnextInstance(here))
         {
             for (m = 0; m < here->dimension; m++) {
                 CREATE_KLU_BINDING_TABLE(CPLibr1Ibr1Ptr[m], CPLibr1Ibr1Binding[m], CPLibr1[m], CPLibr1[m]);
@@ -76,10 +76,10 @@ CPLbindCSCComplex (GENmodel *inModel, CKTcircuit *ckt)
     NG_IGNORE (ckt) ;
 
     /* loop through all the CPL models */
-    for ( ; model != NULL ; model = model->CPLnextModel)
+    for ( ; model != NULL ; model = CPLnextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->CPLinstances ; here != NULL ; here = here->CPLnextInstance)
+        for (here = CPLinstances(model); here != NULL ; here = CPLnextInstance(here))
         {
             for (m = 0; m < here->dimension; m++) {
                 CONVERT_KLU_BINDING_TABLE_TO_COMPLEX(CPLibr1Ibr1Ptr[m], CPLibr1Ibr1Binding[m], CPLibr1[m], CPLibr1[m]);
@@ -116,10 +116,10 @@ CPLbindCSCComplexToReal (GENmodel *inModel, CKTcircuit *ckt)
     NG_IGNORE (ckt) ;
 
     /* loop through all the CPL models */
-    for ( ; model != NULL ; model = model->CPLnextModel)
+    for ( ; model != NULL ; model = CPLnextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->CPLinstances ; here != NULL ; here = here->CPLnextInstance)
+        for (here = CPLinstances(model); here != NULL ; here = CPLnextInstance(here))
         {
             for (m = 0; m < here->dimension; m++) {
                 CONVERT_KLU_BINDING_TABLE_TO_REAL(CPLibr1Ibr1Ptr[m], CPLibr1Ibr1Binding[m], CPLibr1[m], CPLibr1[m]);

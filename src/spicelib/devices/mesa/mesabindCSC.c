@@ -34,10 +34,10 @@ MESAbindCSC (GENmodel *inModel, CKTcircuit *ckt)
     nz = (size_t)ckt->CKTmatrix->CKTklunz ;
 
     /* loop through all the MESA models */
-    for ( ; model != NULL ; model = model->MESAnextModel)
+    for ( ; model != NULL ; model = MESAnextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->MESAinstances ; here != NULL ; here = here->MESAnextInstance)
+        for (here = MESAinstances(model); here != NULL ; here = MESAnextInstance(here))
         {
             CREATE_KLU_BINDING_TABLE(MESAdrainDrainPtr, MESAdrainDrainBinding, MESAdrainNode, MESAdrainNode);
             CREATE_KLU_BINDING_TABLE(MESAdrainPrimeDrainPrimePtr, MESAdrainPrimeDrainPrimeBinding, MESAdrainPrimeNode, MESAdrainPrimeNode);
@@ -82,10 +82,10 @@ MESAbindCSCComplex (GENmodel *inModel, CKTcircuit *ckt)
     NG_IGNORE (ckt) ;
 
     /* loop through all the MESA models */
-    for ( ; model != NULL ; model = model->MESAnextModel)
+    for ( ; model != NULL ; model = MESAnextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->MESAinstances ; here != NULL ; here = here->MESAnextInstance)
+        for (here = MESAinstances(model); here != NULL ; here = MESAnextInstance(here))
         {
             CONVERT_KLU_BINDING_TABLE_TO_COMPLEX(MESAdrainDrainPtr, MESAdrainDrainBinding, MESAdrainNode, MESAdrainNode);
             CONVERT_KLU_BINDING_TABLE_TO_COMPLEX(MESAdrainPrimeDrainPrimePtr, MESAdrainPrimeDrainPrimeBinding, MESAdrainPrimeNode, MESAdrainPrimeNode);
@@ -130,10 +130,10 @@ MESAbindCSCComplexToReal (GENmodel *inModel, CKTcircuit *ckt)
     NG_IGNORE (ckt) ;
 
     /* loop through all the MESA models */
-    for ( ; model != NULL ; model = model->MESAnextModel)
+    for ( ; model != NULL ; model = MESAnextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->MESAinstances ; here != NULL ; here = here->MESAnextInstance)
+        for (here = MESAinstances(model); here != NULL ; here = MESAnextInstance(here))
         {
             CONVERT_KLU_BINDING_TABLE_TO_REAL(MESAdrainDrainPtr, MESAdrainDrainBinding, MESAdrainNode, MESAdrainNode);
             CONVERT_KLU_BINDING_TABLE_TO_REAL(MESAdrainPrimeDrainPrimePtr, MESAdrainPrimeDrainPrimeBinding, MESAdrainPrimeNode, MESAdrainPrimeNode);

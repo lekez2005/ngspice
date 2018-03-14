@@ -34,10 +34,10 @@ BJTbindCSC (GENmodel *inModel, CKTcircuit *ckt)
     nz = (size_t)ckt->CKTmatrix->CKTklunz ;
 
     /* loop through all the BJT models */
-    for ( ; model != NULL ; model = model->BJTnextModel)
+    for ( ; model != NULL ; model = BJTnextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->BJTinstances ; here != NULL ; here = here->BJTnextInstance)
+        for (here = BJTinstances(model); here != NULL ; here = BJTnextInstance(here))
         {
             CREATE_KLU_BINDING_TABLE(BJTcolColPrimePtr, BJTcolColPrimeBinding, BJTcolNode, BJTcolPrimeNode);
             CREATE_KLU_BINDING_TABLE(BJTbaseBasePrimePtr, BJTbaseBasePrimeBinding, BJTbaseNode, BJTbasePrimeNode);
@@ -83,10 +83,10 @@ BJTbindCSCComplex (GENmodel *inModel, CKTcircuit *ckt)
     NG_IGNORE (ckt) ;
 
     /* loop through all the BJT models */
-    for ( ; model != NULL ; model = model->BJTnextModel)
+    for ( ; model != NULL ; model = BJTnextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->BJTinstances ; here != NULL ; here = here->BJTnextInstance)
+        for (here = BJTinstances(model); here != NULL ; here = BJTnextInstance(here))
         {
             CONVERT_KLU_BINDING_TABLE_TO_COMPLEX(BJTcolColPrimePtr, BJTcolColPrimeBinding, BJTcolNode, BJTcolPrimeNode);
             CONVERT_KLU_BINDING_TABLE_TO_COMPLEX(BJTbaseBasePrimePtr, BJTbaseBasePrimeBinding, BJTbaseNode, BJTbasePrimeNode);
@@ -132,10 +132,10 @@ BJTbindCSCComplexToReal (GENmodel *inModel, CKTcircuit *ckt)
     NG_IGNORE (ckt) ;
 
     /* loop through all the BJT models */
-    for ( ; model != NULL ; model = model->BJTnextModel)
+    for ( ; model != NULL ; model = BJTnextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->BJTinstances ; here != NULL ; here = here->BJTnextInstance)
+        for (here = BJTinstances(model); here != NULL ; here = BJTnextInstance(here))
         {
             CONVERT_KLU_BINDING_TABLE_TO_REAL(BJTcolColPrimePtr, BJTcolColPrimeBinding, BJTcolNode, BJTcolPrimeNode);
             CONVERT_KLU_BINDING_TABLE_TO_REAL(BJTbaseBasePrimePtr, BJTbaseBasePrimeBinding, BJTbaseNode, BJTbasePrimeNode);

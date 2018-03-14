@@ -34,10 +34,10 @@ MOS9bindCSC (GENmodel *inModel, CKTcircuit *ckt)
     nz = (size_t)ckt->CKTmatrix->CKTklunz ;
 
     /* loop through all the MOS9 models */
-    for ( ; model != NULL ; model = model->MOS9nextModel)
+    for ( ; model != NULL ; model = MOS9nextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->MOS9instances ; here != NULL ; here = here->MOS9nextInstance)
+        for (here = MOS9instances(model); here != NULL ; here = MOS9nextInstance(here))
         {
             CREATE_KLU_BINDING_TABLE(MOS9DdPtr, MOS9DdBinding, MOS9dNode, MOS9dNode);
             CREATE_KLU_BINDING_TABLE(MOS9GgPtr, MOS9GgBinding, MOS9gNode, MOS9gNode);
@@ -76,10 +76,10 @@ MOS9bindCSCComplex (GENmodel *inModel, CKTcircuit *ckt)
     NG_IGNORE (ckt) ;
 
     /* loop through all the MOS9 models */
-    for ( ; model != NULL ; model = model->MOS9nextModel)
+    for ( ; model != NULL ; model = MOS9nextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->MOS9instances ; here != NULL ; here = here->MOS9nextInstance)
+        for (here = MOS9instances(model); here != NULL ; here = MOS9nextInstance(here))
         {
             CONVERT_KLU_BINDING_TABLE_TO_COMPLEX(MOS9DdPtr, MOS9DdBinding, MOS9dNode, MOS9dNode);
             CONVERT_KLU_BINDING_TABLE_TO_COMPLEX(MOS9GgPtr, MOS9GgBinding, MOS9gNode, MOS9gNode);
@@ -118,10 +118,10 @@ MOS9bindCSCComplexToReal (GENmodel *inModel, CKTcircuit *ckt)
     NG_IGNORE (ckt) ;
 
     /* loop through all the MOS9 models */
-    for ( ; model != NULL ; model = model->MOS9nextModel)
+    for ( ; model != NULL ; model = MOS9nextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->MOS9instances ; here != NULL ; here = here->MOS9nextInstance)
+        for (here = MOS9instances(model); here != NULL ; here = MOS9nextInstance(here))
         {
             CONVERT_KLU_BINDING_TABLE_TO_REAL(MOS9DdPtr, MOS9DdBinding, MOS9dNode, MOS9dNode);
             CONVERT_KLU_BINDING_TABLE_TO_REAL(MOS9GgPtr, MOS9GgBinding, MOS9gNode, MOS9gNode);

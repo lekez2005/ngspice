@@ -34,10 +34,10 @@ SWbindCSC (GENmodel *inModel, CKTcircuit *ckt)
     nz = (size_t)ckt->CKTmatrix->CKTklunz ;
 
     /* loop through all the SW models */
-    for ( ; model != NULL ; model = model->SWnextModel)
+    for ( ; model != NULL ; model = SWnextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->SWinstances ; here != NULL ; here = here->SWnextInstance)
+        for (here = SWinstances(model); here != NULL ; here = SWnextInstance(here))
         {
             CREATE_KLU_BINDING_TABLE(SWposPosPtr, SWposPosBinding, SWposNode, SWposNode);
             CREATE_KLU_BINDING_TABLE(SWposNegPtr, SWposNegBinding, SWposNode, SWnegNode);
@@ -58,10 +58,10 @@ SWbindCSCComplex (GENmodel *inModel, CKTcircuit *ckt)
     NG_IGNORE (ckt) ;
 
     /* loop through all the SW models */
-    for ( ; model != NULL ; model = model->SWnextModel)
+    for ( ; model != NULL ; model = SWnextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->SWinstances ; here != NULL ; here = here->SWnextInstance)
+        for (here = SWinstances(model); here != NULL ; here = SWnextInstance(here))
         {
             CONVERT_KLU_BINDING_TABLE_TO_COMPLEX(SWposPosPtr, SWposPosBinding, SWposNode, SWposNode);
             CONVERT_KLU_BINDING_TABLE_TO_COMPLEX(SWposNegPtr, SWposNegBinding, SWposNode, SWnegNode);
@@ -82,10 +82,10 @@ SWbindCSCComplexToReal (GENmodel *inModel, CKTcircuit *ckt)
     NG_IGNORE (ckt) ;
 
     /* loop through all the SW models */
-    for ( ; model != NULL ; model = model->SWnextModel)
+    for ( ; model != NULL ; model = SWnextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->SWinstances ; here != NULL ; here = here->SWnextInstance)
+        for (here = SWinstances(model); here != NULL ; here = SWnextInstance(here))
         {
             CONVERT_KLU_BINDING_TABLE_TO_REAL(SWposPosPtr, SWposPosBinding, SWposNode, SWposNode);
             CONVERT_KLU_BINDING_TABLE_TO_REAL(SWposNegPtr, SWposNegBinding, SWposNode, SWnegNode);

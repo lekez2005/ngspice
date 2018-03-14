@@ -34,10 +34,10 @@ MOS3bindCSC (GENmodel *inModel, CKTcircuit *ckt)
     nz = (size_t)ckt->CKTmatrix->CKTklunz ;
 
     /* loop through all the MOS3 models */
-    for ( ; model != NULL ; model = model->MOS3nextModel)
+    for ( ; model != NULL ; model = MOS3nextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->MOS3instances ; here != NULL ; here = here->MOS3nextInstance)
+        for (here = MOS3instances(model); here != NULL ; here = MOS3nextInstance(here))
         {
             CREATE_KLU_BINDING_TABLE(MOS3DdPtr, MOS3DdBinding, MOS3dNode, MOS3dNode);
             CREATE_KLU_BINDING_TABLE(MOS3GgPtr, MOS3GgBinding, MOS3gNode, MOS3gNode);
@@ -76,10 +76,10 @@ MOS3bindCSCComplex (GENmodel *inModel, CKTcircuit *ckt)
     NG_IGNORE (ckt) ;
 
     /* loop through all the MOS3 models */
-    for ( ; model != NULL ; model = model->MOS3nextModel)
+    for ( ; model != NULL ; model = MOS3nextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->MOS3instances ; here != NULL ; here = here->MOS3nextInstance)
+        for (here = MOS3instances(model); here != NULL ; here = MOS3nextInstance(here))
         {
             CONVERT_KLU_BINDING_TABLE_TO_COMPLEX(MOS3DdPtr, MOS3DdBinding, MOS3dNode, MOS3dNode);
             CONVERT_KLU_BINDING_TABLE_TO_COMPLEX(MOS3GgPtr, MOS3GgBinding, MOS3gNode, MOS3gNode);
@@ -118,10 +118,10 @@ MOS3bindCSCComplexToReal (GENmodel *inModel, CKTcircuit *ckt)
     NG_IGNORE (ckt) ;
 
     /* loop through all the MOS3 models */
-    for ( ; model != NULL ; model = model->MOS3nextModel)
+    for ( ; model != NULL ; model = MOS3nextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->MOS3instances ; here != NULL ; here = here->MOS3nextInstance)
+        for (here = MOS3instances(model); here != NULL ; here = MOS3nextInstance(here))
         {
             CONVERT_KLU_BINDING_TABLE_TO_REAL(MOS3DdPtr, MOS3DdBinding, MOS3dNode, MOS3dNode);
             CONVERT_KLU_BINDING_TABLE_TO_REAL(MOS3GgPtr, MOS3GgBinding, MOS3gNode, MOS3gNode);

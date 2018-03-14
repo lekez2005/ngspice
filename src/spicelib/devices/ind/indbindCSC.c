@@ -34,10 +34,10 @@ INDbindCSC (GENmodel *inModel, CKTcircuit *ckt)
     nz = (size_t)ckt->CKTmatrix->CKTklunz ;
 
     /* loop through all the IND models */
-    for ( ; model != NULL ; model = model->INDnextModel)
+    for ( ; model != NULL ; model = INDnextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->INDinstances ; here != NULL ; here = here->INDnextInstance)
+        for (here = INDinstances(model); here != NULL ; here = INDnextInstance(here))
         {
             CREATE_KLU_BINDING_TABLE(INDposIbrPtr, INDposIbrBinding, INDposNode, INDbrEq);
             CREATE_KLU_BINDING_TABLE(INDnegIbrPtr, INDnegIbrBinding, INDnegNode, INDbrEq);
@@ -59,10 +59,10 @@ INDbindCSCComplex (GENmodel *inModel, CKTcircuit *ckt)
     NG_IGNORE (ckt) ;
 
     /* loop through all the IND models */
-    for ( ; model != NULL ; model = model->INDnextModel)
+    for ( ; model != NULL ; model = INDnextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->INDinstances ; here != NULL ; here = here->INDnextInstance)
+        for (here = INDinstances(model); here != NULL ; here = INDnextInstance(here))
         {
             CONVERT_KLU_BINDING_TABLE_TO_COMPLEX(INDposIbrPtr, INDposIbrBinding, INDposNode, INDbrEq);
             CONVERT_KLU_BINDING_TABLE_TO_COMPLEX(INDnegIbrPtr, INDnegIbrBinding, INDnegNode, INDbrEq);
@@ -84,10 +84,10 @@ INDbindCSCComplexToReal (GENmodel *inModel, CKTcircuit *ckt)
     NG_IGNORE (ckt) ;
 
     /* loop through all the IND models */
-    for ( ; model != NULL ; model = model->INDnextModel)
+    for ( ; model != NULL ; model = INDnextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->INDinstances ; here != NULL ; here = here->INDnextInstance)
+        for (here = INDinstances(model); here != NULL ; here = INDnextInstance(here))
         {
             CONVERT_KLU_BINDING_TABLE_TO_REAL(INDposIbrPtr, INDposIbrBinding, INDposNode, INDbrEq);
             CONVERT_KLU_BINDING_TABLE_TO_REAL(INDnegIbrPtr, INDnegIbrBinding, INDnegNode, INDbrEq);

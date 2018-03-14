@@ -34,10 +34,10 @@ JFETbindCSC (GENmodel *inModel, CKTcircuit *ckt)
     nz = (size_t)ckt->CKTmatrix->CKTklunz ;
 
     /* loop through all the JFET models */
-    for ( ; model != NULL ; model = model->JFETnextModel)
+    for ( ; model != NULL ; model = JFETnextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->JFETinstances ; here != NULL ; here = here->JFETnextInstance)
+        for (here = JFETinstances(model); here != NULL ; here = JFETnextInstance(here))
         {
             CREATE_KLU_BINDING_TABLE(JFETdrainDrainPrimePtr, JFETdrainDrainPrimeBinding, JFETdrainNode, JFETdrainPrimeNode);
             CREATE_KLU_BINDING_TABLE(JFETgateDrainPrimePtr, JFETgateDrainPrimeBinding, JFETgateNode, JFETdrainPrimeNode);
@@ -69,10 +69,10 @@ JFETbindCSCComplex (GENmodel *inModel, CKTcircuit *ckt)
     NG_IGNORE (ckt) ;
 
     /* loop through all the JFET models */
-    for ( ; model != NULL ; model = model->JFETnextModel)
+    for ( ; model != NULL ; model = JFETnextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->JFETinstances ; here != NULL ; here = here->JFETnextInstance)
+        for (here = JFETinstances(model); here != NULL ; here = JFETnextInstance(here))
         {
             CONVERT_KLU_BINDING_TABLE_TO_COMPLEX(JFETdrainDrainPrimePtr, JFETdrainDrainPrimeBinding, JFETdrainNode, JFETdrainPrimeNode);
             CONVERT_KLU_BINDING_TABLE_TO_COMPLEX(JFETgateDrainPrimePtr, JFETgateDrainPrimeBinding, JFETgateNode, JFETdrainPrimeNode);
@@ -104,10 +104,10 @@ JFETbindCSCComplexToReal (GENmodel *inModel, CKTcircuit *ckt)
     NG_IGNORE (ckt) ;
 
     /* loop through all the JFET models */
-    for ( ; model != NULL ; model = model->JFETnextModel)
+    for ( ; model != NULL ; model = JFETnextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->JFETinstances ; here != NULL ; here = here->JFETnextInstance)
+        for (here = JFETinstances(model); here != NULL ; here = JFETnextInstance(here))
         {
             CONVERT_KLU_BINDING_TABLE_TO_REAL(JFETdrainDrainPrimePtr, JFETdrainDrainPrimeBinding, JFETdrainNode, JFETdrainPrimeNode);
             CONVERT_KLU_BINDING_TABLE_TO_REAL(JFETgateDrainPrimePtr, JFETgateDrainPrimeBinding, JFETgateNode, JFETdrainPrimeNode);

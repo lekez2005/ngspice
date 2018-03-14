@@ -34,10 +34,10 @@ VBICbindCSC (GENmodel *inModel, CKTcircuit *ckt)
     nz = (size_t)ckt->CKTmatrix->CKTklunz ;
 
     /* loop through all the VBIC models */
-    for ( ; model != NULL ; model = model->VBICnextModel)
+    for ( ; model != NULL ; model = VBICnextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->VBICinstances ; here != NULL ; here = here->VBICnextInstance)
+        for (here = VBICinstances(model); here != NULL ; here = VBICnextInstance(here))
         {
             CREATE_KLU_BINDING_TABLE(VBICcollCollPtr, VBICcollCollBinding, VBICcollNode, VBICcollNode);
             CREATE_KLU_BINDING_TABLE(VBICbaseBasePtr, VBICbaseBaseBinding, VBICbaseNode, VBICbaseNode);
@@ -105,10 +105,10 @@ VBICbindCSCComplex (GENmodel *inModel, CKTcircuit *ckt)
     NG_IGNORE (ckt) ;
 
     /* loop through all the VBIC models */
-    for ( ; model != NULL ; model = model->VBICnextModel)
+    for ( ; model != NULL ; model = VBICnextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->VBICinstances ; here != NULL ; here = here->VBICnextInstance)
+        for (here = VBICinstances(model); here != NULL ; here = VBICnextInstance(here))
         {
             CONVERT_KLU_BINDING_TABLE_TO_COMPLEX(VBICcollCollPtr, VBICcollCollBinding, VBICcollNode, VBICcollNode);
             CONVERT_KLU_BINDING_TABLE_TO_COMPLEX(VBICbaseBasePtr, VBICbaseBaseBinding, VBICbaseNode, VBICbaseNode);
@@ -176,10 +176,10 @@ VBICbindCSCComplexToReal (GENmodel *inModel, CKTcircuit *ckt)
     NG_IGNORE (ckt) ;
 
     /* loop through all the VBIC models */
-    for ( ; model != NULL ; model = model->VBICnextModel)
+    for ( ; model != NULL ; model = VBICnextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->VBICinstances ; here != NULL ; here = here->VBICnextInstance)
+        for (here = VBICinstances(model); here != NULL ; here = VBICnextInstance(here))
         {
             CONVERT_KLU_BINDING_TABLE_TO_REAL(VBICcollCollPtr, VBICcollCollBinding, VBICcollNode, VBICcollNode);
             CONVERT_KLU_BINDING_TABLE_TO_REAL(VBICbaseBasePtr, VBICbaseBaseBinding, VBICbaseNode, VBICbaseNode);

@@ -34,10 +34,10 @@ HSM2bindCSC (GENmodel *inModel, CKTcircuit *ckt)
     nz = (size_t)ckt->CKTmatrix->CKTklunz ;
 
     /* loop through all the HSM2 models */
-    for ( ; model != NULL ; model = model->HSM2nextModel)
+    for ( ; model != NULL ; model = HSM2nextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->HSM2instances ; here != NULL ; here = here->HSM2nextInstance)
+        for (here = HSM2instances(model); here != NULL ; here = HSM2nextInstance(here))
         {
             CREATE_KLU_BINDING_TABLE(HSM2DPbpPtr, HSM2DPbpBinding, HSM2dNodePrime, HSM2bNodePrime);
             CREATE_KLU_BINDING_TABLE(HSM2SPbpPtr, HSM2SPbpBinding, HSM2sNodePrime, HSM2bNodePrime);
@@ -105,10 +105,10 @@ HSM2bindCSCComplex (GENmodel *inModel, CKTcircuit *ckt)
     NG_IGNORE (ckt) ;
 
     /* loop through all the HSM2 models */
-    for ( ; model != NULL ; model = model->HSM2nextModel)
+    for ( ; model != NULL ; model = HSM2nextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->HSM2instances ; here != NULL ; here = here->HSM2nextInstance)
+        for (here = HSM2instances(model); here != NULL ; here = HSM2nextInstance(here))
         {
             CONVERT_KLU_BINDING_TABLE_TO_COMPLEX(HSM2DPbpPtr, HSM2DPbpBinding, HSM2dNodePrime, HSM2bNodePrime);
             CONVERT_KLU_BINDING_TABLE_TO_COMPLEX(HSM2SPbpPtr, HSM2SPbpBinding, HSM2sNodePrime, HSM2bNodePrime);
@@ -176,10 +176,10 @@ HSM2bindCSCComplexToReal (GENmodel *inModel, CKTcircuit *ckt)
     NG_IGNORE (ckt) ;
 
     /* loop through all the HSM2 models */
-    for ( ; model != NULL ; model = model->HSM2nextModel)
+    for ( ; model != NULL ; model = HSM2nextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->HSM2instances ; here != NULL ; here = here->HSM2nextInstance)
+        for (here = HSM2instances(model); here != NULL ; here = HSM2nextInstance(here))
         {
             CONVERT_KLU_BINDING_TABLE_TO_REAL(HSM2DPbpPtr, HSM2DPbpBinding, HSM2dNodePrime, HSM2bNodePrime);
             CONVERT_KLU_BINDING_TABLE_TO_REAL(HSM2SPbpPtr, HSM2SPbpBinding, HSM2sNodePrime, HSM2bNodePrime);

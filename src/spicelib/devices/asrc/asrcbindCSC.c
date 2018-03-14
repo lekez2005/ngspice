@@ -35,10 +35,10 @@ ASRCbindCSC (GENmodel *inModel, CKTcircuit *ckt)
     nz = (size_t)ckt->CKTmatrix->CKTklunz ;
 
     /* loop through all the ASRC models */
-    for ( ; model != NULL ; model = model->ASRCnextModel)
+    for ( ; model != NULL ; model = ASRCnextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->ASRCinstances ; here != NULL ; here = here->ASRCnextInstance)
+        for (here = ASRCinstances(model); here != NULL ; here = ASRCnextInstance(here))
         {
             j = 0 ;
             if (here->ASRCtype == ASRC_VOLTAGE)
@@ -86,10 +86,10 @@ ASRCbindCSCComplex (GENmodel *inModel, CKTcircuit *ckt)
     NG_IGNORE (ckt) ;
 
     /* loop through all the ASRC models */
-    for ( ; model != NULL ; model = model->ASRCnextModel)
+    for ( ; model != NULL ; model = ASRCnextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->ASRCinstances ; here != NULL ; here = here->ASRCnextInstance)
+        for (here = ASRCinstances(model); here != NULL ; here = ASRCnextInstance(here))
         {
             j = 0 ;
             if (here->ASRCtype == ASRC_VOLTAGE)
@@ -137,10 +137,10 @@ ASRCbindCSCComplexToReal (GENmodel *inModel, CKTcircuit *ckt)
     NG_IGNORE (ckt) ;
 
     /* loop through all the ASRC models */
-    for ( ; model != NULL ; model = model->ASRCnextModel)
+    for ( ; model != NULL ; model = ASRCnextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->ASRCinstances ; here != NULL ; here = here->ASRCnextInstance)
+        for (here = ASRCinstances(model); here != NULL ; here = ASRCnextInstance(here))
         {
             j = 0 ;
             if (here->ASRCtype == ASRC_VOLTAGE)

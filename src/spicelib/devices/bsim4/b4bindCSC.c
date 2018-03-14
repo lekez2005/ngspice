@@ -34,10 +34,10 @@ BSIM4bindCSC (GENmodel *inModel, CKTcircuit *ckt)
     nz = (size_t)ckt->CKTmatrix->CKTklunz ;
 
     /* loop through all the BSIM4 models */
-    for ( ; model != NULL ; model = model->BSIM4nextModel)
+    for ( ; model != NULL ; model = BSIM4nextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->BSIM4instances ; here != NULL ; here = here->BSIM4nextInstance)
+        for (here = BSIM4instances(model); here != NULL ; here = BSIM4nextInstance(here))
         {
             CREATE_KLU_BINDING_TABLE(BSIM4DPbpPtr, BSIM4DPbpBinding, BSIM4dNodePrime, BSIM4bNodePrime);
             CREATE_KLU_BINDING_TABLE(BSIM4GPbpPtr, BSIM4GPbpBinding, BSIM4gNodePrime, BSIM4bNodePrime);
@@ -133,10 +133,10 @@ BSIM4bindCSCComplex (GENmodel *inModel, CKTcircuit *ckt)
     NG_IGNORE (ckt) ;
 
     /* loop through all the BSIM4 models */
-    for ( ; model != NULL ; model = model->BSIM4nextModel)
+    for ( ; model != NULL ; model = BSIM4nextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->BSIM4instances ; here != NULL ; here = here->BSIM4nextInstance)
+        for (here = BSIM4instances(model); here != NULL ; here = BSIM4nextInstance(here))
         {
             CONVERT_KLU_BINDING_TABLE_TO_COMPLEX(BSIM4DPbpPtr, BSIM4DPbpBinding, BSIM4dNodePrime, BSIM4bNodePrime);
             CONVERT_KLU_BINDING_TABLE_TO_COMPLEX(BSIM4GPbpPtr, BSIM4GPbpBinding, BSIM4gNodePrime, BSIM4bNodePrime);
@@ -232,10 +232,10 @@ BSIM4bindCSCComplexToReal (GENmodel *inModel, CKTcircuit *ckt)
     NG_IGNORE (ckt) ;
 
     /* loop through all the BSIM4 models */
-    for ( ; model != NULL ; model = model->BSIM4nextModel)
+    for ( ; model != NULL ; model = BSIM4nextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->BSIM4instances ; here != NULL ; here = here->BSIM4nextInstance)
+        for (here = BSIM4instances(model); here != NULL ; here = BSIM4nextInstance(here))
         {
             CONVERT_KLU_BINDING_TABLE_TO_REAL(BSIM4DPbpPtr, BSIM4DPbpBinding, BSIM4dNodePrime, BSIM4bNodePrime);
             CONVERT_KLU_BINDING_TABLE_TO_REAL(BSIM4GPbpPtr, BSIM4GPbpBinding, BSIM4gNodePrime, BSIM4bNodePrime);

@@ -34,10 +34,10 @@ TRAbindCSC (GENmodel *inModel, CKTcircuit *ckt)
     nz = (size_t)ckt->CKTmatrix->CKTklunz ;
 
     /* loop through all the TRA models */
-    for ( ; model != NULL ; model = model->TRAnextModel)
+    for ( ; model != NULL ; model = TRAnextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->TRAinstances ; here != NULL ; here = here->TRAnextInstance)
+        for (here = TRAinstances(model); here != NULL ; here = TRAnextInstance(here))
         {
             CREATE_KLU_BINDING_TABLE(TRAibr1Ibr2Ptr, TRAibr1Ibr2Binding, TRAbrEq1, TRAbrEq2);
             CREATE_KLU_BINDING_TABLE(TRAibr1Int1Ptr, TRAibr1Int1Binding, TRAbrEq1, TRAintNode1);
@@ -76,10 +76,10 @@ TRAbindCSCComplex (GENmodel *inModel, CKTcircuit *ckt)
     NG_IGNORE (ckt) ;
 
     /* loop through all the TRA models */
-    for ( ; model != NULL ; model = model->TRAnextModel)
+    for ( ; model != NULL ; model = TRAnextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->TRAinstances ; here != NULL ; here = here->TRAnextInstance)
+        for (here = TRAinstances(model); here != NULL ; here = TRAnextInstance(here))
         {
             CONVERT_KLU_BINDING_TABLE_TO_COMPLEX(TRAibr1Ibr2Ptr, TRAibr1Ibr2Binding, TRAbrEq1, TRAbrEq2);
             CONVERT_KLU_BINDING_TABLE_TO_COMPLEX(TRAibr1Int1Ptr, TRAibr1Int1Binding, TRAbrEq1, TRAintNode1);
@@ -118,10 +118,10 @@ TRAbindCSCComplexToReal (GENmodel *inModel, CKTcircuit *ckt)
     NG_IGNORE (ckt) ;
 
     /* loop through all the TRA models */
-    for ( ; model != NULL ; model = model->TRAnextModel)
+    for ( ; model != NULL ; model = TRAnextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->TRAinstances ; here != NULL ; here = here->TRAnextInstance)
+        for (here = TRAinstances(model); here != NULL ; here = TRAnextInstance(here))
         {
             CONVERT_KLU_BINDING_TABLE_TO_REAL(TRAibr1Ibr2Ptr, TRAibr1Ibr2Binding, TRAbrEq1, TRAbrEq2);
             CONVERT_KLU_BINDING_TABLE_TO_REAL(TRAibr1Int1Ptr, TRAibr1Int1Binding, TRAbrEq1, TRAintNode1);

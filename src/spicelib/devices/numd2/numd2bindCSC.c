@@ -34,10 +34,10 @@ NUMD2bindCSC (GENmodel *inModel, CKTcircuit *ckt)
     nz = (size_t)ckt->CKTmatrix->CKTklunz ;
 
     /* loop through all the NUMD2 models */
-    for ( ; model != NULL ; model = model->NUMD2nextModel)
+    for ( ; model != NULL ; model = NUMD2nextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->NUMD2instances ; here != NULL ; here = here->NUMD2nextInstance)
+        for (here = NUMD2instances(model); here != NULL ; here = NUMD2nextInstance(here))
         {
             CREATE_KLU_BINDING_TABLE(NUMD2posPosPtr, NUMD2posPosBinding, NUMD2posNode, NUMD2posNode);
             CREATE_KLU_BINDING_TABLE(NUMD2negNegPtr, NUMD2negNegBinding, NUMD2negNode, NUMD2negNode);
@@ -58,10 +58,10 @@ NUMD2bindCSCComplex (GENmodel *inModel, CKTcircuit *ckt)
     NG_IGNORE (ckt) ;
 
     /* loop through all the NUMD2 models */
-    for ( ; model != NULL ; model = model->NUMD2nextModel)
+    for ( ; model != NULL ; model = NUMD2nextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->NUMD2instances ; here != NULL ; here = here->NUMD2nextInstance)
+        for (here = NUMD2instances(model); here != NULL ; here = NUMD2nextInstance(here))
         {
             CONVERT_KLU_BINDING_TABLE_TO_COMPLEX(NUMD2posPosPtr, NUMD2posPosBinding, NUMD2posNode, NUMD2posNode);
             CONVERT_KLU_BINDING_TABLE_TO_COMPLEX(NUMD2negNegPtr, NUMD2negNegBinding, NUMD2negNode, NUMD2negNode);
@@ -82,10 +82,10 @@ NUMD2bindCSCComplexToReal (GENmodel *inModel, CKTcircuit *ckt)
     NG_IGNORE (ckt) ;
 
     /* loop through all the NUMD2 models */
-    for ( ; model != NULL ; model = model->NUMD2nextModel)
+    for ( ; model != NULL ; model = NUMD2nextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->NUMD2instances ; here != NULL ; here = here->NUMD2nextInstance)
+        for (here = NUMD2instances(model); here != NULL ; here = NUMD2nextInstance(here))
         {
             CONVERT_KLU_BINDING_TABLE_TO_REAL(NUMD2posPosPtr, NUMD2posPosBinding, NUMD2posNode, NUMD2posNode);
             CONVERT_KLU_BINDING_TABLE_TO_REAL(NUMD2negNegPtr, NUMD2negNegBinding, NUMD2negNode, NUMD2negNode);

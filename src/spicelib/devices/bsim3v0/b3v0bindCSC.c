@@ -34,10 +34,10 @@ BSIM3v0bindCSC (GENmodel *inModel, CKTcircuit *ckt)
     nz = (size_t)ckt->CKTmatrix->CKTklunz ;
 
     /* loop through all the BSIM3v0 models */
-    for ( ; model != NULL ; model = model->BSIM3v0nextModel)
+    for ( ; model != NULL ; model = BSIM3v0nextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->BSIM3v0instances ; here != NULL ; here = here->BSIM3v0nextInstance)
+        for (here = BSIM3v0instances(model); here != NULL ; here = BSIM3v0nextInstance(here))
         {
             CREATE_KLU_BINDING_TABLE(BSIM3v0DdPtr, BSIM3v0DdBinding, BSIM3v0dNode, BSIM3v0dNode);
             CREATE_KLU_BINDING_TABLE(BSIM3v0GgPtr, BSIM3v0GgBinding, BSIM3v0gNode, BSIM3v0gNode);
@@ -85,10 +85,10 @@ BSIM3v0bindCSCComplex (GENmodel *inModel, CKTcircuit *ckt)
     NG_IGNORE (ckt) ;
 
     /* loop through all the BSIM3v0 models */
-    for ( ; model != NULL ; model = model->BSIM3v0nextModel)
+    for ( ; model != NULL ; model = BSIM3v0nextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->BSIM3v0instances ; here != NULL ; here = here->BSIM3v0nextInstance)
+        for (here = BSIM3v0instances(model); here != NULL ; here = BSIM3v0nextInstance(here))
         {
             CONVERT_KLU_BINDING_TABLE_TO_COMPLEX(BSIM3v0DdPtr, BSIM3v0DdBinding, BSIM3v0dNode, BSIM3v0dNode);
             CONVERT_KLU_BINDING_TABLE_TO_COMPLEX(BSIM3v0GgPtr, BSIM3v0GgBinding, BSIM3v0gNode, BSIM3v0gNode);
@@ -136,10 +136,10 @@ BSIM3v0bindCSCComplexToReal (GENmodel *inModel, CKTcircuit *ckt)
     NG_IGNORE (ckt) ;
 
     /* loop through all the BSIM3v0 models */
-    for ( ; model != NULL ; model = model->BSIM3v0nextModel)
+    for ( ; model != NULL ; model = BSIM3v0nextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->BSIM3v0instances ; here != NULL ; here = here->BSIM3v0nextInstance)
+        for (here = BSIM3v0instances(model); here != NULL ; here = BSIM3v0nextInstance(here))
         {
             CONVERT_KLU_BINDING_TABLE_TO_REAL(BSIM3v0DdPtr, BSIM3v0DdBinding, BSIM3v0dNode, BSIM3v0dNode);
             CONVERT_KLU_BINDING_TABLE_TO_REAL(BSIM3v0GgPtr, BSIM3v0GgBinding, BSIM3v0gNode, BSIM3v0gNode);

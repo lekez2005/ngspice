@@ -34,10 +34,10 @@ MOS6bindCSC (GENmodel *inModel, CKTcircuit *ckt)
     nz = (size_t)ckt->CKTmatrix->CKTklunz ;
 
     /* loop through all the MOS6 models */
-    for ( ; model != NULL ; model = model->MOS6nextModel)
+    for ( ; model != NULL ; model = MOS6nextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->MOS6instances ; here != NULL ; here = here->MOS6nextInstance)
+        for (here = MOS6instances(model); here != NULL ; here = MOS6nextInstance(here))
         {
             CREATE_KLU_BINDING_TABLE(MOS6DdPtr, MOS6DdBinding, MOS6dNode, MOS6dNode);
             CREATE_KLU_BINDING_TABLE(MOS6GgPtr, MOS6GgBinding, MOS6gNode, MOS6gNode);
@@ -76,10 +76,10 @@ MOS6bindCSCComplex (GENmodel *inModel, CKTcircuit *ckt)
     NG_IGNORE (ckt) ;
 
     /* loop through all the MOS6 models */
-    for ( ; model != NULL ; model = model->MOS6nextModel)
+    for ( ; model != NULL ; model = MOS6nextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->MOS6instances ; here != NULL ; here = here->MOS6nextInstance)
+        for (here = MOS6instances(model); here != NULL ; here = MOS6nextInstance(here))
         {
             CONVERT_KLU_BINDING_TABLE_TO_COMPLEX(MOS6DdPtr, MOS6DdBinding, MOS6dNode, MOS6dNode);
             CONVERT_KLU_BINDING_TABLE_TO_COMPLEX(MOS6GgPtr, MOS6GgBinding, MOS6gNode, MOS6gNode);
@@ -118,10 +118,10 @@ MOS6bindCSCComplexToReal (GENmodel *inModel, CKTcircuit *ckt)
     NG_IGNORE (ckt) ;
 
     /* loop through all the MOS6 models */
-    for ( ; model != NULL ; model = model->MOS6nextModel)
+    for ( ; model != NULL ; model = MOS6nextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->MOS6instances ; here != NULL ; here = here->MOS6nextInstance)
+        for (here = MOS6instances(model); here != NULL ; here = MOS6nextInstance(here))
         {
             CONVERT_KLU_BINDING_TABLE_TO_REAL(MOS6DdPtr, MOS6DdBinding, MOS6dNode, MOS6dNode);
             CONVERT_KLU_BINDING_TABLE_TO_REAL(MOS6GgPtr, MOS6GgBinding, MOS6gNode, MOS6gNode);

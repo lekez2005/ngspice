@@ -34,10 +34,10 @@ RESbindCSC (GENmodel *inModel, CKTcircuit *ckt)
     nz = (size_t)ckt->CKTmatrix->CKTklunz ;
 
     /* loop through all the RES models */
-    for ( ; model != NULL ; model = model->RESnextModel)
+    for ( ; model != NULL ; model = RESnextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->RESinstances ; here != NULL ; here = here->RESnextInstance)
+        for (here = RESinstances(model); here != NULL ; here = RESnextInstance(here))
         {
             CREATE_KLU_BINDING_TABLE(RESposPosPtr, RESposPosBinding, RESposNode, RESposNode);
             CREATE_KLU_BINDING_TABLE(RESnegNegPtr, RESnegNegBinding, RESnegNode, RESnegNode);
@@ -58,10 +58,10 @@ RESbindCSCComplex (GENmodel *inModel, CKTcircuit *ckt)
     NG_IGNORE (ckt) ;
 
     /* loop through all the RES models */
-    for ( ; model != NULL ; model = model->RESnextModel)
+    for ( ; model != NULL ; model = RESnextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->RESinstances ; here != NULL ; here = here->RESnextInstance)
+        for (here = RESinstances(model); here != NULL ; here = RESnextInstance(here))
         {
             CONVERT_KLU_BINDING_TABLE_TO_COMPLEX(RESposPosPtr, RESposPosBinding, RESposNode, RESposNode);
             CONVERT_KLU_BINDING_TABLE_TO_COMPLEX(RESnegNegPtr, RESnegNegBinding, RESnegNode, RESnegNode);
@@ -82,10 +82,10 @@ RESbindCSCComplexToReal (GENmodel *inModel, CKTcircuit *ckt)
     NG_IGNORE (ckt) ;
 
     /* loop through all the RES models */
-    for ( ; model != NULL ; model = model->RESnextModel)
+    for ( ; model != NULL ; model = RESnextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->RESinstances ; here != NULL ; here = here->RESnextInstance)
+        for (here = RESinstances(model); here != NULL ; here = RESnextInstance(here))
         {
             CONVERT_KLU_BINDING_TABLE_TO_REAL(RESposPosPtr, RESposPosBinding, RESposNode, RESposNode);
             CONVERT_KLU_BINDING_TABLE_TO_REAL(RESnegNegPtr, RESnegNegBinding, RESnegNode, RESnegNode);

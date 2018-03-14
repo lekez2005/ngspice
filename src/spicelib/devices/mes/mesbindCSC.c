@@ -34,10 +34,10 @@ MESbindCSC (GENmodel *inModel, CKTcircuit *ckt)
     nz = (size_t)ckt->CKTmatrix->CKTklunz ;
 
     /* loop through all the MES models */
-    for ( ; model != NULL ; model = model->MESnextModel)
+    for ( ; model != NULL ; model = MESnextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->MESinstances ; here != NULL ; here = here->MESnextInstance)
+        for (here = MESinstances(model); here != NULL ; here = MESnextInstance(here))
         {
             CREATE_KLU_BINDING_TABLE(MESdrainDrainPrimePtr, MESdrainDrainPrimeBinding, MESdrainNode, MESdrainPrimeNode);
             CREATE_KLU_BINDING_TABLE(MESgateDrainPrimePtr, MESgateDrainPrimeBinding, MESgateNode, MESdrainPrimeNode);
@@ -69,10 +69,10 @@ MESbindCSCComplex (GENmodel *inModel, CKTcircuit *ckt)
     NG_IGNORE (ckt) ;
 
     /* loop through all the MES models */
-    for ( ; model != NULL ; model = model->MESnextModel)
+    for ( ; model != NULL ; model = MESnextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->MESinstances ; here != NULL ; here = here->MESnextInstance)
+        for (here = MESinstances(model); here != NULL ; here = MESnextInstance(here))
         {
             CONVERT_KLU_BINDING_TABLE_TO_COMPLEX(MESdrainDrainPrimePtr, MESdrainDrainPrimeBinding, MESdrainNode, MESdrainPrimeNode);
             CONVERT_KLU_BINDING_TABLE_TO_COMPLEX(MESgateDrainPrimePtr, MESgateDrainPrimeBinding, MESgateNode, MESdrainPrimeNode);
@@ -104,10 +104,10 @@ MESbindCSCComplexToReal (GENmodel *inModel, CKTcircuit *ckt)
     NG_IGNORE (ckt) ;
 
     /* loop through all the MES models */
-    for ( ; model != NULL ; model = model->MESnextModel)
+    for ( ; model != NULL ; model = MESnextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->MESinstances ; here != NULL ; here = here->MESnextInstance)
+        for (here = MESinstances(model); here != NULL ; here = MESnextInstance(here))
         {
             CONVERT_KLU_BINDING_TABLE_TO_REAL(MESdrainDrainPrimePtr, MESdrainDrainPrimeBinding, MESdrainNode, MESdrainPrimeNode);
             CONVERT_KLU_BINDING_TABLE_TO_REAL(MESgateDrainPrimePtr, MESgateDrainPrimeBinding, MESgateNode, MESdrainPrimeNode);

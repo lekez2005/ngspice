@@ -34,10 +34,10 @@ DIObindCSC (GENmodel *inModel, CKTcircuit *ckt)
     nz = (size_t)ckt->CKTmatrix->CKTklunz ;
 
     /* loop through all the DIO models */
-    for ( ; model != NULL ; model = model->DIOnextModel)
+    for ( ; model != NULL ; model = DIOnextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->DIOinstances ; here != NULL ; here = here->DIOnextInstance)
+        for (here = DIOinstances(model); here != NULL ; here = DIOnextInstance(here))
         {
             CREATE_KLU_BINDING_TABLE(DIOposPosPrimePtr, DIOposPosPrimeBinding, DIOposNode, DIOposPrimeNode);
             CREATE_KLU_BINDING_TABLE(DIOnegPosPrimePtr, DIOnegPosPrimeBinding, DIOnegNode, DIOposPrimeNode);
@@ -61,10 +61,10 @@ DIObindCSCComplex (GENmodel *inModel, CKTcircuit *ckt)
     NG_IGNORE (ckt) ;
 
     /* loop through all the DIO models */
-    for ( ; model != NULL ; model = model->DIOnextModel)
+    for ( ; model != NULL ; model = DIOnextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->DIOinstances ; here != NULL ; here = here->DIOnextInstance)
+        for (here = DIOinstances(model); here != NULL ; here = DIOnextInstance(here))
         {
             CONVERT_KLU_BINDING_TABLE_TO_COMPLEX(DIOposPosPrimePtr, DIOposPosPrimeBinding, DIOposNode, DIOposPrimeNode);
             CONVERT_KLU_BINDING_TABLE_TO_COMPLEX(DIOnegPosPrimePtr, DIOnegPosPrimeBinding, DIOnegNode, DIOposPrimeNode);
@@ -88,10 +88,10 @@ DIObindCSCComplexToReal (GENmodel *inModel, CKTcircuit *ckt)
     NG_IGNORE (ckt) ;
 
     /* loop through all the DIO models */
-    for ( ; model != NULL ; model = model->DIOnextModel)
+    for ( ; model != NULL ; model = DIOnextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->DIOinstances ; here != NULL ; here = here->DIOnextInstance)
+        for (here = DIOinstances(model); here != NULL ; here = DIOnextInstance(here))
         {
             CONVERT_KLU_BINDING_TABLE_TO_REAL(DIOposPosPrimePtr, DIOposPosPrimeBinding, DIOposNode, DIOposPrimeNode);
             CONVERT_KLU_BINDING_TABLE_TO_REAL(DIOnegPosPrimePtr, DIOnegPosPrimeBinding, DIOnegNode, DIOposPrimeNode);

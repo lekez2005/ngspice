@@ -34,10 +34,10 @@ TXLbindCSC (GENmodel *inModel, CKTcircuit *ckt)
     nz = (size_t)ckt->CKTmatrix->CKTklunz ;
 
     /* loop through all the TXL models */
-    for ( ; model != NULL ; model = model->TXLnextModel)
+    for ( ; model != NULL ; model = TXLnextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->TXLinstances ; here != NULL ; here = here->TXLnextInstance)
+        for (here = TXLinstances(model); here != NULL ; here = TXLnextInstance(here))
         {
             CREATE_KLU_BINDING_TABLE(TXLposPosPtr, TXLposPosBinding, TXLposNode, TXLposNode);
             CREATE_KLU_BINDING_TABLE(TXLposNegPtr, TXLposNegBinding, TXLposNode, TXLnegNode);
@@ -68,10 +68,10 @@ TXLbindCSCComplex (GENmodel *inModel, CKTcircuit *ckt)
     NG_IGNORE (ckt) ;
 
     /* loop through all the TXL models */
-    for ( ; model != NULL ; model = model->TXLnextModel)
+    for ( ; model != NULL ; model = TXLnextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->TXLinstances ; here != NULL ; here = here->TXLnextInstance)
+        for (here = TXLinstances(model); here != NULL ; here = TXLnextInstance(here))
         {
             CONVERT_KLU_BINDING_TABLE_TO_COMPLEX(TXLposPosPtr, TXLposPosBinding, TXLposNode, TXLposNode);
             CONVERT_KLU_BINDING_TABLE_TO_COMPLEX(TXLposNegPtr, TXLposNegBinding, TXLposNode, TXLnegNode);
@@ -102,10 +102,10 @@ TXLbindCSCComplexToReal (GENmodel *inModel, CKTcircuit *ckt)
     NG_IGNORE (ckt) ;
 
     /* loop through all the TXL models */
-    for ( ; model != NULL ; model = model->TXLnextModel)
+    for ( ; model != NULL ; model = TXLnextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->TXLinstances ; here != NULL ; here = here->TXLnextInstance)
+        for (here = TXLinstances(model); here != NULL ; here = TXLnextInstance(here))
         {
             CONVERT_KLU_BINDING_TABLE_TO_REAL(TXLposPosPtr, TXLposPosBinding, TXLposNode, TXLposNode);
             CONVERT_KLU_BINDING_TABLE_TO_REAL(TXLposNegPtr, TXLposNegBinding, TXLposNode, TXLnegNode);

@@ -34,10 +34,10 @@ B1bindCSC (GENmodel *inModel, CKTcircuit *ckt)
     nz = (size_t)ckt->CKTmatrix->CKTklunz ;
 
     /* loop through all the B1 models */
-    for ( ; model != NULL ; model = model->B1nextModel)
+    for ( ; model != NULL ; model = B1nextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->B1instances ; here != NULL ; here = here->B1nextInstance)
+        for (here = B1instances(model); here != NULL ; here = B1nextInstance(here))
         {
             CREATE_KLU_BINDING_TABLE(B1DdPtr, B1DdBinding, B1dNode, B1dNode);
             CREATE_KLU_BINDING_TABLE(B1GgPtr, B1GgBinding, B1gNode, B1gNode);
@@ -76,10 +76,10 @@ B1bindCSCComplex (GENmodel *inModel, CKTcircuit *ckt)
     NG_IGNORE (ckt) ;
 
     /* loop through all the B1 models */
-    for ( ; model != NULL ; model = model->B1nextModel)
+    for ( ; model != NULL ; model = B1nextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->B1instances ; here != NULL ; here = here->B1nextInstance)
+        for (here = B1instances(model); here != NULL ; here = B1nextInstance(here))
         {
             CONVERT_KLU_BINDING_TABLE_TO_COMPLEX(B1DdPtr, B1DdBinding, B1dNode, B1dNode);
             CONVERT_KLU_BINDING_TABLE_TO_COMPLEX(B1GgPtr, B1GgBinding, B1gNode, B1gNode);
@@ -118,10 +118,10 @@ B1bindCSCComplexToReal (GENmodel *inModel, CKTcircuit *ckt)
     NG_IGNORE (ckt) ;
 
     /* loop through all the B1 models */
-    for ( ; model != NULL ; model = model->B1nextModel)
+    for ( ; model != NULL ; model = B1nextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->B1instances ; here != NULL ; here = here->B1nextInstance)
+        for (here = B1instances(model); here != NULL ; here = B1nextInstance(here))
         {
             CONVERT_KLU_BINDING_TABLE_TO_REAL(B1DdPtr, B1DdBinding, B1dNode, B1dNode);
             CONVERT_KLU_BINDING_TABLE_TO_REAL(B1GgPtr, B1GgBinding, B1gNode, B1gNode);

@@ -34,10 +34,10 @@ CAPbindCSC (GENmodel *inModel, CKTcircuit *ckt)
     nz = (size_t)ckt->CKTmatrix->CKTklunz ;
 
     /* loop through all the CAP models */
-    for ( ; model != NULL ; model = model->CAPnextModel)
+    for ( ; model != NULL ; model = CAPnextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->CAPinstances ; here != NULL ; here = here->CAPnextInstance)
+        for (here = CAPinstances(model); here != NULL ; here = CAPnextInstance(here))
         {
             CREATE_KLU_BINDING_TABLE(CAPposPosPtr, CAPposPosBinding, CAPposNode, CAPposNode);
             CREATE_KLU_BINDING_TABLE(CAPnegNegPtr, CAPnegNegBinding, CAPnegNode, CAPnegNode);
@@ -58,10 +58,10 @@ CAPbindCSCComplex (GENmodel *inModel, CKTcircuit *ckt)
     NG_IGNORE (ckt) ;
 
     /* loop through all the CAP models */
-    for ( ; model != NULL ; model = model->CAPnextModel)
+    for ( ; model != NULL ; model = CAPnextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->CAPinstances ; here != NULL ; here = here->CAPnextInstance)
+        for (here = CAPinstances(model); here != NULL ; here = CAPnextInstance(here))
         {
             CONVERT_KLU_BINDING_TABLE_TO_COMPLEX(CAPposPosPtr, CAPposPosBinding, CAPposNode, CAPposNode);
             CONVERT_KLU_BINDING_TABLE_TO_COMPLEX(CAPnegNegPtr, CAPnegNegBinding, CAPnegNode, CAPnegNode);
@@ -82,10 +82,10 @@ CAPbindCSCComplexToReal (GENmodel *inModel, CKTcircuit *ckt)
     NG_IGNORE (ckt) ;
 
     /* loop through all the CAP models */
-    for ( ; model != NULL ; model = model->CAPnextModel)
+    for ( ; model != NULL ; model = CAPnextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->CAPinstances ; here != NULL ; here = here->CAPnextInstance)
+        for (here = CAPinstances(model); here != NULL ; here = CAPnextInstance(here))
         {
             CONVERT_KLU_BINDING_TABLE_TO_REAL(CAPposPosPtr, CAPposPosBinding, CAPposNode, CAPposNode);
             CONVERT_KLU_BINDING_TABLE_TO_REAL(CAPnegNegPtr, CAPnegNegBinding, CAPnegNode, CAPnegNode);

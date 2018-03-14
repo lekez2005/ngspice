@@ -34,10 +34,10 @@ HSMHVbindCSC (GENmodel *inModel, CKTcircuit *ckt)
     nz = (size_t)ckt->CKTmatrix->CKTklunz ;
 
     /* loop through all the HSMHV models */
-    for ( ; model != NULL ; model = model->HSMHVnextModel)
+    for ( ; model != NULL ; model = HSMHVnextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->HSMHVinstances ; here != NULL ; here = here->HSMHVnextInstance)
+        for (here = HSMHVinstances(model); here != NULL ; here = HSMHVnextInstance(here))
         {
             CREATE_KLU_BINDING_TABLE(HSMHVDPbpPtr, HSMHVDPbpBinding, HSMHVdNodePrime, HSMHVbNodePrime);
             CREATE_KLU_BINDING_TABLE(HSMHVSPbpPtr, HSMHVSPbpBinding, HSMHVsNodePrime, HSMHVbNodePrime);
@@ -154,10 +154,10 @@ HSMHVbindCSCComplex (GENmodel *inModel, CKTcircuit *ckt)
     NG_IGNORE (ckt) ;
 
     /* loop through all the HSMHV models */
-    for ( ; model != NULL ; model = model->HSMHVnextModel)
+    for ( ; model != NULL ; model = HSMHVnextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->HSMHVinstances ; here != NULL ; here = here->HSMHVnextInstance)
+        for (here = HSMHVinstances(model); here != NULL ; here = HSMHVnextInstance(here))
         {
             CONVERT_KLU_BINDING_TABLE_TO_COMPLEX(HSMHVDPbpPtr, HSMHVDPbpBinding, HSMHVdNodePrime, HSMHVbNodePrime);
             CONVERT_KLU_BINDING_TABLE_TO_COMPLEX(HSMHVSPbpPtr, HSMHVSPbpBinding, HSMHVsNodePrime, HSMHVbNodePrime);
@@ -274,10 +274,10 @@ HSMHVbindCSCComplexToReal (GENmodel *inModel, CKTcircuit *ckt)
     NG_IGNORE (ckt) ;
 
     /* loop through all the HSMHV models */
-    for ( ; model != NULL ; model = model->HSMHVnextModel)
+    for ( ; model != NULL ; model = HSMHVnextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->HSMHVinstances ; here != NULL ; here = here->HSMHVnextInstance)
+        for (here = HSMHVinstances(model); here != NULL ; here = HSMHVnextInstance(here))
         {
             CONVERT_KLU_BINDING_TABLE_TO_REAL(HSMHVDPbpPtr, HSMHVDPbpBinding, HSMHVdNodePrime, HSMHVbNodePrime);
             CONVERT_KLU_BINDING_TABLE_TO_REAL(HSMHVSPbpPtr, HSMHVSPbpBinding, HSMHVsNodePrime, HSMHVbNodePrime);

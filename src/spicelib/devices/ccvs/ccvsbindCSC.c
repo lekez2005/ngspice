@@ -34,10 +34,10 @@ CCVSbindCSC (GENmodel *inModel, CKTcircuit *ckt)
     nz = (size_t)ckt->CKTmatrix->CKTklunz ;
 
     /* loop through all the CCVS models */
-    for ( ; model != NULL ; model = model->CCVSnextModel)
+    for ( ; model != NULL ; model = CCVSnextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->CCVSinstances ; here != NULL ; here = here->CCVSnextInstance)
+        for (here = CCVSinstances(model); here != NULL ; here = CCVSnextInstance(here))
         {
             CREATE_KLU_BINDING_TABLE(CCVSposIbrPtr, CCVSposIbrBinding, CCVSposNode, CCVSbranch);
             CREATE_KLU_BINDING_TABLE(CCVSnegIbrPtr, CCVSnegIbrBinding, CCVSnegNode, CCVSbranch);
@@ -59,10 +59,10 @@ CCVSbindCSCComplex (GENmodel *inModel, CKTcircuit *ckt)
     NG_IGNORE (ckt) ;
 
     /* loop through all the CCVS models */
-    for ( ; model != NULL ; model = model->CCVSnextModel)
+    for ( ; model != NULL ; model = CCVSnextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->CCVSinstances ; here != NULL ; here = here->CCVSnextInstance)
+        for (here = CCVSinstances(model); here != NULL ; here = CCVSnextInstance(here))
         {
             CONVERT_KLU_BINDING_TABLE_TO_COMPLEX(CCVSposIbrPtr, CCVSposIbrBinding, CCVSposNode, CCVSbranch);
             CONVERT_KLU_BINDING_TABLE_TO_COMPLEX(CCVSnegIbrPtr, CCVSnegIbrBinding, CCVSnegNode, CCVSbranch);
@@ -84,10 +84,10 @@ CCVSbindCSCComplexToReal (GENmodel *inModel, CKTcircuit *ckt)
     NG_IGNORE (ckt) ;
 
     /* loop through all the CCVS models */
-    for ( ; model != NULL ; model = model->CCVSnextModel)
+    for ( ; model != NULL ; model = CCVSnextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->CCVSinstances ; here != NULL ; here = here->CCVSnextInstance)
+        for (here = CCVSinstances(model); here != NULL ; here = CCVSnextInstance(here))
         {
             CONVERT_KLU_BINDING_TABLE_TO_REAL(CCVSposIbrPtr, CCVSposIbrBinding, CCVSposNode, CCVSbranch);
             CONVERT_KLU_BINDING_TABLE_TO_REAL(CCVSnegIbrPtr, CCVSnegIbrBinding, CCVSnegNode, CCVSbranch);

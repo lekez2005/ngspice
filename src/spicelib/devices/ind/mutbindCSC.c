@@ -34,10 +34,10 @@ MUTbindCSC (GENmodel *inModel, CKTcircuit *ckt)
     nz = (size_t)ckt->CKTmatrix->CKTklunz ;
 
     /* loop through all the MUT models */
-    for ( ; model != NULL ; model = model->MUTnextModel)
+    for ( ; model != NULL ; model = MUTnextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->MUTinstances ; here != NULL ; here = here->MUTnextInstance)
+        for (here = MUTinstances(model); here != NULL ; here = MUTnextInstance(here))
         {
             CREATE_KLU_BINDING_TABLE(MUTbr1br2Ptr, MUTbr1br2Binding, MUTind1->INDbrEq, MUTind2->INDbrEq);
             CREATE_KLU_BINDING_TABLE(MUTbr2br1Ptr, MUTbr2br1Binding, MUTind2->INDbrEq, MUTind1->INDbrEq);
@@ -56,10 +56,10 @@ MUTbindCSCComplex (GENmodel *inModel, CKTcircuit *ckt)
     NG_IGNORE (ckt) ;
 
     /* loop through all the MUT models */
-    for ( ; model != NULL ; model = model->MUTnextModel)
+    for ( ; model != NULL ; model = MUTnextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->MUTinstances ; here != NULL ; here = here->MUTnextInstance)
+        for (here = MUTinstances(model); here != NULL ; here = MUTnextInstance(here))
         {
             CONVERT_KLU_BINDING_TABLE_TO_COMPLEX(MUTbr1br2Ptr, MUTbr1br2Binding, MUTind1->INDbrEq, MUTind2->INDbrEq);
             CONVERT_KLU_BINDING_TABLE_TO_COMPLEX(MUTbr2br1Ptr, MUTbr2br1Binding, MUTind2->INDbrEq, MUTind1->INDbrEq);
@@ -78,10 +78,10 @@ MUTbindCSCComplexToReal (GENmodel *inModel, CKTcircuit *ckt)
     NG_IGNORE (ckt) ;
 
     /* loop through all the MUT models */
-    for ( ; model != NULL ; model = model->MUTnextModel)
+    for ( ; model != NULL ; model = MUTnextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->MUTinstances ; here != NULL ; here = here->MUTnextInstance)
+        for (here = MUTinstances(model); here != NULL ; here = MUTnextInstance(here))
         {
             CONVERT_KLU_BINDING_TABLE_TO_REAL(MUTbr1br2Ptr, MUTbr1br2Binding, MUTind1->INDbrEq, MUTind2->INDbrEq);
             CONVERT_KLU_BINDING_TABLE_TO_REAL(MUTbr2br1Ptr, MUTbr2br1Binding, MUTind2->INDbrEq, MUTind1->INDbrEq);

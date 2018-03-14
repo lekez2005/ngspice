@@ -34,10 +34,10 @@ LTRAbindCSC (GENmodel *inModel, CKTcircuit *ckt)
     nz = (size_t)ckt->CKTmatrix->CKTklunz ;
 
     /* loop through all the LTRA models */
-    for ( ; model != NULL ; model = model->LTRAnextModel)
+    for ( ; model != NULL ; model = LTRAnextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->LTRAinstances ; here != NULL ; here = here->LTRAnextInstance)
+        for (here = LTRAinstances(model); here != NULL ; here = LTRAnextInstance(here))
         {
             CREATE_KLU_BINDING_TABLE(LTRAibr1Pos1Ptr, LTRAibr1Pos1Binding, LTRAbrEq1, LTRAposNode1);
             CREATE_KLU_BINDING_TABLE(LTRAibr1Neg1Ptr, LTRAibr1Neg1Binding, LTRAbrEq1, LTRAnegNode1);
@@ -74,10 +74,10 @@ LTRAbindCSCComplex (GENmodel *inModel, CKTcircuit *ckt)
     NG_IGNORE (ckt) ;
 
     /* loop through all the LTRA models */
-    for ( ; model != NULL ; model = model->LTRAnextModel)
+    for ( ; model != NULL ; model = LTRAnextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->LTRAinstances ; here != NULL ; here = here->LTRAnextInstance)
+        for (here = LTRAinstances(model); here != NULL ; here = LTRAnextInstance(here))
         {
             CONVERT_KLU_BINDING_TABLE_TO_COMPLEX(LTRAibr1Pos1Ptr, LTRAibr1Pos1Binding, LTRAbrEq1, LTRAposNode1);
             CONVERT_KLU_BINDING_TABLE_TO_COMPLEX(LTRAibr1Neg1Ptr, LTRAibr1Neg1Binding, LTRAbrEq1, LTRAnegNode1);
@@ -114,10 +114,10 @@ LTRAbindCSCComplexToReal (GENmodel *inModel, CKTcircuit *ckt)
     NG_IGNORE (ckt) ;
 
     /* loop through all the LTRA models */
-    for ( ; model != NULL ; model = model->LTRAnextModel)
+    for ( ; model != NULL ; model = LTRAnextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->LTRAinstances ; here != NULL ; here = here->LTRAnextInstance)
+        for (here = LTRAinstances(model); here != NULL ; here = LTRAnextInstance(here))
         {
             CONVERT_KLU_BINDING_TABLE_TO_REAL(LTRAibr1Pos1Ptr, LTRAibr1Pos1Binding, LTRAbrEq1, LTRAposNode1);
             CONVERT_KLU_BINDING_TABLE_TO_REAL(LTRAibr1Neg1Ptr, LTRAibr1Neg1Binding, LTRAbrEq1, LTRAnegNode1);

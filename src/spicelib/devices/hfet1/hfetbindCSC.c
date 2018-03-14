@@ -34,10 +34,10 @@ HFETAbindCSC (GENmodel *inModel, CKTcircuit *ckt)
     nz = (size_t)ckt->CKTmatrix->CKTklunz ;
 
     /* loop through all the HFETA models */
-    for ( ; model != NULL ; model = model->HFETAnextModel)
+    for ( ; model != NULL ; model = HFETAnextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->HFETAinstances ; here != NULL ; here = here->HFETAnextInstance)
+        for (here = HFETAinstances(model); here != NULL ; here = HFETAnextInstance(here))
         {
             CREATE_KLU_BINDING_TABLE(HFETAdrainDrainPrimePtr, HFETAdrainDrainPrimeBinding, HFETAdrainNode, HFETAdrainPrimeNode);
             CREATE_KLU_BINDING_TABLE(HFETAgatePrimeDrainPrimePtr, HFETAgatePrimeDrainPrimeBinding, HFETAgatePrimeNode, HFETAdrainPrimeNode);
@@ -82,10 +82,10 @@ HFETAbindCSCComplex (GENmodel *inModel, CKTcircuit *ckt)
     NG_IGNORE (ckt) ;
 
     /* loop through all the HFETA models */
-    for ( ; model != NULL ; model = model->HFETAnextModel)
+    for ( ; model != NULL ; model = HFETAnextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->HFETAinstances ; here != NULL ; here = here->HFETAnextInstance)
+        for (here = HFETAinstances(model); here != NULL ; here = HFETAnextInstance(here))
         {
             CONVERT_KLU_BINDING_TABLE_TO_COMPLEX(HFETAdrainDrainPrimePtr, HFETAdrainDrainPrimeBinding, HFETAdrainNode, HFETAdrainPrimeNode);
             CONVERT_KLU_BINDING_TABLE_TO_COMPLEX(HFETAgatePrimeDrainPrimePtr, HFETAgatePrimeDrainPrimeBinding, HFETAgatePrimeNode, HFETAdrainPrimeNode);
@@ -130,10 +130,10 @@ HFETAbindCSCComplexToReal (GENmodel *inModel, CKTcircuit *ckt)
     NG_IGNORE (ckt) ;
 
     /* loop through all the HFETA models */
-    for ( ; model != NULL ; model = model->HFETAnextModel)
+    for ( ; model != NULL ; model = HFETAnextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->HFETAinstances ; here != NULL ; here = here->HFETAnextInstance)
+        for (here = HFETAinstances(model); here != NULL ; here = HFETAnextInstance(here))
         {
             CONVERT_KLU_BINDING_TABLE_TO_REAL(HFETAdrainDrainPrimePtr, HFETAdrainDrainPrimeBinding, HFETAdrainNode, HFETAdrainPrimeNode);
             CONVERT_KLU_BINDING_TABLE_TO_REAL(HFETAgatePrimeDrainPrimePtr, HFETAgatePrimeDrainPrimeBinding, HFETAgatePrimeNode, HFETAdrainPrimeNode);

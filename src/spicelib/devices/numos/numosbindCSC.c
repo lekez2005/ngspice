@@ -34,10 +34,10 @@ NUMOSbindCSC (GENmodel *inModel, CKTcircuit *ckt)
     nz = (size_t)ckt->CKTmatrix->CKTklunz ;
 
     /* loop through all the NUMOS models */
-    for ( ; model != NULL ; model = model->NUMOSnextModel)
+    for ( ; model != NULL ; model = NUMOSnextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->NUMOSinstances ; here != NULL ; here = here->NUMOSnextInstance)
+        for (here = NUMOSinstances(model); here != NULL ; here = NUMOSnextInstance(here))
         {
             CREATE_KLU_BINDING_TABLE(NUMOSdrainDrainPtr, NUMOSdrainDrainBinding, NUMOSdrainNode, NUMOSdrainNode);
             CREATE_KLU_BINDING_TABLE(NUMOSdrainSourcePtr, NUMOSdrainSourceBinding, NUMOSdrainNode, NUMOSsourceNode);
@@ -70,10 +70,10 @@ NUMOSbindCSCComplex (GENmodel *inModel, CKTcircuit *ckt)
     NG_IGNORE (ckt) ;
 
     /* loop through all the NUMOS models */
-    for ( ; model != NULL ; model = model->NUMOSnextModel)
+    for ( ; model != NULL ; model = NUMOSnextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->NUMOSinstances ; here != NULL ; here = here->NUMOSnextInstance)
+        for (here = NUMOSinstances(model); here != NULL ; here = NUMOSnextInstance(here))
         {
             CONVERT_KLU_BINDING_TABLE_TO_COMPLEX(NUMOSdrainDrainPtr, NUMOSdrainDrainBinding, NUMOSdrainNode, NUMOSdrainNode);
             CONVERT_KLU_BINDING_TABLE_TO_COMPLEX(NUMOSdrainSourcePtr, NUMOSdrainSourceBinding, NUMOSdrainNode, NUMOSsourceNode);
@@ -106,10 +106,10 @@ NUMOSbindCSCComplexToReal (GENmodel *inModel, CKTcircuit *ckt)
     NG_IGNORE (ckt) ;
 
     /* loop through all the NUMOS models */
-    for ( ; model != NULL ; model = model->NUMOSnextModel)
+    for ( ; model != NULL ; model = NUMOSnextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->NUMOSinstances ; here != NULL ; here = here->NUMOSnextInstance)
+        for (here = NUMOSinstances(model); here != NULL ; here = NUMOSnextInstance(here))
         {
             CONVERT_KLU_BINDING_TABLE_TO_REAL(NUMOSdrainDrainPtr, NUMOSdrainDrainBinding, NUMOSdrainNode, NUMOSdrainNode);
             CONVERT_KLU_BINDING_TABLE_TO_REAL(NUMOSdrainSourcePtr, NUMOSdrainSourceBinding, NUMOSdrainNode, NUMOSsourceNode);

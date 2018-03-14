@@ -34,10 +34,10 @@ B3SOIFDbindCSC (GENmodel *inModel, CKTcircuit *ckt)
     nz = (size_t)ckt->CKTmatrix->CKTklunz ;
 
     /* loop through all the B3SOIFD models */
-    for ( ; model != NULL ; model = model->B3SOIFDnextModel)
+    for ( ; model != NULL ; model = B3SOIFDnextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->B3SOIFDinstances ; here != NULL ; here = here->B3SOIFDnextInstance)
+        for (here = B3SOIFDinstances(model); here != NULL ; here = B3SOIFDnextInstance(here))
         {
             if ((model->B3SOIFDshMod == 1) && (here->B3SOIFDrth0 != 0.0))
             {
@@ -154,10 +154,10 @@ B3SOIFDbindCSCComplex (GENmodel *inModel, CKTcircuit *ckt)
     NG_IGNORE (ckt) ;
 
     /* loop through all the B3SOIFD models */
-    for ( ; model != NULL ; model = model->B3SOIFDnextModel)
+    for ( ; model != NULL ; model = B3SOIFDnextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->B3SOIFDinstances ; here != NULL ; here = here->B3SOIFDnextInstance)
+        for (here = B3SOIFDinstances(model); here != NULL ; here = B3SOIFDnextInstance(here))
         {
             if ((model->B3SOIFDshMod == 1) && (here->B3SOIFDrth0 != 0.0))
             {
@@ -274,10 +274,10 @@ B3SOIFDbindCSCComplexToReal (GENmodel *inModel, CKTcircuit *ckt)
     NG_IGNORE (ckt) ;
 
     /* loop through all the B3SOIFD models */
-    for ( ; model != NULL ; model = model->B3SOIFDnextModel)
+    for ( ; model != NULL ; model = B3SOIFDnextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->B3SOIFDinstances ; here != NULL ; here = here->B3SOIFDnextInstance)
+        for (here = B3SOIFDinstances(model); here != NULL ; here = B3SOIFDnextInstance(here))
         {
             if ((model->B3SOIFDshMod == 1) && (here->B3SOIFDrth0 != 0.0))
             {

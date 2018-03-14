@@ -34,10 +34,10 @@ B4SOIbindCSC (GENmodel *inModel, CKTcircuit *ckt)
     nz = (size_t)ckt->CKTmatrix->CKTklunz ;
 
     /* loop through all the B4SOI models */
-    for ( ; model != NULL ; model = model->B4SOInextModel)
+    for ( ; model != NULL ; model = B4SOInextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->B4SOIinstances ; here != NULL ; here = here->B4SOInextInstance)
+        for (here = B4SOIinstances(model); here != NULL ; here = B4SOInextInstance(here))
         {
             if ((model->B4SOIshMod == 1) && (here->B4SOIrth0 != 0.0))
             {
@@ -194,10 +194,10 @@ B4SOIbindCSCComplex (GENmodel *inModel, CKTcircuit *ckt)
     NG_IGNORE (ckt) ;
 
     /* loop through all the B4SOI models */
-    for ( ; model != NULL ; model = model->B4SOInextModel)
+    for ( ; model != NULL ; model = B4SOInextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->B4SOIinstances ; here != NULL ; here = here->B4SOInextInstance)
+        for (here = B4SOIinstances(model); here != NULL ; here = B4SOInextInstance(here))
         {
             if ((model->B4SOIshMod == 1) && (here->B4SOIrth0 != 0.0))
             {
@@ -354,10 +354,10 @@ B4SOIbindCSCComplexToReal (GENmodel *inModel, CKTcircuit *ckt)
     NG_IGNORE (ckt) ;
 
     /* loop through all the B4SOI models */
-    for ( ; model != NULL ; model = model->B4SOInextModel)
+    for ( ; model != NULL ; model = B4SOInextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->B4SOIinstances ; here != NULL ; here = here->B4SOInextInstance)
+        for (here = B4SOIinstances(model); here != NULL ; here = B4SOInextInstance(here))
         {
             if ((model->B4SOIshMod == 1) && (here->B4SOIrth0 != 0.0))
             {

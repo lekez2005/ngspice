@@ -34,10 +34,10 @@ BSIM4v7bindCSC (GENmodel *inModel, CKTcircuit *ckt)
     nz = (size_t)ckt->CKTmatrix->CKTklunz ;
 
     /* loop through all the BSIM4v7 models */
-    for ( ; model != NULL ; model = model->BSIM4v7nextModel)
+    for ( ; model != NULL ; model = BSIM4v7nextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->BSIM4v7instances ; here != NULL ; here = here->BSIM4v7nextInstance)
+        for (here = BSIM4v7instances(model); here != NULL ; here = BSIM4v7nextInstance(here))
         {
             CREATE_KLU_BINDING_TABLE(BSIM4v7DPbpPtr, BSIM4v7DPbpBinding, BSIM4v7dNodePrime, BSIM4v7bNodePrime);
             CREATE_KLU_BINDING_TABLE(BSIM4v7GPbpPtr, BSIM4v7GPbpBinding, BSIM4v7gNodePrime, BSIM4v7bNodePrime);
@@ -133,10 +133,10 @@ BSIM4v7bindCSCComplex (GENmodel *inModel, CKTcircuit *ckt)
     NG_IGNORE (ckt) ;
 
     /* loop through all the BSIM4v7 models */
-    for ( ; model != NULL ; model = model->BSIM4v7nextModel)
+    for ( ; model != NULL ; model = BSIM4v7nextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->BSIM4v7instances ; here != NULL ; here = here->BSIM4v7nextInstance)
+        for (here = BSIM4v7instances(model); here != NULL ; here = BSIM4v7nextInstance(here))
         {
             CONVERT_KLU_BINDING_TABLE_TO_COMPLEX(BSIM4v7DPbpPtr, BSIM4v7DPbpBinding, BSIM4v7dNodePrime, BSIM4v7bNodePrime);
             CONVERT_KLU_BINDING_TABLE_TO_COMPLEX(BSIM4v7GPbpPtr, BSIM4v7GPbpBinding, BSIM4v7gNodePrime, BSIM4v7bNodePrime);
@@ -232,10 +232,10 @@ BSIM4v7bindCSCComplexToReal (GENmodel *inModel, CKTcircuit *ckt)
     NG_IGNORE (ckt) ;
 
     /* loop through all the BSIM4v7 models */
-    for ( ; model != NULL ; model = model->BSIM4v7nextModel)
+    for ( ; model != NULL ; model = BSIM4v7nextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->BSIM4v7instances ; here != NULL ; here = here->BSIM4v7nextInstance)
+        for (here = BSIM4v7instances(model); here != NULL ; here = BSIM4v7nextInstance(here))
         {
             CONVERT_KLU_BINDING_TABLE_TO_REAL(BSIM4v7DPbpPtr, BSIM4v7DPbpBinding, BSIM4v7dNodePrime, BSIM4v7bNodePrime);
             CONVERT_KLU_BINDING_TABLE_TO_REAL(BSIM4v7GPbpPtr, BSIM4v7GPbpBinding, BSIM4v7gNodePrime, BSIM4v7bNodePrime);

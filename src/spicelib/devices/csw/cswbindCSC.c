@@ -34,10 +34,10 @@ CSWbindCSC (GENmodel *inModel, CKTcircuit *ckt)
     nz = (size_t)ckt->CKTmatrix->CKTklunz ;
 
     /* loop through all the CSW models */
-    for ( ; model != NULL ; model = model->CSWnextModel)
+    for ( ; model != NULL ; model = CSWnextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->CSWinstances ; here != NULL ; here = here->CSWnextInstance)
+        for (here = CSWinstances(model); here != NULL ; here = CSWnextInstance(here))
         {
             CREATE_KLU_BINDING_TABLE(CSWposPosPtr, CSWposPosBinding, CSWposNode, CSWposNode);
             CREATE_KLU_BINDING_TABLE(CSWposNegPtr, CSWposNegBinding, CSWposNode, CSWnegNode);
@@ -58,10 +58,10 @@ CSWbindCSCComplex (GENmodel *inModel, CKTcircuit *ckt)
     NG_IGNORE (ckt) ;
 
     /* loop through all the CSW models */
-    for ( ; model != NULL ; model = model->CSWnextModel)
+    for ( ; model != NULL ; model = CSWnextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->CSWinstances ; here != NULL ; here = here->CSWnextInstance)
+        for (here = CSWinstances(model); here != NULL ; here = CSWnextInstance(here))
         {
             CONVERT_KLU_BINDING_TABLE_TO_COMPLEX(CSWposPosPtr, CSWposPosBinding, CSWposNode, CSWposNode);
             CONVERT_KLU_BINDING_TABLE_TO_COMPLEX(CSWposNegPtr, CSWposNegBinding, CSWposNode, CSWnegNode);
@@ -82,10 +82,10 @@ CSWbindCSCComplexToReal (GENmodel *inModel, CKTcircuit *ckt)
     NG_IGNORE (ckt) ;
 
     /* loop through all the CSW models */
-    for ( ; model != NULL ; model = model->CSWnextModel)
+    for ( ; model != NULL ; model = CSWnextModel(model))
     {
         /* loop through all the instances of the model */
-        for (here = model->CSWinstances ; here != NULL ; here = here->CSWnextInstance)
+        for (here = CSWinstances(model); here != NULL ; here = CSWnextInstance(here))
         {
             CONVERT_KLU_BINDING_TABLE_TO_REAL(CSWposPosPtr, CSWposPosBinding, CSWposNode, CSWposNode);
             CONVERT_KLU_BINDING_TABLE_TO_REAL(CSWposNegPtr, CSWposNegBinding, CSWposNode, CSWnegNode);
