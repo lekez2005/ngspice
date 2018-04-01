@@ -220,6 +220,7 @@ char *INPdomodel(CKTcircuit *ckt, struct card *image, INPtables * tab)
                 INPmkTemp
                 ("Device type VDMOS not available in this binary\n");
         }
+        INPmakeMod(modname, type, image);
     }
 
     /*  --------  Check if model is a MOSFET --------- */
