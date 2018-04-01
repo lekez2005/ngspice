@@ -149,7 +149,8 @@ IFparm VDMOSmPTable[] = { /* model parameters */
  IOP("nss",   VDMOS_MOD_NSS,   IF_REAL   ,"Surface state density"),
  IOP("tnom",  VDMOS_MOD_TNOM,  IF_REAL   ,"Parameter measurement temperature"),
  IOP("kf",     VDMOS_MOD_KF,    IF_REAL   ,"Flicker noise coefficient"),
- IOP("af",     VDMOS_MOD_AF,    IF_REAL   ,"Flicker noise exponent")
+ IOP("af",     VDMOS_MOD_AF,    IF_REAL   ,"Flicker noise exponent"),
+ IP("vdmos",  VDMOS_MOD_DMOS,    IF_REAL   ,"DMOS transistor")
 };
 
 char *VDMOSnames[] = {
