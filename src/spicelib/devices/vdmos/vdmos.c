@@ -81,37 +81,12 @@ IFparm VDMOSpTable[] = { /* parameters */
  OPU( "cqbd",VDMOS_CQBD,IF_REAL,"Capacitance due to bulk-drain charge storage"),
  OPU( "cqbs",VDMOS_CQBS,IF_REAL,"Capacitance due to bulk-source charge storage"),
 
- OP( "cbd0", VDMOS_CAPZEROBIASBD, IF_REAL, "Zero-Bias B-D junction capacitance"),
- OP( "cbdsw0",        VDMOS_CAPZEROBIASBDSW, IF_REAL,    " "),
- OP( "cbs0", VDMOS_CAPZEROBIASBS, IF_REAL, "Zero-Bias B-S junction capacitance"),
- OP( "cbssw0",        VDMOS_CAPZEROBIASBSSW, IF_REAL,    " "),
-
  OPU( "qgs",         VDMOS_QGS,        IF_REAL,    "Gate-Source charge storage"),
  OPU( "qgd",         VDMOS_QGD,        IF_REAL,    "Gate-Drain charge storage"),
  OPU( "qgb",         VDMOS_QGB,        IF_REAL,    "Gate-Bulk charge storage"),
  OPU( "qbd",         VDMOS_QBD,        IF_REAL,    "Bulk-Drain charge storage"),
  OPU( "qbs",         VDMOS_QBS,        IF_REAL,    "Bulk-Source charge storage"),
  OPU( "p",            VDMOS_POWER,      IF_REAL,    "Instaneous power"),
- OPU( "sens_l_dc",    VDMOS_L_SENS_DC,  IF_REAL,    "dc sensitivity wrt length"),
- OPU( "sens_l_real", VDMOS_L_SENS_REAL,IF_REAL,
-        "real part of ac sensitivity wrt length"),
- OPU( "sens_l_imag",  VDMOS_L_SENS_IMAG,IF_REAL,    
-        "imag part of ac sensitivity wrt length"),
- OPU( "sens_l_mag",   VDMOS_L_SENS_MAG, IF_REAL,    
-        "sensitivity wrt l of ac magnitude"),
- OPU( "sens_l_ph",    VDMOS_L_SENS_PH,  IF_REAL,    
-        "sensitivity wrt l of ac phase"),
- OPU( "sens_l_cplx",  VDMOS_L_SENS_CPLX,IF_COMPLEX, "ac sensitivity wrt length"),
- OPU( "sens_w_dc",    VDMOS_W_SENS_DC,  IF_REAL,    "dc sensitivity wrt width"),
- OPU( "sens_w_real",  VDMOS_W_SENS_REAL,IF_REAL,    
-        "real part of ac sensitivity wrt width"),
- OPU( "sens_w_imag",  VDMOS_W_SENS_IMAG,IF_REAL,    
-        "imag part of ac sensitivity wrt width"),
- OPU( "sens_w_mag",   VDMOS_W_SENS_MAG, IF_REAL,    
-        "sensitivity wrt w of ac magnitude"),
- OPU( "sens_w_ph",    VDMOS_W_SENS_PH,  IF_REAL,    
-        "sensitivity wrt w of ac phase"),
- OPU( "sens_w_cplx",  VDMOS_W_SENS_CPLX,IF_COMPLEX, "ac sensitivity wrt width")
 };
 
 IFparm VDMOSmPTable[] = { /* model parameters */
@@ -122,6 +97,29 @@ IFparm VDMOSmPTable[] = { /* model parameters */
  IOP("lambda",VDMOS_MOD_LAMBDA,IF_REAL   ,"Channel length modulation"),
  IOP("rd",    VDMOS_MOD_RD,    IF_REAL   ,"Drain ohmic resistance"),
  IOP("rs",    VDMOS_MOD_RS,    IF_REAL   ,"Source ohmic resistance"),
+/*
+ IOP("rg",    VDMOS_MOD_RG,    IF_REAL   ,"Gate ohmic resistance"),
+ IOP("mtriode", VDMOS_MOD_MTRIODE,   IF_REAL ,"Conductance multiplier in triode region"),
+ IOP("subthres",VDMOS_MOD_SUBTHRES,  IF_REAL ,"Current(per volt Vds) to switch from square law to exponential subthreshold conduction"),
+ IOP("bv",    VDMOS_MOD_BV,    IF_REAL   ,"Vds breakdown voltage"),
+ IOP("ibv",   VDMOS_MOD_IBV,   IF_REAL   ,"Current at Vds=bv"),
+ IOP("nbv",   VDMOS_MOD_NBV,   IF_REAL   ,"Vds breakdown emission coefficient"),
+ IOP("rds",   VDMOS_MOD_RDS,   IF_REAL   ,"Drain-source shunt resistance"),
+ Cjo Zero-bias body diode junction capacitance
+ Is Body diode saturation current
+ N Bulk diode emission coefficient
+ Vj Body diode junction potential
+ M Body diode grading coefficient
+ Fc Body diode coefficient for forward-bias depletion capacitance formula
+ tt Body diode transit time
+ Eg Body diode activation energy for temperature effect on Is
+ Xti Body diode saturation current temperature exponent
+*/
+ IOPA("cgdmin", VDMOS_MOD_CGDMIN, IF_REAL ,"Minimum non-linear G-D capacitance"),
+ IOPA("cgdmax", VDMOS_MOD_CGDMAX, IF_REAL ,"Maximum non-linear G-D capacitance"),
+ IOPA("a",    VDMOS_MOD_A,     IF_REAL   ,"Non-linear Cgd capacitance parameter"),
+ IOPA("cgs",  VDMOS_MOD_CGS,   IF_REAL   ,"Gate-source capacitance"),
+
  IOP("tnom",  VDMOS_MOD_TNOM,  IF_REAL   ,"Parameter measurement temperature"),
  IOP("kf",    VDMOS_MOD_KF,    IF_REAL   ,"Flicker noise coefficient"),
  IOP("af",    VDMOS_MOD_AF,    IF_REAL   ,"Flicker noise exponent"),
