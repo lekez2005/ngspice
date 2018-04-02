@@ -160,7 +160,8 @@ VDMOSsetup(SMPmatrix *matrix, GENmodel *inModel, CKTcircuit *ckt,
                     }
                 }
 
-            } else {
+            }
+            else {
                 here->VDMOSdNodePrime = here->VDMOSdNode;
             }
 
@@ -185,7 +186,8 @@ VDMOSsetup(SMPmatrix *matrix, GENmodel *inModel, CKTcircuit *ckt,
                     }
 
                 }
-            } else {
+            }
+            else {
                 here->VDMOSsNodePrime = here->VDMOSsNode;
             }
 
