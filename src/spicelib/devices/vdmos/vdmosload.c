@@ -173,7 +173,7 @@ VDMOSload(GENmodel *inModel, CKTcircuit *ckt)
                 }
                 else if (ckt->CKTsenInfo->SENmode == ACSEN) {
                     vgb = model->VDMOStype * (
-                        *(ckt->CKTrhsOp + here->VDMOSgNode) -
+                        *(ckt->CKTrhsOp + here->VDMOSgNodePrime) -
                         *(ckt->CKTrhsOp + here->VDMOSbNode));
                     vbs = *(ckt->CKTstate0 + here->VDMOSvbs);
                     vbd = *(ckt->CKTstate0 + here->VDMOSvbd);
@@ -231,7 +231,7 @@ VDMOSload(GENmodel *inModel, CKTcircuit *ckt)
                         *(ckt->CKTrhsOld + here->VDMOSbNode) -
                         *(ckt->CKTrhsOld + here->VDMOSsNodePrime));
                     vgs = model->VDMOStype * (
-                        *(ckt->CKTrhsOld + here->VDMOSgNode) -
+                        *(ckt->CKTrhsOld + here->VDMOSgNodePrime) -
                         *(ckt->CKTrhsOld + here->VDMOSsNodePrime));
                     vds = model->VDMOStype * (
                         *(ckt->CKTrhsOld + here->VDMOSdNodePrime) -
@@ -924,7 +924,7 @@ VDMOSload(GENmodel *inModel, CKTcircuit *ckt)
                                cdreq = -(model->VDMOStype)*(cdrain - here->VDMOSgds*(-vds) -
                                    here->VDMOSgm*vgd - here->VDMOSgmbs*vbd);
                            }
-                           *(ckt->CKTrhs + here->VDMOSgNode) -=
+                           *(ckt->CKTrhs + here->VDMOSgNodePrime) -=
                                (model->VDMOStype * (ceqgs + ceqgb + ceqgd));
                            *(ckt->CKTrhs + here->VDMOSbNode) -=
                                (ceqbs + ceqbd - model->VDMOStype * ceqgb);
