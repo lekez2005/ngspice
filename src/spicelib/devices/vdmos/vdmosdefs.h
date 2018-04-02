@@ -451,6 +451,7 @@ typedef struct sVDMOSmodel {       /* model structure for a resistor */
 #define VDMOS_MOD_KF 131
 #define VDMOS_MOD_AF 132
 #define VDMOS_MOD_TYPE 133
+#define VDMOS_MOD_DMOS 134
 
 /* device questions */
 #define VDMOS_CGS                201
