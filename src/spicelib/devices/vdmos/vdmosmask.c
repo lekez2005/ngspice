@@ -107,9 +107,9 @@ VDMOSmAsk(CKTcircuit *ckt, GENmodel *inst, int which, IFvalue *value)
             return(OK);
         case VDMOS_MOD_TYPE:
             if (model->VDMOStype > 0)
-                value->sValue = "nmos";
+                value->sValue = "vdmosn";
             else
-                value->sValue = "pmos";
+                value->sValue = "vdmosp";
             return(OK);
         default:
             return(E_BADPARM);
