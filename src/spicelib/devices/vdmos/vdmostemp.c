@@ -293,7 +293,8 @@ VDMOStemp(GENmodel *inModel, CKTcircuit *ckt)
                 if (model->VDMOSdrainResistance != 0) {
                     here->VDMOSdrainConductance = here->VDMOSm /
                         model->VDMOSdrainResistance;
-                } else {
+                }
+                else {
                     here->VDMOSdrainConductance = 0;
                 }
             } else if (model->VDMOSsheetResistanceGiven) {
@@ -330,10 +331,12 @@ VDMOStemp(GENmodel *inModel, CKTcircuit *ckt)
                 if (model->VDMOSgateResistance != 0) {
                     here->VDMOSgateConductance = here->VDMOSm /
                         model->VDMOSgateResistance;
-                } else {
+                }
+                else {
                     here->VDMOSgateConductance = 0;
                 }
-            } else {
+            }
+            else {
                 here->VDMOSgateConductance = 0;
             }
         }
