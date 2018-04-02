@@ -32,7 +32,8 @@ typedef struct sVDMOSinstance {
     const int VDMOSbNode;  /* number of the bulk node of the mosfet */
     int VDMOSdNodePrime; /* number of the internal drain node of the mosfet */
     int VDMOSsNodePrime; /* number of the internal source node of the mosfet */
-    
+    int VDMOSgNodePrime; /* number of the internal gate node of the mosfet */
+
     double VDMOSm;   /* parallel device multiplier */
 
     double VDMOSl;   /* the length of the channel region */
@@ -45,6 +46,7 @@ typedef struct sVDMOSinstance {
     double VDMOSsourcePerimiter;
     double VDMOSsourceConductance;   /*conductance of source(or 0):set in setup*/
     double VDMOSdrainConductance;    /*conductance of drain(or 0):set in setup*/
+    double VDMOSgateConductance;    /*conductance of gate(or 0):set in setup*/
     double VDMOStemp;    /* operating temperature of this instance */
     double VDMOSdtemp;   /* operating temperature of the instance relative to circuit temperature*/
 
@@ -226,6 +228,25 @@ typedef struct sVDMOSinstance {
                                      * (source prime node,bulk node) */
     double *VDMOSSPdpPtr;    /* pointer to sparse matrix element at
                                      * (source prime node,drain prime node) */
+    /* VDMOS */
+    double *VDMOSGPgpPtr;    /* pointer to sparse matrix element at
+                             * (gate prime node, gate prime node) */
+    double *VDMOSGPbPtr;    /* pointer to sparse matrix element at
+                             * (gate prime node, bulk node) */
+    double *VDMOSGPdpPtr;    /* pointer to sparse matrix element at
+                             * (gate prime node, drain prime node) */
+    double *VDMOSGPspPtr;    /* pointer to sparse matrix element at
+                             * (gate prime node, source prime node) */
+    double *VDMOSBgpPtr;    /* pointer to sparse matrix element at
+                             * (bulk node, gate prime node) */
+    double *VDMOSDPgpPtr;    /* pointer to sparse matrix element at
+                             * (drain prime node, gate prime node) */
+    double *VDMOSSPgpPtr;    /* pointer to sparse matrix element at
+                             * (source prime node, gate prime node) */
+    double *VDMOSGgpPtr;    /* pointer to sparse matrix element at
+                             * (gate node, gate prime node) */
+    double *VDMOSGPgPtr;    /* pointer to sparse matrix element at
+                             * (gate prime node, gate node) */
 
     int  VDMOSsenParmNo;   /* parameter # for sensitivity use;
             set equal to 0  if  neither length
@@ -329,6 +350,7 @@ typedef struct sVDMOSmodel {       /* model structure for a resistor */
     double VDMOSjctSatCur;   /* input - use tSatCur */
     double VDMOSdrainResistance;
     double VDMOSsourceResistance;
+    double VDMOSgateResistance;
     double VDMOSsheetResistance;
     double VDMOStransconductance;    /* input - use tTransconductance */
     double VDMOSgateSourceOverlapCapFactor;
@@ -365,6 +387,7 @@ typedef struct sVDMOSmodel {       /* model structure for a resistor */
     unsigned VDMOSjctSatCurGiven :1;
     unsigned VDMOSdrainResistanceGiven   :1;
     unsigned VDMOSsourceResistanceGiven  :1;
+    unsigned VDMOSgateResistanceGiven    :1;
     unsigned VDMOSsheetResistanceGiven   :1;
     unsigned VDMOStransconductanceGiven  :1;
     unsigned VDMOSgateSourceOverlapCapFactorGiven    :1;
@@ -466,6 +489,7 @@ typedef struct sVDMOSmodel {       /* model structure for a resistor */
 #define VDMOS_MOD_CGDMAX 151
 #define VDMOS_MOD_A 152
 #define VDMOS_MOD_CGS 153
+#define VDMOS_MOD_RG 154
 
 /* device questions */
 #define VDMOS_CGS                201
