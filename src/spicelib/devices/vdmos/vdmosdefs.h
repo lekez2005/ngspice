@@ -432,10 +432,6 @@ typedef struct sVDMOSmodel {       /* model structure for a resistor */
 #define VDMOS_GBS                222
 #define VDMOS_CAPBD              223
 #define VDMOS_CAPBS              224
-#define VDMOS_CAPZEROBIASBD      225
-#define VDMOS_CAPZEROBIASBDSW    226
-#define VDMOS_CAPZEROBIASBS      227
-#define VDMOS_CAPZEROBIASBSSW    228
 #define VDMOS_VBD                229
 #define VDMOS_VBS                230
 #define VDMOS_VGS                231
