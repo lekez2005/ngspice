@@ -80,6 +80,8 @@ VDMOSmAsk(CKTcircuit *ckt, GENmodel *inst, int which, IFvalue *value)
             return(OK);
         case VDMOS_MOD_JS:
             value->rValue = model->VDMOSjctSatCurDensity;
+        case VDMOS_MOD_RG:
+            value->rValue = model->VDMOSgateResistance;
             return(OK);
         case VDMOS_MOD_TOX:
             value->rValue = model->VDMOSoxideThickness;
