@@ -2,6 +2,7 @@
 Copyright 1990 Regents of the University of California.  All rights reserved.
 Author: 1985 Thomas L. Quarles
 Modified: 2000 AlansFixes
+VDMOS: 2018 Holger Vogt
 **********/
 
 #include "ngspice/ngspice.h"
@@ -79,9 +80,6 @@ VDMOSload(GENmodel *inModel, CKTcircuit *ckt)
     double tempv;
 #endif /*NOBYPASS*/    
     int error;
- #ifdef CAPBYPASS
-    int senflag;
-#endif /*CAPBYPASS*/           
     int SenCond;
 
     double cgdmin;
@@ -90,14 +88,6 @@ VDMOSload(GENmodel *inModel, CKTcircuit *ckt)
     double cgs;
 
 
-
-#ifdef CAPBYPASS
-    senflag = 0;
-    if(ckt->CKTsenInfo && ckt->CKTsenInfo->SENstatus == PERTURBATION &&
-        (ckt->CKTsenInfo->SENmode & (ACSEN | TRANSEN))) {
-        senflag = 1;
-    }
-#endif /* CAPBYPASS */ 
 
     /*  loop through all the VDMOS device models */
     for( ; model != NULL; model = VDMOSnextModel(model)) {
@@ -567,13 +557,6 @@ next1:      if(vbs <= -3*vt) {
                  *
                  *.. bulk-drain and bulk-source depletion capacitances
                  */
-#ifdef CAPBYPASS
-                if(((ckt->CKTmode & (MODEINITPRED | MODEINITTRAN) ) ||
-                        fabs(delvbs) >= ckt->CKTreltol * MAX(fabs(vbs),
-                        fabs(*(ckt->CKTstate0+here->VDMOSvbs)))+
-                        ckt->CKTvoltTol)|| senflag)
-#endif /*CAPBYPASS*/
-		 
                 {
                     /* can't bypass the diode capacitance calculations */
                     if(here->VDMOSCbs != 0 || here->VDMOSCbssw != 0 ) {
@@ -627,14 +610,7 @@ next1:      if(vbs <= -3*vt) {
                         here->VDMOScapbs=0;
                     }
                 }
-#ifdef CAPBYPASS
-                    if(((ckt->CKTmode & (MODEINITPRED | MODEINITTRAN) ) ||
-                        fabs(delvbd) >= ckt->CKTreltol * MAX(fabs(vbd),
-                        fabs(*(ckt->CKTstate0+here->VDMOSvbd)))+
-                        ckt->CKTvoltTol)|| senflag)
-#endif /*CAPBYPASS*/		    	
-	
-                    /* can't bypass the diode capacitance calculations */
+
                 {
                     if(here->VDMOSCbd != 0 || here->VDMOSCbdsw != 0 ) {
 			if (vbd < here->VDMOStDepCap) {
