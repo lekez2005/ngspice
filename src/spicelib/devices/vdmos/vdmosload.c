@@ -84,6 +84,11 @@ VDMOSload(GENmodel *inModel, CKTcircuit *ckt)
 #endif /*CAPBYPASS*/           
     int SenCond;
 
+    double cgdmin;
+    double cgdmax;
+    double a;
+    double cgs;
+
 
 
 #ifdef CAPBYPASS
@@ -96,6 +101,11 @@ VDMOSload(GENmodel *inModel, CKTcircuit *ckt)
 
     /*  loop through all the VDMOS device models */
     for( ; model != NULL; model = VDMOSnextModel(model)) {
+        /* VDMOS capacitance parameters */
+        cgdmin = model->VDMOScgdmin;
+        cgdmax = model->VDMOScgdmax;
+        a = model->VDMOSa;
+        cgs = model->VDMOScgs;
 
         /* loop through all the instances of the model */
         for (here = VDMOSinstances(model); here != NULL ;
@@ -750,6 +760,7 @@ next1:      if(vbs <= -3*vt) {
                  * you must add in the other half from previous time
                  * and the constant part
                  */
+/*
                 if (here->VDMOSmode > 0){
                     DEVqmeyer (vgs,vgd,vgb,von,vdsat,
 			       (ckt->CKTstate0 + here->VDMOScapgs),
@@ -763,6 +774,19 @@ next1:      if(vbs <= -3*vt) {
 			       (ckt->CKTstate0 + here->VDMOScapgb),
 			       here->VDMOStPhi,OxideCap);
                 }
+*/
+
+                /*
+                *     VDMOS capacitor model
+                */
+                if (ckt->CKTmode & (MODETRAN | MODETRANOP | MODEINITSMSIG)) {
+                    DevCapVDMOS(vgd, cgdmin, cgdmax, a, cgs,
+                        (ckt->CKTstate0 + here->VDMOScapgs),
+                        (ckt->CKTstate0 + here->VDMOScapgd),
+                        (ckt->CKTstate0 + here->VDMOScapgb));
+                }
+
+
                 vgs1 = *(ckt->CKTstate1 + here->VDMOSvgs);
                 vgd1 = vgs1 - *(ckt->CKTstate1 + here->VDMOSvds);
                 vgb1 = vgs1 - *(ckt->CKTstate1 + here->VDMOSvbs);
