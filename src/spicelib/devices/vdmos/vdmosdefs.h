@@ -354,6 +354,10 @@ typedef struct sVDMOSmodel {       /* model structure for a resistor */
     double VDMOSsurfaceMobility; /* input - use tSurfMob */
     double VDMOSfNcoef;
     double VDMOSfNexp;
+    double VDMOScgdmin;
+    double VDMOScgdmax;
+    double VDMOSa;
+    double VDMOScgs;
 
     unsigned VDMOStypeGiven  :1;
     unsigned VDMOSlatDiffGiven   :1;
@@ -386,6 +390,11 @@ typedef struct sVDMOSmodel {       /* model structure for a resistor */
     unsigned VDMOStnomGiven  :1;
     unsigned VDMOSfNcoefGiven  :1;
     unsigned VDMOSfNexpGiven   :1;
+
+    unsigned VDMOScgdminGiven   :1;
+    unsigned VDMOScgdmaxGiven   :1;
+    unsigned VDMOScgsGiven   :1;
+    unsigned VDMOSaGiven   :1;
 
 } VDMOSmodel;
 
@@ -452,6 +461,11 @@ typedef struct sVDMOSmodel {       /* model structure for a resistor */
 #define VDMOS_MOD_AF 132
 #define VDMOS_MOD_TYPE 133
 #define VDMOS_MOD_DMOS 134
+
+#define VDMOS_MOD_CGDMIN 150
+#define VDMOS_MOD_CGDMAX 151
+#define VDMOS_MOD_A 152
+#define VDMOS_MOD_CGS 153
 
 /* device questions */
 #define VDMOS_CGS                201
