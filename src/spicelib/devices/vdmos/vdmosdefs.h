@@ -59,6 +59,7 @@ typedef struct sVDMOSinstance {
     double VDMOSsourcePerimiter;
     double VDMOSsourceConductance;   /*conductance of source(or 0):set in setup*/
     double VDMOSdrainConductance;    /*conductance of drain(or 0):set in setup*/
+    double VDMOSgateConductance;    /*conductance of gate(or 0):set in setup*/
     double VDMOStemp;    /* operating temperature of this instance */
     double VDMOSdtemp;   /* operating temperature of the instance relative to circuit temperature*/
 
@@ -286,6 +287,7 @@ typedef struct sVDMOSmodel {       /* model structure for a resistor */
     double VDMOSjctSatCur;   /* input - use tSatCur */
     double VDMOSdrainResistance;
     double VDMOSsourceResistance;
+    double VDMOSgateResistance;
     double VDMOSsheetResistance;
     double VDMOStransconductance;    /* input - use tTransconductance */
     double VDMOSgateSourceOverlapCapFactor;
@@ -322,6 +324,7 @@ typedef struct sVDMOSmodel {       /* model structure for a resistor */
     unsigned VDMOSjctSatCurGiven :1;
     unsigned VDMOSdrainResistanceGiven   :1;
     unsigned VDMOSsourceResistanceGiven  :1;
+    unsigned VDMOSgateResistanceGiven    :1;
     unsigned VDMOSsheetResistanceGiven   :1;
     unsigned VDMOStransconductanceGiven  :1;
     unsigned VDMOSgateSourceOverlapCapFactorGiven    :1;
@@ -393,6 +396,7 @@ enum {
     VDMOS_MOD_LAMBDA,
     VDMOS_MOD_RD,
     VDMOS_MOD_RS,
+    VDMOS_MOD_RG,
     VDMOS_MOD_CBD,
     VDMOS_MOD_CBS,
     VDMOS_MOD_IS,
