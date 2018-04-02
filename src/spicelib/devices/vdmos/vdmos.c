@@ -100,6 +100,29 @@ IFparm VDMOSmPTable[] = { /* model parameters */
  IOP("lambda",VDMOS_MOD_LAMBDA,IF_REAL   ,"Channel length modulation"),
  IOP("rd",    VDMOS_MOD_RD,    IF_REAL   ,"Drain ohmic resistance"),
  IOP("rs",    VDMOS_MOD_RS,    IF_REAL   ,"Source ohmic resistance"),
+/*
+ IOP("rg",    VDMOS_MOD_RG,    IF_REAL   ,"Gate ohmic resistance"),
+ IOP("mtriode", VDMOS_MOD_MTRIODE,   IF_REAL ,"Conductance multiplier in triode region"),
+ IOP("subthres",VDMOS_MOD_SUBTHRES,  IF_REAL ,"Current(per volt Vds) to switch from square law to exponential subthreshold conduction"),
+ IOP("bv",    VDMOS_MOD_BV,    IF_REAL   ,"Vds breakdown voltage"),
+ IOP("ibv",   VDMOS_MOD_IBV,   IF_REAL   ,"Current at Vds=bv"),
+ IOP("nbv",   VDMOS_MOD_NBV,   IF_REAL   ,"Vds breakdown emission coefficient"),
+ IOP("rds",   VDMOS_MOD_RDS,   IF_REAL   ,"Drain-source shunt resistance"),
+ Cjo Zero-bias body diode junction capacitance
+ Is Body diode saturation current
+ N Bulk diode emission coefficient
+ Vj Body diode junction potential
+ M Body diode grading coefficient
+ Fc Body diode coefficient for forward-bias depletion capacitance formula
+ tt Body diode transit time
+ Eg Body diode activation energy for temperature effect on Is
+ Xti Body diode saturation current temperature exponent
+*/
+ IOPA("cgdmin", VDMOS_MOD_CGDMIN, IF_REAL ,"Minimum non-linear G-D capacitance"),
+ IOPA("cgdmax", VDMOS_MOD_CGDMAX, IF_REAL ,"Maximum non-linear G-D capacitance"),
+ IOPA("a",    VDMOS_MOD_A,     IF_REAL   ,"Non-linear Cgd capacitance parameter"),
+ IOPA("cgs",  VDMOS_MOD_CGS,   IF_REAL   ,"Gate-source capacitance"),
+
  IOP("tnom",  VDMOS_MOD_TNOM,  IF_REAL   ,"Parameter measurement temperature"),
  IOP("kf",    VDMOS_MOD_KF,    IF_REAL   ,"Flicker noise coefficient"),
  IOP("af",    VDMOS_MOD_AF,    IF_REAL   ,"Flicker noise exponent"),

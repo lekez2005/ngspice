@@ -411,6 +411,10 @@ enum {
     VDMOS_MOD_AF,
     VDMOS_MOD_TYPE,
     VDMOS_MOD_DMOS,
+    VDMOS_MOD_CGDMIN,
+    VDMOS_MOD_CGDMAX,
+    VDMOS_MOD_A,
+    VDMOS_MOD_CGS,
 };
 
 /* device questions */
