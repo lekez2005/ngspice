@@ -106,6 +106,10 @@ IFparm VDMOSmPTable[] = { /* model parameters */
  Eg Body diode activation energy for temperature effect on Is
  Xti Body diode saturation current temperature exponent
 */
+ IOPA("cgdmin", VDMOS_MOD_CGDMIN, IF_REAL ,"Minimum non-linear G-D capacitance"),
+ IOPA("cgdmax", VDMOS_MOD_CGDMAX, IF_REAL ,"Maximum non-linear G-D capacitance"),
+ IOPA("a",    VDMOS_MOD_A,     IF_REAL   ,"Non-linear Cgd capacitance parameter"),
+ IOPA("cgs",  VDMOS_MOD_CGS,   IF_REAL   ,"Gate-source capacitance"),
 
  IOP("tnom",  VDMOS_MOD_TNOM,  IF_REAL   ,"Parameter measurement temperature"),
  IOP("kf",    VDMOS_MOD_KF,    IF_REAL   ,"Flicker noise coefficient"),
