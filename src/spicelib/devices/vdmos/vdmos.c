@@ -21,7 +21,7 @@ IFparm VDMOSpTable[] = { /* parameters */
  IOPU("ps",           VDMOS_PS,         IF_REAL   , "Source perimeter"),
  IOPU("nrd",          VDMOS_NRD,        IF_REAL   , "Drain squares"),
  IOPU("nrs",          VDMOS_NRS,        IF_REAL   , "Source squares"),
- IP("off",           VDMOS_OFF,        IF_FLAG   , "Device initially off"),
+ IP("off",            VDMOS_OFF,        IF_FLAG   , "Device initially off"),
  IOPU("icvds",        VDMOS_IC_VDS,     IF_REAL   , "Initial D-S voltage"),
  IOPU("icvgs",        VDMOS_IC_VGS,     IF_REAL   , "Initial G-S voltage"),
  IOPU("icvbs",        VDMOS_IC_VBS,     IF_REAL   , "Initial B-S voltage"),
