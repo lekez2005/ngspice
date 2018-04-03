@@ -128,10 +128,6 @@ IFparm VDMOSmPTable[] = { /* model parameters */
  IP("vdmos",  VDMOS_MOD_DMOS,  IF_REAL   ,"DMOS transistor"),
 
 /* MOS1 */
- IOPR("vt0",  VDMOS_MOD_VTO,   IF_REAL   ,"Threshold voltage"),
- IOP("gamma", VDMOS_MOD_GAMMA, IF_REAL   ,"Bulk threshold parameter"),
- IOPA("cbd",  VDMOS_MOD_CBD,   IF_REAL   ,"B-D junction capacitance"),
- IOPA("cbs",  VDMOS_MOD_CBS,   IF_REAL   ,"B-S junction capacitance"),
  IOP("rsh",   VDMOS_MOD_RSH,   IF_REAL   ,"Sheet resistance"),
  IOPA("cj",   VDMOS_MOD_CJ,    IF_REAL   ,"Bottom junction cap per area"),
  IOP("mj",    VDMOS_MOD_MJ,    IF_REAL   ,"Bottom grading coefficient"),
