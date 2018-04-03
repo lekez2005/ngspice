@@ -437,7 +437,8 @@ VDMOSload(GENmodel *inModel, CKTcircuit *ckt)
              *   here we just evaluate the ideal diode current and the
              *   corresponding derivative (conductance).
              */
-        next1:      if (vbs <= -3 * vt) {
+        next1:
+            if (vbs <= -3 * vt) {
                 here->VDMOSgbs = ckt->CKTgmin;
                 here->VDMOScbs = here->VDMOSgbs*vbs - SourceSatCur;
             }
@@ -738,7 +739,8 @@ VDMOSload(GENmodel *inModel, CKTcircuit *ckt)
 
             /* save things away for next time */
 
-        next2:      *(ckt->CKTstate0 + here->VDMOSvbs) = vbs;
+        next2:
+            *(ckt->CKTstate0 + here->VDMOSvbs) = vbs;
             *(ckt->CKTstate0 + here->VDMOSvbd) = vbd;
             *(ckt->CKTstate0 + here->VDMOSvgs) = vgs;
             *(ckt->CKTstate0 + here->VDMOSvds) = vds;
