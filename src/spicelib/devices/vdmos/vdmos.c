@@ -104,15 +104,17 @@ IFparm VDMOSmPTable[] = { /* model parameters */
  IOP("nbv",   VDMOS_MOD_NBV,   IF_REAL   ,"Vds breakdown emission coefficient"),
  IOP("rds",   VDMOS_MOD_RDS,   IF_REAL   ,"Drain-source shunt resistance"),
  Cjo Zero-bias body diode junction capacitance
- Is Body diode saturation current
  N Bulk diode emission coefficient
- Vj Body diode junction potential
  M Body diode grading coefficient
  Fc Body diode coefficient for forward-bias depletion capacitance formula
  tt Body diode transit time
  Eg Body diode activation energy for temperature effect on Is
  Xti Body diode saturation current temperature exponent
 */
+ IOP("is",    VDMOS_MOD_IS,    IF_REAL   ,"Body diode saturation current"),
+ IOP("vj",    VDMOS_MOD_VJ,    IF_REAL   ,"Body diode junction potential"),
+
+/* capacitance */
  IOPA("cgdmin", VDMOS_MOD_CGDMIN, IF_REAL ,"Minimum non-linear G-D capacitance"),
  IOPA("cgdmax", VDMOS_MOD_CGDMAX, IF_REAL ,"Maximum non-linear G-D capacitance"),
  IOPA("a",    VDMOS_MOD_A,     IF_REAL   ,"Non-linear Cgd capacitance parameter"),
@@ -126,12 +128,6 @@ IFparm VDMOSmPTable[] = { /* model parameters */
  IP("vdmos",  VDMOS_MOD_DMOS,  IF_REAL   ,"DMOS transistor"),
 
 /* MOS1 */
- IOPR("vt0",  VDMOS_MOD_VTO,   IF_REAL   ,"Threshold voltage"),
- IOP("gamma", VDMOS_MOD_GAMMA, IF_REAL   ,"Bulk threshold parameter"),
- IOPA("cbd",  VDMOS_MOD_CBD,   IF_REAL   ,"B-D junction capacitance"),
- IOPA("cbs",  VDMOS_MOD_CBS,   IF_REAL   ,"B-S junction capacitance"),
- IOP("is",    VDMOS_MOD_IS,    IF_REAL   ,"Bulk junction sat. current"),
- IOP("pb",    VDMOS_MOD_PB,    IF_REAL   ,"Bulk junction potential"),
  IOP("rsh",   VDMOS_MOD_RSH,   IF_REAL   ,"Sheet resistance"),
  IOPA("cj",   VDMOS_MOD_CJ,    IF_REAL   ,"Bottom junction cap per area"),
  IOP("mj",    VDMOS_MOD_MJ,    IF_REAL   ,"Bottom grading coefficient"),

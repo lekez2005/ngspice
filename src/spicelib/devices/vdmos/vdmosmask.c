@@ -30,9 +30,6 @@ VDMOSmAsk(CKTcircuit *ckt, GENmodel *inst, int which, IFvalue *value)
         case VDMOS_MOD_KP:
             value->rValue = model->VDMOStransconductance;
             return(OK);
-        case VDMOS_MOD_GAMMA:
-            value->rValue = model->VDMOSgamma;
-            return(OK);
         case VDMOS_MOD_PHI:
             value->rValue = model->VDMOSphi;
             return(OK);
@@ -45,16 +42,10 @@ VDMOSmAsk(CKTcircuit *ckt, GENmodel *inst, int which, IFvalue *value)
         case VDMOS_MOD_RS:
             value->rValue = model->VDMOSsourceResistance;
             return(OK);
-        case VDMOS_MOD_CBD:
-            value->rValue = model->VDMOScapBD;
-            return(OK);
-        case VDMOS_MOD_CBS:
-            value->rValue = model->VDMOScapBS;
-            return(OK);
         case VDMOS_MOD_IS:
             value->rValue = model->VDMOSjctSatCur;
             return(OK);
-        case VDMOS_MOD_PB:
+        case VDMOS_MOD_VJ:
             value->rValue = model->VDMOSbulkJctPotential;
             return(OK);
         case VDMOS_MOD_CJ:
