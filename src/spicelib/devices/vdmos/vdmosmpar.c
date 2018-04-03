@@ -27,10 +27,6 @@ VDMOSmParam(int param, IFvalue *value, GENmodel *inModel)
             model->VDMOStransconductance = value->rValue;
             model->VDMOStransconductanceGiven = TRUE;
             break;
-        case VDMOS_MOD_GAMMA:
-            model->VDMOSgamma = value->rValue;
-            model->VDMOSgammaGiven = TRUE;
-            break;
         case VDMOS_MOD_PHI:
             model->VDMOSphi = value->rValue;
             model->VDMOSphiGiven = TRUE;
@@ -51,19 +47,11 @@ VDMOSmParam(int param, IFvalue *value, GENmodel *inModel)
             model->VDMOSgateResistance = value->rValue;
             model->VDMOSgateResistanceGiven = TRUE;
             break;
-        case VDMOS_MOD_CBD:
-            model->VDMOScapBD = value->rValue;
-            model->VDMOScapBDGiven = TRUE;
-            break;
-        case VDMOS_MOD_CBS:
-            model->VDMOScapBS = value->rValue;
-            model->VDMOScapBSGiven = TRUE;
-            break;
         case VDMOS_MOD_IS:
             model->VDMOSjctSatCur = value->rValue;
             model->VDMOSjctSatCurGiven = TRUE;
             break;
-        case VDMOS_MOD_PB:
+        case VDMOS_MOD_VJ:
             model->VDMOSbulkJctPotential = value->rValue;
             model->VDMOSbulkJctPotentialGiven = TRUE;
             break;
