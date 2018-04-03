@@ -410,9 +410,6 @@ typedef struct sVDMOSmodel {       /* model structure for a resistor */
 #define VDMOS_MOD_CBS 109
 #define VDMOS_MOD_IS 110
 #define VDMOS_MOD_PB 111
-#define VDMOS_MOD_CGSO 112
-#define VDMOS_MOD_CGDO 113
-#define VDMOS_MOD_CGBO 114
 #define VDMOS_MOD_CJ 115
 #define VDMOS_MOD_MJ 116
 #define VDMOS_MOD_CJSW 117
