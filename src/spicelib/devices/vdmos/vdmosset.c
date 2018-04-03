@@ -40,7 +40,7 @@ VDMOSsetup(SMPmatrix *matrix, GENmodel *inModel, CKTcircuit *ckt,
             model->VDMOSjctSatCur = 1e-14;
         }
         if (!model->VDMOStransconductanceGiven) {
-            model->VDMOStransconductance = 2e-5;
+            model->VDMOStransconductance = 1;
         }
         if (!model->VDMOSgateSourceOverlapCapFactorGiven) {
             model->VDMOSgateSourceOverlapCapFactor = 0;
