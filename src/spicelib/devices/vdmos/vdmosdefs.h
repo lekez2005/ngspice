@@ -38,12 +38,6 @@ typedef struct sVDMOSinstance {
 
     double VDMOSl;   /* the length of the channel region */
     double VDMOSw;   /* the width of the channel region */
-    double VDMOSdrainArea;   /* the area of the drain diffusion */
-    double VDMOSsourceArea;  /* the area of the source diffusion */
-    double VDMOSdrainSquares;    /* the length of the drain in squares */
-    double VDMOSsourceSquares;   /* the length of the source in squares */
-    double VDMOSdrainPerimiter;
-    double VDMOSsourcePerimiter;
     double VDMOSsourceConductance;   /*conductance of source(or 0):set in setup*/
     double VDMOSdrainConductance;    /*conductance of drain(or 0):set in setup*/
     double VDMOSgateConductance;    /*conductance of gate(or 0):set in setup*/
@@ -167,12 +161,6 @@ typedef struct sVDMOSinstance {
     unsigned VDMOSmGiven :1;
     unsigned VDMOSlGiven :1;
     unsigned VDMOSwGiven :1;
-    unsigned VDMOSdrainAreaGiven :1;
-    unsigned VDMOSsourceAreaGiven    :1;
-    unsigned VDMOSdrainSquaresGiven  :1;
-    unsigned VDMOSsourceSquaresGiven :1;
-    unsigned VDMOSdrainPerimiterGiven    :1;
-    unsigned VDMOSsourcePerimiterGiven   :1;
     unsigned VDMOSdNodePrimeSet  :1;
     unsigned VDMOSsNodePrimeSet  :1;
     unsigned VDMOSicVBSGiven :1;
@@ -337,7 +325,6 @@ typedef struct sVDMOSmodel {       /* model structure for a resistor */
     unsigned VDMOSdrainResistanceGiven   :1;
     unsigned VDMOSsourceResistanceGiven  :1;
     unsigned VDMOSgateResistanceGiven    :1;
-    unsigned VDMOSsheetResistanceGiven   :1;
     unsigned VDMOStransconductanceGiven  :1;
     unsigned VDMOSgateSourceOverlapCapFactorGiven    :1;
     unsigned VDMOSgateDrainOverlapCapFactorGiven :1;
@@ -378,12 +365,6 @@ typedef struct sVDMOSmodel {       /* model structure for a resistor */
 /* device parameters */
 #define VDMOS_W 1
 #define VDMOS_L 2
-#define VDMOS_AS 3
-#define VDMOS_AD 4
-#define VDMOS_PS 5
-#define VDMOS_PD 6
-#define VDMOS_NRS 7
-#define VDMOS_NRD 8
 #define VDMOS_OFF 9
 #define VDMOS_IC 10
 #define VDMOS_IC_VBS 11
@@ -411,7 +392,6 @@ typedef struct sVDMOSmodel {       /* model structure for a resistor */
 #define VDMOS_MOD_MJSW 118
 #define VDMOS_MOD_JS 119
 #define VDMOS_MOD_TOX 120
-#define VDMOS_MOD_RSH 122
 #define VDMOS_MOD_U0 123
 #define VDMOS_MOD_FC 124
 #define VDMOS_MOD_NSUB 125
