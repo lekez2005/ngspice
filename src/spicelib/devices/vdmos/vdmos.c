@@ -122,8 +122,6 @@ IFparm VDMOSmPTable[] = { /* model parameters */
  IP("vdmos",  VDMOS_MOD_DMOS,  IF_REAL   ,"DMOS transistor"),
 
 /* MOS1 */
- IOPA("cjsw", VDMOS_MOD_CJSW,  IF_REAL   ,"Side junction cap per area"),
- IOP("mjsw",  VDMOS_MOD_MJSW,  IF_REAL   ,"Side grading coefficient"),
  IOP("js",    VDMOS_MOD_JS,    IF_REAL   ,"Bulk jct. sat. current density"),
  IOP("tox",   VDMOS_MOD_TOX,   IF_REAL   ,"Oxide thickness"),
  IOP("u0",    VDMOS_MOD_U0,    IF_REAL   ,"Surface mobility"),
