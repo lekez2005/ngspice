@@ -75,14 +75,11 @@ VDMOSload(GENmodel *inModel, CKTcircuit *ckt)
     double tempv;
 #endif /*NOBYPASS*/    
     int error;
-    int SenCond;
 
     double cgdmin;
     double cgdmax;
     double a;
     double cgs;
-
-
 
     /*  loop through all the VDMOS device models */
     for (; model != NULL; model = VDMOSnextModel(model)) {
@@ -98,20 +95,6 @@ VDMOSload(GENmodel *inModel, CKTcircuit *ckt)
 
             vt = CONSTKoverQ * here->VDMOStemp;
             Check = 1;
-            if (ckt->CKTsenInfo) {
-#ifdef SENSDEBUG
-                printf("VDMOSload \n");
-#endif /* SENSDEBUG */
-
-                if ((ckt->CKTsenInfo->SENstatus == PERTURBATION) &&
-                    (here->VDMOSsenPertFlag == OFF))continue;
-
-            }
-            SenCond = ckt->CKTsenInfo && here->VDMOSsenPertFlag;
-
-            /*
-              
-            */
 
             /* first, we compute a few useful values - these could be
              * pre-computed, but for historical reasons are still done
@@ -131,45 +114,6 @@ VDMOSload(GENmodel *inModel, CKTcircuit *ckt)
              * step or the general iteration step and they
              * share some code, so we put them first - others later on
              */
-
-            if (SenCond) {
-#ifdef SENSDEBUG
-                printf("VDMOSsenPertFlag = ON \n");
-#endif /* SENSDEBUG */
-                if ((ckt->CKTsenInfo->SENmode == TRANSEN) &&
-                    (ckt->CKTmode & MODEINITTRAN)) {
-                    vgs = *(ckt->CKTstate1 + here->VDMOSvgs);
-                    vds = *(ckt->CKTstate1 + here->VDMOSvds);
-                    vbs = *(ckt->CKTstate1 + here->VDMOSvbs);
-                    vbd = *(ckt->CKTstate1 + here->VDMOSvbd);
-                    vgb = vgs - vbs;
-                    vgd = vgs - vds;
-                }
-                else if (ckt->CKTsenInfo->SENmode == ACSEN) {
-                    vgb = model->VDMOStype * (
-                        *(ckt->CKTrhsOp + here->VDMOSgNodePrime) -
-                        *(ckt->CKTrhsOp + here->VDMOSbNode));
-                    vbs = *(ckt->CKTstate0 + here->VDMOSvbs);
-                    vbd = *(ckt->CKTstate0 + here->VDMOSvbd);
-                    vgd = vgb + vbd;
-                    vgs = vgb + vbs;
-                    vds = vbs - vbd;
-                }
-                else {
-                    vgs = *(ckt->CKTstate0 + here->VDMOSvgs);
-                    vds = *(ckt->CKTstate0 + here->VDMOSvds);
-                    vbs = *(ckt->CKTstate0 + here->VDMOSvbs);
-                    vbd = *(ckt->CKTstate0 + here->VDMOSvbd);
-                    vgb = vgs - vbs;
-                    vgd = vgs - vds;
-                }
-#ifdef SENSDEBUG
-                printf(" vbs = %.7e ,vbd = %.7e,vgb = %.7e\n", vbs, vbd, vgb);
-                printf(" vgs = %.7e ,vds = %.7e,vgd = %.7e\n", vgs, vds, vgd);
-#endif /* SENSDEBUG */
-                goto next1;
-            }
-
 
             if ((ckt->CKTmode & (MODEINITFLOAT | MODEINITPRED | MODEINITSMSIG
                 | MODEINITTRAN)) ||
@@ -408,7 +352,7 @@ VDMOSload(GENmodel *inModel, CKTcircuit *ckt)
              *   here we just evaluate the ideal diode current and the
              *   corresponding derivative (conductance).
              */
-        next1:
+
             if (vbs <= -3 * vt) {
                 here->VDMOSgbs = ckt->CKTgmin;
                 here->VDMOScbs = here->VDMOSgbs*vbs - SourceSatCur;
@@ -659,8 +603,6 @@ VDMOSload(GENmodel *inModel, CKTcircuit *ckt)
                   
                 */
 
-                if (SenCond && (ckt->CKTsenInfo->SENmode == TRANSEN)) goto next2;
-
                 if ((ckt->CKTmode & MODETRAN) || ((ckt->CKTmode&MODEINITTRAN)
                     && !(ckt->CKTmode&MODEUIC))) {
                     /* (above only excludes tranop, since we're only at this
@@ -690,10 +632,6 @@ VDMOSload(GENmodel *inModel, CKTcircuit *ckt)
             /*
               
             */
-
-            if (SenCond) goto next2;
-
-
             /*
              *  check convergence
              */
@@ -710,7 +648,6 @@ VDMOSload(GENmodel *inModel, CKTcircuit *ckt)
 
             /* save things away for next time */
 
-        next2:
             *(ckt->CKTstate0 + here->VDMOSvbs) = vbs;
             *(ckt->CKTstate0 + here->VDMOSvbd) = vbd;
             *(ckt->CKTstate0 + here->VDMOSvgs) = vgs;
@@ -721,44 +658,26 @@ VDMOSload(GENmodel *inModel, CKTcircuit *ckt)
             */
 
             /*
-             *     meyer's capacitor model
+             *     new capacitor model
              */
             if (ckt->CKTmode & (MODETRAN | MODETRANOP | MODEINITSMSIG)) {
                 /*
                  *     calculate meyer's capacitors
                  */
                  /*
-                  * new cmeyer - this just evaluates at the current time,
+                  * according to new cmeyer - this just evaluates at the current time,
                   * expects you to remember values from previous time
                   * returns 1/2 of non-constant portion of capacitance
                   * you must add in the other half from previous time
                   * and the constant part
                   */
                   /*
-                                  if (here->VDMOSmode > 0){
-                                      DEVqmeyer (vgs,vgd,vgb,von,vdsat,
-                                     (ckt->CKTstate0 + here->VDMOScapgs),
-                                     (ckt->CKTstate0 + here->VDMOScapgd),
-                                     (ckt->CKTstate0 + here->VDMOScapgb),
-                                     here->VDMOStPhi,OxideCap);
-                                  } else {
-                                      DEVqmeyer (vgd,vgs,vgb,von,vdsat,
-                                     (ckt->CKTstate0 + here->VDMOScapgd),
-                                     (ckt->CKTstate0 + here->VDMOScapgs),
-                                     (ckt->CKTstate0 + here->VDMOScapgb),
-                                     here->VDMOStPhi,OxideCap);
-                                  }
-                  */
-
-                  /*
                   *     VDMOS capacitor model
                   */
-                if (ckt->CKTmode & (MODETRAN | MODETRANOP | MODEINITSMSIG)) {
-                    DevCapVDMOS(vgd, cgdmin, cgdmax, a, cgs,
-                        (ckt->CKTstate0 + here->VDMOScapgs),
-                        (ckt->CKTstate0 + here->VDMOScapgd),
-                        (ckt->CKTstate0 + here->VDMOScapgb));
-                }
+                DevCapVDMOS(vgd, cgdmin, cgdmax, a, cgs,
+                    (ckt->CKTstate0 + here->VDMOScapgs),
+                    (ckt->CKTstate0 + here->VDMOScapgd),
+                    (ckt->CKTstate0 + here->VDMOScapgb));
 
 
                 vgs1 = *(ckt->CKTstate1 + here->VDMOSvgs);
@@ -790,13 +709,6 @@ VDMOSload(GENmodel *inModel, CKTcircuit *ckt)
                  *     store small-signal parameters (for meyer's model)
                  *  all parameters already stored, so done...
                  */
-                if (SenCond) {
-                    if ((ckt->CKTsenInfo->SENmode == DCSEN) ||
-                        (ckt->CKTsenInfo->SENmode == ACSEN)) {
-                        continue;
-                    }
-                }
-
 #ifndef PREDICTOR
                 if (ckt->CKTmode & (MODEINITPRED | MODEINITTRAN)) {
                     *(ckt->CKTstate0 + here->VDMOSqgs) =
@@ -832,7 +744,6 @@ VDMOSload(GENmodel *inModel, CKTcircuit *ckt)
 #ifndef NOBYPASS
             bypass :
 #endif
-                   if (SenCond) continue;
 
                    if ((ckt->CKTmode & (MODEINITTRAN)) ||
                        (!(ckt->CKTmode & (MODETRAN)))) {
