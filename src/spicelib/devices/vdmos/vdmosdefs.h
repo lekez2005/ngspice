@@ -227,45 +227,6 @@ typedef struct sVDMOSinstance {
     double *VDMOSSPdpPtr;    /* pointer to sparse matrix element at
                                      * (source prime node,drain prime node) */
 
-    int  VDMOSsenParmNo;   /* parameter # for sensitivity use;
-            set equal to 0  if  neither length
-            nor width of the mosfet is a design
-            parameter */
-    unsigned VDMOSsens_l :1;   /* field which indicates whether  
-            length of the mosfet is a design
-            parameter or not */
-    unsigned VDMOSsens_w :1;   /* field which indicates whether  
-            width of the mosfet is a design
-            parameter or not */
-    unsigned VDMOSsenPertFlag :1; /* indictes whether the the 
-            parameter of the particular instance is 
-            to be perturbed */
-    double VDMOScgs;
-    double VDMOScgd;
-    double VDMOScgb;
-    double *VDMOSsens;
-
-#define VDMOSsenCgs VDMOSsens /* contains pertured values of cgs */
-#define VDMOSsenCgd VDMOSsens + 6 /* contains perturbed values of cgd*/
-#define VDMOSsenCgb VDMOSsens + 12 /* contains perturbed values of cgb*/
-#define VDMOSsenCbd VDMOSsens + 18 /* contains perturbed values of cbd*/
-#define VDMOSsenCbs VDMOSsens + 24 /* contains perturbed values of cbs*/
-#define VDMOSsenGds VDMOSsens + 30 /* contains perturbed values of gds*/
-#define VDMOSsenGbs VDMOSsens + 36 /* contains perturbed values of gbs*/
-#define VDMOSsenGbd VDMOSsens + 42 /* contains perturbed values of gbd*/
-#define VDMOSsenGm VDMOSsens + 48 /* contains perturbed values of gm*/
-#define VDMOSsenGmbs VDMOSsens + 54 /* contains perturbed values of gmbs*/
-#define VDMOSdphigs_dl VDMOSsens + 60
-#define VDMOSdphigd_dl VDMOSsens + 61
-#define VDMOSdphigb_dl VDMOSsens + 62
-#define VDMOSdphibs_dl VDMOSsens + 63
-#define VDMOSdphibd_dl VDMOSsens + 64
-#define VDMOSdphigs_dw VDMOSsens + 65
-#define VDMOSdphigd_dw VDMOSsens + 66
-#define VDMOSdphigb_dw VDMOSsens + 67
-#define VDMOSdphibs_dw VDMOSsens + 68
-#define VDMOSdphibd_dw VDMOSsens + 69
-
 } VDMOSinstance ;
 
 #define VDMOSvbd VDMOSstates+ 0   /* bulk-drain voltage */
@@ -292,16 +253,6 @@ typedef struct sVDMOSinstance {
 #define VDMOScqbs VDMOSstates+ 16 /* bulk-source capacitor current */
 
 #define VDMOSnumStates 17
-
-#define VDMOSsensxpgs VDMOSstates+17 /* charge sensitivities and 
-          their derivatives.  +18 for the derivatives:
-          pointer to the beginning of the array */
-#define VDMOSsensxpgd  VDMOSstates+19
-#define VDMOSsensxpgb  VDMOSstates+21
-#define VDMOSsensxpbs  VDMOSstates+23
-#define VDMOSsensxpbd  VDMOSstates+25
-
-#define VDMOSnumSenStates 10
 
 
 /* per model data */
@@ -408,8 +359,6 @@ typedef struct sVDMOSmodel {       /* model structure for a resistor */
 #define VDMOS_IC_VBS 11
 #define VDMOS_IC_VDS 12
 #define VDMOS_IC_VGS 13
-#define VDMOS_W_SENS 14
-#define VDMOS_L_SENS 15
 #define VDMOS_CB 16
 #define VDMOS_CG 17
 #define VDMOS_CS 18
@@ -498,18 +447,6 @@ typedef struct sVDMOSmodel {       /* model structure for a resistor */
 #define VDMOS_CQBD               243
 #define VDMOS_QBS                244
 #define VDMOS_CQBS               245
-#define VDMOS_L_SENS_REAL               246
-#define VDMOS_L_SENS_IMAG               247
-#define VDMOS_L_SENS_MAG                248 
-#define VDMOS_L_SENS_PH                 249 
-#define VDMOS_L_SENS_CPLX               250
-#define VDMOS_W_SENS_REAL               251
-#define VDMOS_W_SENS_IMAG               252
-#define VDMOS_W_SENS_MAG                253 
-#define VDMOS_W_SENS_PH                 254 
-#define VDMOS_W_SENS_CPLX               255
-#define VDMOS_L_SENS_DC                 256
-#define VDMOS_W_SENS_DC                 257
 #define VDMOS_SOURCERESIST      258
 #define VDMOS_DRAINRESIST       259
 
