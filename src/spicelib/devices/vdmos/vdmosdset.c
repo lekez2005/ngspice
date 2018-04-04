@@ -22,11 +22,6 @@ VDMOSdSetup(GENmodel *inModel, CKTcircuit *ckt)
     VDMOSinstance *here;
     double Beta;
     double DrainSatCur;
-    double EffectiveLength;
-    double GateBulkOverlapCap;
-    double GateDrainOverlapCap;
-    double GateSourceOverlapCap;
-    double OxideCap;
     double SourceSatCur;
     double gm;
     double gds;
@@ -86,8 +81,7 @@ VDMOSdSetup(GENmodel *inModel, CKTcircuit *ckt)
                 here=VDMOSnextInstance(here)) {
 
             vt = CONSTKoverQ * here->VDMOStemp;
-            EffectiveLength=here->VDMOSl - 2*model->VDMOSlatDiff;
-            
+
              if( (here->VDMOStSatCurDens == 0) || 
                     (here->VDMOSdrainArea == 0) ||
                     (here->VDMOSsourceArea == 0)) {
@@ -99,16 +93,9 @@ VDMOSdSetup(GENmodel *inModel, CKTcircuit *ckt)
                 SourceSatCur = here->VDMOStSatCurDens * 
                         here->VDMOSm * here->VDMOSsourceArea;
             }
-            GateSourceOverlapCap = model->VDMOSgateSourceOverlapCapFactor * 
-                    here->VDMOSm * here->VDMOSw;
-            GateDrainOverlapCap = model->VDMOSgateDrainOverlapCapFactor * 
-                    here->VDMOSm * here->VDMOSw;
-            GateBulkOverlapCap = model->VDMOSgateBulkOverlapCapFactor * 
-                    here->VDMOSm * EffectiveLength;
+
             Beta = here->VDMOStTransconductance * here->VDMOSm *
-                    here->VDMOSw/EffectiveLength;
-            OxideCap = model->VDMOSoxideCapFactor * EffectiveLength * 
-                    here->VDMOSm * here->VDMOSw;
+                    here->VDMOSw/here->VDMOSl;
 
                     vbs = model->VDMOStype * ( 
                         *(ckt->CKTrhsOld+here->VDMOSbNode) -
@@ -446,10 +433,8 @@ VDMOSdSetup(GENmodel *inModel, CKTcircuit *ckt)
     /* von, vgst and vdsat have already been adjusted for 
         possible source-drain interchange */
 
-
-
     phi = here->VDMOStPhi;
-    cox = OxideCap;
+    cox = 0;/*FIXME: can we do disto without knowing the oxide thickness?*/
     if (vgst <= -phi) {
     lcapgb2=lcapgb3=lcapgs2=lcapgs3=lcapgd2=lcapgd3=0;
     } else if (vgst <= -phi/2) {
