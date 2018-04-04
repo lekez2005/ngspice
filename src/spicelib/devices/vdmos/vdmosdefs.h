@@ -53,7 +53,6 @@ typedef struct sVDMOSinstance {
     double VDMOStCbd;                /* temperature corrected B-D Capacitance */
     double VDMOStCbs;                /* temperature corrected B-S Capacitance */
     double VDMOStCj;         /* temperature corrected Bulk bottom Capacitance */
-    double VDMOStCjsw;       /* temperature corrected Bulk side Capacitance */
     double VDMOStBulkPot;    /* temperature corrected Bulk potential */
     double VDMOStDepCap;     /* temperature adjusted transition point in */
                             /* the cureve matching Fc * Vj */
@@ -299,10 +298,8 @@ typedef struct sVDMOSmodel {       /* model structure for a resistor */
     double VDMOScapBD;   /* input - use tCbd */
     double VDMOScapBS;   /* input - use tCbs */
     double VDMOSbulkCapFactor;   /* input - use tCj */
-    double VDMOSsideWallCapFactor;   /* input - use tCjsw */
     double VDMOSbulkJctPotential;    /* input - use tBulkPot */
     double VDMOSbulkJctBotGradingCoeff;
-    double VDMOSbulkJctSideGradingCoeff;
     double VDMOSfwdCapDepCoeff;
     double VDMOSphi; /* input - use tPhi */
     double VDMOSgamma;
@@ -333,10 +330,8 @@ typedef struct sVDMOSmodel {       /* model structure for a resistor */
     unsigned VDMOScapBDGiven :1;
     unsigned VDMOScapBSGiven :1;
     unsigned VDMOSbulkCapFactorGiven :1;
-    unsigned VDMOSsideWallCapFactorGiven   :1;
     unsigned VDMOSbulkJctPotentialGiven  :1;
     unsigned VDMOSbulkJctBotGradingCoeffGiven    :1;
-    unsigned VDMOSbulkJctSideGradingCoeffGiven   :1;
     unsigned VDMOSfwdCapDepCoeffGiven    :1;
     unsigned VDMOSphiGiven   :1;
     unsigned VDMOSgammaGiven :1;
@@ -388,8 +383,6 @@ typedef struct sVDMOSmodel {       /* model structure for a resistor */
 #define VDMOS_MOD_VJ 111
 #define VDMOS_MOD_CJ 115
 #define VDMOS_MOD_MJ 116
-#define VDMOS_MOD_CJSW 117
-#define VDMOS_MOD_MJSW 118
 #define VDMOS_MOD_JS 119
 #define VDMOS_MOD_TOX 120
 #define VDMOS_MOD_U0 123
