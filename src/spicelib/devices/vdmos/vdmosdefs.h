@@ -76,9 +76,7 @@ typedef struct sVDMOSinstance {
     double VDMOScapbd;
     double VDMOScapbs;
     double VDMOSCbd;
-    double VDMOSCbdsw;
     double VDMOSCbs;
-    double VDMOSCbssw;
     double VDMOSf2d;
     double VDMOSf3d;
     double VDMOSf4d;
@@ -376,8 +374,6 @@ typedef struct sVDMOSmodel {       /* model structure for a resistor */
     unsigned VDMOSgateDrainOverlapCapFactorGiven :1;
     unsigned VDMOSgateBulkOverlapCapFactorGiven  :1;
     unsigned VDMOSvt0Given   :1;
-    unsigned VDMOScapBDGiven :1;
-    unsigned VDMOScapBSGiven :1;
     unsigned VDMOSbulkCapFactorGiven :1;
     unsigned VDMOSbulkJctPotentialGiven  :1;
     unsigned VDMOSbulkJctBotGradingCoeffGiven    :1;
