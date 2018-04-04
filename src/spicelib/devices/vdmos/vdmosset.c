@@ -107,10 +107,6 @@ VDMOSsetup(SMPmatrix *matrix, GENmodel *inModel, CKTcircuit *ckt,
             if (ckt->CKTsenInfo && (ckt->CKTsenInfo->SENmode & TRANSEN)) {
                 *states += 10 * (ckt->CKTsenInfo->SENparms);
             }
-
-            if (!here->VDMOSdrainPerimiterGiven) {
-                here->VDMOSdrainPerimiter = 0;
-            }
             if (!here->VDMOSicVBSGiven) {
                 here->VDMOSicVBS = 0;
             }
@@ -120,25 +116,13 @@ VDMOSsetup(SMPmatrix *matrix, GENmodel *inModel, CKTcircuit *ckt,
             if (!here->VDMOSicVGSGiven) {
                 here->VDMOSicVGS = 0;
             }
-            if (!here->VDMOSsourcePerimiterGiven) {
-                here->VDMOSsourcePerimiter = 0;
-            }
             if (!here->VDMOSvdsatGiven) {
                 here->VDMOSvdsat = 0;
             }
             if (!here->VDMOSvonGiven) {
                 here->VDMOSvon = 0;
             }
-            if (!here->VDMOSdrainSquaresGiven) {
-                here->VDMOSdrainSquares = 1;
-            }
-            if (!here->VDMOSsourceSquaresGiven) {
-                here->VDMOSsourceSquares = 1;
-            }
-
-            if ((model->VDMOSdrainResistance != 0
-                || (model->VDMOSsheetResistance != 0
-                    && here->VDMOSdrainSquares != 0))) {
+            if (model->VDMOSdrainResistance != 0) {
                 if (here->VDMOSdNodePrime == 0) {
                     error = CKTmkVolt(ckt, &tmp, here->VDMOSname, "drain");
                     if (error) return(error);
@@ -162,9 +146,7 @@ VDMOSsetup(SMPmatrix *matrix, GENmodel *inModel, CKTcircuit *ckt,
                 here->VDMOSdNodePrime = here->VDMOSdNode;
             }
 
-            if ((model->VDMOSsourceResistance != 0 ||
-                (model->VDMOSsheetResistance != 0 &&
-                    here->VDMOSsourceSquares != 0))) {
+            if (model->VDMOSsourceResistance != 0 ) {
                 if (here->VDMOSsNodePrime == 0) {
                     error = CKTmkVolt(ckt, &tmp, here->VDMOSname, "source");
                     if (error) return(error);

@@ -15,13 +15,7 @@ IFparm VDMOSpTable[] = { /* parameters */
  IOPU("m",            VDMOS_M,          IF_REAL   , "Multiplier"),
  IOPU("l",            VDMOS_L,          IF_REAL   , "Length"),
  IOPU("w",            VDMOS_W,          IF_REAL   , "Width"),
- IOPU("ad",           VDMOS_AD,         IF_REAL   , "Drain area"),
- IOPU("as",           VDMOS_AS,         IF_REAL   , "Source area"),
- IOPU("pd",           VDMOS_PD,         IF_REAL   , "Drain perimeter"),
- IOPU("ps",           VDMOS_PS,         IF_REAL   , "Source perimeter"),
- IOPU("nrd",          VDMOS_NRD,        IF_REAL   , "Drain squares"),
- IOPU("nrs",          VDMOS_NRS,        IF_REAL   , "Source squares"),
- IP("off",           VDMOS_OFF,        IF_FLAG   , "Device initially off"),
+ IP("off",            VDMOS_OFF,        IF_FLAG   , "Device initially off"),
  IOPU("icvds",        VDMOS_IC_VDS,     IF_REAL   , "Initial D-S voltage"),
  IOPU("icvgs",        VDMOS_IC_VGS,     IF_REAL   , "Initial G-S voltage"),
  IOPU("icvbs",        VDMOS_IC_VBS,     IF_REAL   , "Initial B-S voltage"),
@@ -132,7 +126,6 @@ IOP("vj",    VDMOS_MOD_VJ,    IF_REAL   ,"Body diode junction potential"),
 
 
 /* MOS1 */
- IOP("rsh",   VDMOS_MOD_RSH,   IF_REAL   ,"Sheet resistance"),
  IOPA("cj",   VDMOS_MOD_CJ,    IF_REAL   ,"Bottom junction cap per area"),
  IOP("mj",    VDMOS_MOD_MJ,    IF_REAL   ,"Bottom grading coefficient"),
  IOPA("cjsw", VDMOS_MOD_CJSW,  IF_REAL   ,"Side junction cap per area"),
