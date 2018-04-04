@@ -140,14 +140,8 @@ VDMOSask(CKTcircuit *ckt, GENinstance *inst, int which, IFvalue *value,
         case VDMOS_CAPZEROBIASBD:
             value->rValue = here->VDMOSCbd;
             return(OK);
-        case VDMOS_CAPZEROBIASBDSW:
-            value->rValue = here->VDMOSCbdsw;
-            return(OK);
         case VDMOS_CAPZEROBIASBS:
             value->rValue = here->VDMOSCbs;
-            return(OK);
-        case VDMOS_CAPZEROBIASBSSW:
-            value->rValue = here->VDMOSCbssw;
             return(OK);
         case VDMOS_VBD:
             value->rValue = *(ckt->CKTstate0 + here->VDMOSvbd);
