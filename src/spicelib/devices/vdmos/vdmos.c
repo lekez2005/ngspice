@@ -22,8 +22,6 @@ IFparm VDMOSpTable[] = { /* parameters */
  IOPU("temp",         VDMOS_TEMP,       IF_REAL,    "Instance temperature"),
  IOPU("dtemp",         VDMOS_DTEMP,       IF_REAL,    "Instance temperature difference"),
  IP( "ic",           VDMOS_IC,  IF_REALVEC, "Vector of D-S, G-S, B-S voltages"),
- IP( "sens_l", VDMOS_L_SENS, IF_FLAG, "flag to request sensitivity WRT length"),
- IP( "sens_w", VDMOS_W_SENS, IF_FLAG, "flag to request sensitivity WRT width"),
 
  OP( "id",           VDMOS_CD,         IF_REAL,    "Drain current"),
  OP( "is",           VDMOS_CS,         IF_REAL,    "Source current"),
