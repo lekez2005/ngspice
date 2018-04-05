@@ -116,6 +116,46 @@ VDMOSmParam(int param, IFvalue *value, GENmodel *inModel)
             model->VDMOScgs = value->rValue;
             model->VDMOScgsGiven = TRUE;
             break;
+        case VDMOS_MOD_MTRIODE:
+            model->VDMOSmtr = value->rValue;
+            model->VDMOSmtrGiven = TRUE;
+            break;
+        case VDMOS_MOD_KSUBTHRES:
+            model->VDMOSksub = value->rValue;
+            model->VDMOSksubGiven = TRUE;
+            break;
+        case VDMOS_MOD_BV:
+            model->VDMOSDbv = value->rValue;
+            model->VDMOSDbvGiven = TRUE;
+            break;
+        case VDMOS_MOD_IBV:
+            model->VDMOSDibv = value->rValue;
+            model->VDMOSDibvGiven = TRUE;
+            break;
+        case VDMOS_MOD_NBV:
+            model->VDMOSDnbv = value->rValue;
+            model->VDMOSDnbvGiven = TRUE;
+            break;
+        case VDMOS_MOD_RDS:
+            model->VDMOSrds = value->rValue;
+            model->VDMOSrdsGiven = TRUE;
+            break;
+        case VDMOS_MOD_N:
+            model->VDMOSDn = value->rValue;
+            model->VDMOSDnGiven = TRUE;
+            break;
+        case VDMOS_MOD_TT:
+            model->VDMOSDtt = value->rValue;
+            model->VDMOSDttGiven = TRUE;
+            break;
+        case VDMOS_MOD_EG:
+            model->VDMOSDeg = value->rValue;
+            model->VDMOSDegGiven = TRUE;
+            break;
+        case VDMOS_MOD_XTI:
+            model->VDMOSDxti = value->rValue;
+            model->VDMOSDxtiGiven = TRUE;
+            break;
         default:
             return(E_BADPARM);
     }

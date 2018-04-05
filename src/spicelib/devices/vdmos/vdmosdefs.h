@@ -311,6 +311,17 @@ typedef struct sVDMOSmodel {       /* model structure for a resistor */
     double VDMOScgdmax;
     double VDMOSa;
     double VDMOScgs;
+    double VDMOSksub;
+    double VDMOSmtr;
+
+    double VDMOSDbv;
+    double VDMOSDibv;
+    double VDMOSDnbv;
+    double VDMOSrds;
+    double VDMOSDn;
+    double VDMOSDtt;
+    double VDMOSDeg;
+    double VDMOSDxti;
 
     unsigned VDMOStypeGiven  :1;
     unsigned VDMOSjctSatCurDensityGiven  :1;
@@ -338,6 +349,17 @@ typedef struct sVDMOSmodel {       /* model structure for a resistor */
     unsigned VDMOScgdmaxGiven   :1;
     unsigned VDMOScgsGiven   :1;
     unsigned VDMOSaGiven   :1;
+    unsigned VDMOSksubGiven   :1;
+    unsigned VDMOSmtrGiven   :1;
+
+    unsigned VDMOSDbvGiven   :1;
+    unsigned VDMOSDibvGiven   :1;
+    unsigned VDMOSDnbvGiven   :1;
+    unsigned VDMOSrdsGiven   :1;
+    unsigned VDMOSDnGiven   :1;
+    unsigned VDMOSDttGiven   :1;
+    unsigned VDMOSDegGiven   :1;
+    unsigned VDMOSDxtiGiven   :1;
 
 } VDMOSmodel;
 
@@ -392,6 +414,17 @@ typedef struct sVDMOSmodel {       /* model structure for a resistor */
 #define VDMOS_MOD_A 152
 #define VDMOS_MOD_CGS 153
 #define VDMOS_MOD_RG 154
+#define VDMOS_MOD_MTRIODE 155
+#define VDMOS_MOD_KSUBTHRES 156
+
+#define VDMOS_MOD_BV 160
+#define VDMOS_MOD_IBV 161
+#define VDMOS_MOD_NBV 162
+#define VDMOS_MOD_RDS 163
+#define VDMOS_MOD_N 164
+#define VDMOS_MOD_TT 165
+#define VDMOS_MOD_EG 166
+#define VDMOS_MOD_XTI 167
 
 /* device questions */
 #define VDMOS_CGS                201
