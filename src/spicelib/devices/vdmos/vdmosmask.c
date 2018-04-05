@@ -30,9 +30,6 @@ VDMOSmAsk(CKTcircuit *ckt, GENmodel *inst, int which, IFvalue *value)
         case VDMOS_MOD_KP:
             value->rValue = model->VDMOStransconductance;
             return(OK);
-        case VDMOS_MOD_PHI:
-            value->rValue = model->VDMOSphi;
-            return(OK);
         case VDMOS_MOD_LAMBDA:
             value->rValue = model->VDMOSlambda;
             return(OK);
@@ -60,20 +57,11 @@ VDMOSmAsk(CKTcircuit *ckt, GENmodel *inst, int which, IFvalue *value)
         case VDMOS_MOD_TOX:
             value->rValue = model->VDMOSoxideThickness;
             return(OK);
-        case VDMOS_MOD_U0:
-            value->rValue = model->VDMOSsurfaceMobility;
-            return(OK);
         case VDMOS_MOD_FC:
             value->rValue = model->VDMOSfwdCapDepCoeff;
             return(OK);
-        case VDMOS_MOD_NSUB:
-            value->rValue = model->VDMOSsubstrateDoping;
-            return(OK);
         case VDMOS_MOD_TPG:
             value->iValue = model->VDMOSgateType;
-            return(OK);
-        case VDMOS_MOD_NSS:
-            value->rValue = model->VDMOSsurfaceStateDensity;
             return(OK);
         case VDMOS_MOD_TYPE:
             if (model->VDMOStype > 0)

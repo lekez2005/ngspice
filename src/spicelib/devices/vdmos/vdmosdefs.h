@@ -45,18 +45,11 @@ typedef struct sVDMOSinstance {
     double VDMOSdtemp;   /* operating temperature of the instance relative to circuit temperature*/
 
     double VDMOStTransconductance;   /* temperature corrected transconductance*/
-    double VDMOStSurfMob;            /* temperature corrected surface mobility */
-    double VDMOStPhi;                /* temperature corrected Phi */
     double VDMOStVto;                /* temperature corrected Vto */
     double VDMOStSatCur;             /* temperature corrected saturation Cur. */
-    double VDMOStSatCurDens; /* temperature corrected saturation Cur. density*/
-    double VDMOStCbd;                /* temperature corrected B-D Capacitance */
-    double VDMOStCbs;                /* temperature corrected B-S Capacitance */
-    double VDMOStCj;         /* temperature corrected Bulk bottom Capacitance */
     double VDMOStBulkPot;    /* temperature corrected Bulk potential */
     double VDMOStDepCap;     /* temperature adjusted transition point in */
                             /* the cureve matching Fc * Vj */
-    double VDMOStVbi;        /* temperature adjusted Vbi */
 
     double VDMOSicVBS;   /* initial condition B-S voltage */
     double VDMOSicVDS;   /* initial condition D-S voltage */
@@ -348,14 +341,9 @@ typedef struct sVDMOSmodel {       /* model structure for a resistor */
     double VDMOSbulkJctPotential;    /* input - use tBulkPot */
     double VDMOSbulkJctBotGradingCoeff;
     double VDMOSfwdCapDepCoeff;
-    double VDMOSphi; /* input - use tPhi */
-    double VDMOSgamma;
     double VDMOSlambda;
-    double VDMOSsubstrateDoping;
     int VDMOSgateType;
-    double VDMOSsurfaceStateDensity;
     double VDMOSoxideThickness;
-    double VDMOSsurfaceMobility; /* input - use tSurfMob */
     double VDMOSfNcoef;
     double VDMOSfNexp;
     double VDMOScgdmin;
@@ -378,14 +366,9 @@ typedef struct sVDMOSmodel {       /* model structure for a resistor */
     unsigned VDMOSbulkJctPotentialGiven  :1;
     unsigned VDMOSbulkJctBotGradingCoeffGiven    :1;
     unsigned VDMOSfwdCapDepCoeffGiven    :1;
-    unsigned VDMOSphiGiven   :1;
-    unsigned VDMOSgammaGiven :1;
     unsigned VDMOSlambdaGiven    :1;
-    unsigned VDMOSsubstrateDopingGiven   :1;
     unsigned VDMOSgateTypeGiven  :1;
-    unsigned VDMOSsurfaceStateDensityGiven   :1;
     unsigned VDMOSoxideThicknessGiven    :1;
-    unsigned VDMOSsurfaceMobilityGiven   :1;
     unsigned VDMOStnomGiven  :1;
     unsigned VDMOSfNcoefGiven  :1;
     unsigned VDMOSfNexpGiven   :1;
