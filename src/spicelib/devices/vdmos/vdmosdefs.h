@@ -307,6 +307,17 @@ typedef struct sVDMOSmodel {       /* model structure for a resistor */
     double VDMOScgdmax;
     double VDMOSa;
     double VDMOScgs;
+    double VDMOSsubth;
+    double VDMOSmtr;
+
+    double VDMOSDbv;
+    double VDMOSDibv;
+    double VDMOSDnbv;
+    double VDMOSrds;
+    double VDMOSDn;
+    double VDMOSDtt;
+    double VDMOSDeg;
+    double VDMOSDxti;
 
     unsigned VDMOStypeGiven  :1;
     unsigned VDMOSjctSatCurDensityGiven  :1;
@@ -334,6 +345,17 @@ typedef struct sVDMOSmodel {       /* model structure for a resistor */
     unsigned VDMOScgdmaxGiven   :1;
     unsigned VDMOScgsGiven   :1;
     unsigned VDMOSaGiven   :1;
+    unsigned VDMOSsubthGiven   :1;
+    unsigned VDMOSmtrGiven   :1;
+
+    unsigned VDMOSDbvGiven   :1;
+    unsigned VDMOSDibvGiven   :1;
+    unsigned VDMOSDnbvGiven   :1;
+    unsigned VDMOSrdsGiven   :1;
+    unsigned VDMOSDnGiven   :1;
+    unsigned VDMOSDttGiven   :1;
+    unsigned VDMOSDegGiven   :1;
+    unsigned VDMOSDxtiGiven   :1;
 
 } VDMOSmodel;
 
@@ -391,6 +413,16 @@ enum {
     VDMOS_MOD_A,
     VDMOS_MOD_CGS,
     VDMOS_MOD_RG,
+    VDMOS_MOD_MTRIODE,
+    VDMOS_MOD_SUBTHRES,
+    VDMOS_MOD_BV,
+    VDMOS_MOD_IBV,
+    VDMOS_MOD_NBV,
+    VDMOS_MOD_RDS,
+    VDMOS_MOD_N,
+    VDMOS_MOD_TT,
+    VDMOS_MOD_EG,
+    VDMOS_MOD_XTI,
 };
 
 /* device questions */
