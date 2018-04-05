@@ -348,7 +348,6 @@ typedef struct sVDMOSmodel {       /* model structure for a resistor */
     double VDMOSlambda;
     int VDMOSgateType;
     double VDMOSoxideThickness;
-    double VDMOSsurfaceMobility; /* input - use tSurfMob */
     double VDMOSfNcoef;
     double VDMOSfNexp;
     double VDMOScgdmin;
