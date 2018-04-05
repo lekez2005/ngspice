@@ -90,19 +90,21 @@ IFparm VDMOSmPTable[] = { /* model parameters */
  IOP("rd",    VDMOS_MOD_RD,    IF_REAL   ,"Drain ohmic resistance"),
  IOP("rs",    VDMOS_MOD_RS,    IF_REAL   ,"Source ohmic resistance"),
  IOP("rg",    VDMOS_MOD_RG,    IF_REAL   ,"Gate ohmic resistance"),
-/*
+
  IOP("mtriode", VDMOS_MOD_MTRIODE,   IF_REAL ,"Conductance multiplier in triode region"),
  IOP("subthres",VDMOS_MOD_SUBTHRES,  IF_REAL ,"Current(per volt Vds) to switch from square law to exponential subthreshold conduction"),
+
+/* body diode */
  IOP("bv",    VDMOS_MOD_BV,    IF_REAL   ,"Vds breakdown voltage"),
  IOP("ibv",   VDMOS_MOD_IBV,   IF_REAL   ,"Current at Vds=bv"),
  IOP("nbv",   VDMOS_MOD_NBV,   IF_REAL   ,"Vds breakdown emission coefficient"),
  IOP("rds",   VDMOS_MOD_RDS,   IF_REAL   ,"Drain-source shunt resistance"),
  IOP("rb",    VDMOS_MOD_RG,    IF_REAL   ,"Body diode ohmic resistance"),
- N Bulk diode emission coefficient
- tt Body diode transit time
- Eg Body diode activation energy for temperature effect on Is
- Xti Body diode saturation current temperature exponent
-*/
+ IOP("n",     VDMOS_MOD_N,     IF_REAL   ,"Bulk diode emission coefficient"),
+ IOP("tt",    VDMOS_MOD_TT,    IF_REAL   ,"Body diode transit time"),
+ IOP("eg",    VDMOS_MOD_EG,    IF_REAL   ,"Body diode activation energy for temperature effect on Is"),
+ IOP("Xti",   VDMOS_MOD_XTI,   IF_REAL   ,"Body diode saturation current temperature exponent"),
+
  IOP("is",    VDMOS_MOD_IS,    IF_REAL   ,"Body diode saturation current"),
  IOP("vj",    VDMOS_MOD_VJ,    IF_REAL   ,"Body diode junction potential"),
  IOP("fc",    VDMOS_MOD_FC,    IF_REAL   ,"Body diode coefficient for forward-bias depletion capacitance formula"),
