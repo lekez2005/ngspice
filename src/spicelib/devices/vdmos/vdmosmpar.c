@@ -27,10 +27,6 @@ VDMOSmParam(int param, IFvalue *value, GENmodel *inModel)
             model->VDMOStransconductance = value->rValue;
             model->VDMOStransconductanceGiven = TRUE;
             break;
-        case VDMOS_MOD_PHI:
-            model->VDMOSphi = value->rValue;
-            model->VDMOSphiGiven = TRUE;
-            break;
         case VDMOS_MOD_LAMBDA:
             model->VDMOSlambda = value->rValue;
             model->VDMOSlambdaGiven = TRUE;
@@ -71,21 +67,9 @@ VDMOSmParam(int param, IFvalue *value, GENmodel *inModel)
             model->VDMOSoxideThickness = value->rValue;
             model->VDMOSoxideThicknessGiven = TRUE;
             break;
-        case VDMOS_MOD_U0:
-            model->VDMOSsurfaceMobility = value->rValue;
-            model->VDMOSsurfaceMobilityGiven = TRUE;
-            break;
         case VDMOS_MOD_FC:
             model->VDMOSfwdCapDepCoeff = value->rValue;
             model->VDMOSfwdCapDepCoeffGiven = TRUE;
-            break;
-        case VDMOS_MOD_NSS:
-            model->VDMOSsurfaceStateDensity = value->rValue;
-            model->VDMOSsurfaceStateDensityGiven = TRUE;
-            break;
-        case VDMOS_MOD_NSUB:
-            model->VDMOSsubstrateDoping = value->rValue;
-            model->VDMOSsubstrateDopingGiven = TRUE;
             break;
         case VDMOS_MOD_TPG:
             model->VDMOSgateType = value->iValue;

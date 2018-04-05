@@ -42,7 +42,6 @@ SPICEdev VDMOSinfo = {
     .DEVfindBranch = NULL,
     .DEVacLoad = VDMOSacLoad,
     .DEVaccept = NULL,
-    .DEVdestroy = VDMOSdestroy,
     .DEVmodDelete = VDMOSmDelete,
     .DEVdelete = VDMOSdelete,
     .DEVsetic = VDMOSgetic,
