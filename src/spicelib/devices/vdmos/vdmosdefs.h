@@ -45,6 +45,7 @@ typedef struct sVDMOSinstance {
     double VDMOSdtemp;   /* operating temperature of the instance relative to circuit temperature*/
 
     double VDMOStTransconductance;   /* temperature corrected transconductance*/
+    double VDMOStPhi;                /* temperature corrected Phi */
     double VDMOStVto;                /* temperature corrected Vto */
     double VDMOStSatCur;             /* temperature corrected saturation Cur. */
     double VDMOStBulkPot;    /* temperature corrected Bulk potential */
@@ -289,6 +290,7 @@ typedef struct sVDMOSmodel {       /* model structure for a resistor */
     double VDMOSbulkJctPotential;    /* input - use tBulkPot */
     double VDMOSbulkJctBotGradingCoeff;
     double VDMOSfwdCapDepCoeff;
+    double VDMOSphi; /* input - use tPhi */
     double VDMOSlambda;
     int VDMOSgateType;
     double VDMOSoxideThickness;
@@ -322,6 +324,7 @@ typedef struct sVDMOSmodel {       /* model structure for a resistor */
     unsigned VDMOSbulkJctPotentialGiven  :1;
     unsigned VDMOSbulkJctBotGradingCoeffGiven    :1;
     unsigned VDMOSfwdCapDepCoeffGiven    :1;
+    unsigned VDMOSphiGiven : 1;
     unsigned VDMOSlambdaGiven    :1;
     unsigned VDMOSgateTypeGiven  :1;
     unsigned VDMOSoxideThicknessGiven    :1;
