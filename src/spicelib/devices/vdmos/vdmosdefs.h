@@ -49,9 +49,6 @@ typedef struct sVDMOSinstance {
     double VDMOStVto;                /* temperature corrected Vto */
     double VDMOStSatCur;             /* temperature corrected saturation Cur. */
     double VDMOStSatCurDens; /* temperature corrected saturation Cur. density*/
-    double VDMOStCbd;                /* temperature corrected B-D Capacitance */
-    double VDMOStCbs;                /* temperature corrected B-S Capacitance */
-    double VDMOStCj;         /* temperature corrected Bulk bottom Capacitance */
     double VDMOStBulkPot;    /* temperature corrected Bulk potential */
     double VDMOStDepCap;     /* temperature adjusted transition point in */
                             /* the cureve matching Fc * Vj */
