@@ -281,9 +281,6 @@ typedef struct sVDMOSmodel {       /* model structure for a resistor */
     double VDMOSgateResistance;
     double VDMOSsheetResistance;
     double VDMOStransconductance;    /* input - use tTransconductance */
-    double VDMOSgateSourceOverlapCapFactor;
-    double VDMOSgateDrainOverlapCapFactor;
-    double VDMOSgateBulkOverlapCapFactor;
     double VDMOSoxideCapFactor;
     double VDMOSvt0; /* input - use tVto */
     double VDMOScapBD;   /* input - use tCbd */
@@ -320,9 +317,6 @@ typedef struct sVDMOSmodel {       /* model structure for a resistor */
     unsigned VDMOSsourceResistanceGiven  :1;
     unsigned VDMOSgateResistanceGiven    :1;
     unsigned VDMOStransconductanceGiven  :1;
-    unsigned VDMOSgateSourceOverlapCapFactorGiven    :1;
-    unsigned VDMOSgateDrainOverlapCapFactorGiven :1;
-    unsigned VDMOSgateBulkOverlapCapFactorGiven  :1;
     unsigned VDMOSvt0Given   :1;
     unsigned VDMOSbulkCapFactorGiven :1;
     unsigned VDMOSbulkJctPotentialGiven  :1;
