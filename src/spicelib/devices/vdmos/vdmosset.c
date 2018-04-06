@@ -84,6 +84,33 @@ VDMOSsetup(SMPmatrix *matrix, GENmodel *inModel, CKTcircuit *ckt,
         if (!model->VDMOSaGiven) {
             model->VDMOSa = 1.;
         }
+        if (!model->VDMOSsubthGiven) {
+            model->VDMOSsubth = 0.;
+        }
+        if (!model->VDMOSmtrGiven) {
+            model->VDMOSmtr = 1.;
+        }
+        if (!model->VDMOSDbvGiven) {
+            model->VDMOSDbv = 1.0e30;
+        }
+        if (!model->VDMOSDibvGiven) {
+            model->VDMOSDibv = 1.0e-10;
+        }
+        if (!model->VDMOSDnbvGiven) {
+            model->VDMOSDnbv = 1.;
+        }
+        if (!model->VDMOSrdsGiven) {
+            model->VDMOSrds = 1.0e30;
+        }
+        if (!model->VDMOSDnGiven) {
+            model->VDMOSDn = 1.;
+        }
+        if (!model->VDMOSDttGiven) {
+            model->VDMOSDtt = 0.;
+        }
+        if (!model->VDMOSDegGiven) {
+            model->VDMOSDeg = 1.11;
+        }
 
         /* loop through all the instances of the model */
         for (here = VDMOSinstances(model); here != NULL;
