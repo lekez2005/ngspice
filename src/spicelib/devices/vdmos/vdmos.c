@@ -92,7 +92,7 @@ IFparm VDMOSmPTable[] = { /* model parameters */
  IOP("rg",    VDMOS_MOD_RG,    IF_REAL   ,"Gate ohmic resistance"),
 
  IOP("mtriode", VDMOS_MOD_MTRIODE,   IF_REAL ,"Conductance multiplier in triode region"),
- IOP("ksubthres",VDMOS_MOD_KSUBTHRES,  IF_REAL ,"Current(per volt Vds) to switch from square law to exponential subthreshold conduction"),
+ IOP("subthres",VDMOS_MOD_SUBTHRES,  IF_REAL ,"Current(per volt Vds) to switch from square law to exponential subthreshold conduction"),
 
 /* body diode */
  IOP("bv",    VDMOS_MOD_BV,    IF_REAL   ,"Vds breakdown voltage"),
