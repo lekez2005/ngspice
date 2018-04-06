@@ -27,6 +27,10 @@ VDMOSmParam(int param, IFvalue *value, GENmodel *inModel)
             model->VDMOStransconductance = value->rValue;
             model->VDMOStransconductanceGiven = TRUE;
             break;
+        case VDMOS_MOD_PHI:
+            model->VDMOSphi = value->rValue;
+            model->VDMOSphiGiven = TRUE;
+            break;
         case VDMOS_MOD_LAMBDA:
             model->VDMOSlambda = value->rValue;
             model->VDMOSlambdaGiven = TRUE;
