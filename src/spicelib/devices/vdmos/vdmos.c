@@ -98,6 +98,7 @@ IFparm VDMOSmPTable[] = { /* model parameters */
  IOP("ibv",   VDMOS_MOD_IBV,   IF_REAL   ,"Current at Vds=bv"),
  IOP("nbv",   VDMOS_MOD_NBV,   IF_REAL   ,"Vds breakdown emission coefficient"),
  IOP("rds",   VDMOS_MOD_RDS,   IF_REAL   ,"Drain-source shunt resistance"),
+ IOP("rb",    VDMOS_MOD_RB,    IF_REAL   ,"Body diode ohmic resistance"),
  IOP("n",     VDMOS_MOD_N,     IF_REAL   ,"Bulk diode emission coefficient"),
  IOP("tt",    VDMOS_MOD_TT,    IF_REAL   ,"Body diode transit time"),
  IOP("eg",    VDMOS_MOD_EG,    IF_REAL   ,"Body diode activation energy for temperature effect on Is"),
@@ -129,7 +130,6 @@ IFparm VDMOSmPTable[] = { /* model parameters */
  IOPR("uo",   VDMOS_MOD_U0,    IF_REAL   ,"Surface mobility"),
 
  IOP("nsub",  VDMOS_MOD_NSUB,  IF_REAL   ,"Substrate doping"),
- IOP("tpg",   VDMOS_MOD_TPG,   IF_INTEGER,"Gate type"),
  IOP("nss",   VDMOS_MOD_NSS,   IF_REAL   ,"Surface state density")
 };
 
