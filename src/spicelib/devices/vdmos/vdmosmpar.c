@@ -66,8 +66,8 @@ VDMOSmParam(int param, IFvalue *value, GENmodel *inModel)
             model->VDIOjunctionPotGiven = TRUE;
             break;
         case VDMOS_MOD_MJ:
-            model->VDMOSbulkJctBotGradingCoeff = value->rValue;
-            model->VDMOSbulkJctBotGradingCoeffGiven = TRUE;
+            model->VDIOgradCoeff = value->rValue;
+            model->VDIOgradCoeffGiven = TRUE;
             break;
         case VDMOS_MOD_FC:
             model->VDIOdepletionCapCoeff = value->rValue;
