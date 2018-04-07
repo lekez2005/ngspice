@@ -30,8 +30,8 @@ VDMOSsetup(SMPmatrix *matrix, GENmodel *inModel, CKTcircuit *ckt,
         if (!model->VDMOStypeGiven) {
             model->VDMOStype = NMOS;
         }
-        if (!model->VDMOSjctSatCurGiven) {
-            model->VDMOSjctSatCur = 1e-14;
+        if (!model->VDIOjctSatCurGiven) {
+            model->VDIOjctSatCur = 1e-14;
         }
         if (!model->VDMOStransconductanceGiven) {
             model->VDMOStransconductance = 1;
@@ -39,14 +39,14 @@ VDMOSsetup(SMPmatrix *matrix, GENmodel *inModel, CKTcircuit *ckt,
         if (!model->VDMOSvt0Given) {
             model->VDMOSvt0 = 0;
         }
-        if (!model->VDMOSbulkJctPotentialGiven) {
-            model->VDMOSbulkJctPotential = .8;
+        if (!model->VDIOjunctionPotGiven) {
+            model->VDIOjunctionPot = .8;
         }
         if (!model->VDMOSbulkJctBotGradingCoeffGiven) {
             model->VDMOSbulkJctBotGradingCoeff = .5;
         }
-        if (!model->VDMOSfwdCapDepCoeffGiven) {
-            model->VDMOSfwdCapDepCoeff = .5;
+        if (!model->VDIOdepletionCapCoeffGiven) {
+            model->VDIOdepletionCapCoeff = .5;
         }
         if (!model->VDMOSphiGiven) {
             model->VDMOSphi = .6;
@@ -71,6 +71,15 @@ VDMOSsetup(SMPmatrix *matrix, GENmodel *inModel, CKTcircuit *ckt,
         }
         if (!model->VDMOSaGiven) {
             model->VDMOSa = 1.;
+        }
+        if (!model->VDMOSDbvGiven) {
+            model->VDMOSDbv = 1.0e30;
+        }
+        if (!model->VDMOSDibvGiven) {
+            model->VDMOSDibv = 1.0e-10;
+        }
+        if (!model->VDIObrkdEmissionCoeffGiven) {
+            model->VDIObrkdEmissionCoeff = 1.;
         }
         if (!model->VDMOSDnGiven) {
             model->VDMOSDn = 1.;
@@ -176,6 +185,29 @@ VDMOSsetup(SMPmatrix *matrix, GENmodel *inModel, CKTcircuit *ckt,
                 here->VDMOSgNodePrime = here->VDMOSgNode;
             }
 
+            if (model->VDIOresistance != 0 ) {
+                if (here->VDIOposPrimeNode == 0) {
+                    error = CKTmkVolt(ckt, &tmp, here->VDMOSname, "bulk diode");
+                    if (error) return(error);
+                    here->VDIOposPrimeNode = tmp->number;
+
+                    if (ckt->CKTcopyNodesets) {
+                        CKTnode *tmpNode;
+                        IFuid tmpName;
+
+                        if (CKTinst2Node(ckt, here, 3, &tmpNode, &tmpName) == OK) {
+                            if (tmpNode->nsGiven) {
+                                tmp->nodeset = tmpNode->nodeset;
+                                tmp->nsGiven = tmpNode->nsGiven;
+                            }
+                        }
+                    }
+                }
+            }
+            else {
+                here->VDIOposPrimeNode = here->VDMOSdNode;
+            }
+
 
             /* macro to make elements with built in test for out of memory */
 #define TSTALLOC(ptr,first,second) \
@@ -265,6 +297,11 @@ VDMOSunsetup(GENmodel *inModel, CKTcircuit *ckt)
                 && here->VDMOSgNodePrime != here->VDMOSgNode)
                 CKTdltNNum(ckt, here->VDMOSgNodePrime);
             here->VDMOSgNodePrime = 0;
+
+            if (here->VDIOposPrimeNode > 0
+                && here->VDIOposPrimeNode != here->VDMOSdNode)
+                CKTdltNNum(ckt, here->VDIOposPrimeNode);
+            here->VDIOposPrimeNode = 0;
         }
     }
     return OK;
