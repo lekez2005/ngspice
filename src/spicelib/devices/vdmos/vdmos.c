@@ -37,6 +37,7 @@ IFparm VDMOSpTable[] = { /* parameters */
  OP( "cgs",          VDMOS_CGS,        IF_REAL   , "Gate-Source capacitance"),
  OP( "cgd",          VDMOS_CGD,        IF_REAL   , "Gate-Drain capacitance"),
  */
+ OP( "cds",          VDMOS_CDS,        IF_REAL   , "Drain-Source capacitance"),
 
  OPU( "dnode",      VDMOS_DNODE,      IF_INTEGER, "Number of the drain node "),
  OPU( "gnode",      VDMOS_GNODE,      IF_INTEGER, "Number of the gate node "),
@@ -92,6 +93,10 @@ IFparm VDMOSmPTable[] = { /* model parameters */
  IOP("rg",    VDMOS_MOD_RG,    IF_REAL   ,"Gate ohmic resistance"),
 
 /* body diode */
+ IOP("bv",    VDMOS_MOD_BV,    IF_REAL   ,"Vds breakdown voltage"),
+ IOP("ibv",   VDMOS_MOD_IBV,   IF_REAL   ,"Current at Vds=bv"),
+ IOP("nbv",   VDMOS_MOD_NBV,   IF_REAL   ,"Vds breakdown emission coefficient"),
+ IOP("rb",    VDMOS_MOD_RB,    IF_REAL   ,"Body diode ohmic resistance"),
  IOP("n",     VDMOS_MOD_N,     IF_REAL   ,"Bulk diode emission coefficient"),
  IOP("tt",    VDMOS_MOD_TT,    IF_REAL   ,"Body diode transit time"),
  IOP("eg",    VDMOS_MOD_EG,    IF_REAL   ,"Body diode activation energy for temperature effect on Is"),
@@ -100,6 +105,7 @@ IFparm VDMOSmPTable[] = { /* model parameters */
  IOP("is",    VDMOS_MOD_IS,    IF_REAL   ,"Body diode saturation current"),
  IOP("vj",    VDMOS_MOD_VJ,    IF_REAL   ,"Body diode junction potential"),
  IOP("fc",    VDMOS_MOD_FC,    IF_REAL   ,"Body diode coefficient for forward-bias depletion capacitance formula"),
+ IOPA("cjo",  VDMOS_MOD_CJ,    IF_REAL   ,"Zero-bias body diode junction capacitance"),
  IOP("mj",    VDMOS_MOD_MJ,    IF_REAL   ,"Body diode grading coefficient"),
 
 /* capacitance */
