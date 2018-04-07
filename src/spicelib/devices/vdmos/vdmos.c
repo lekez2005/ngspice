@@ -96,7 +96,7 @@ IFparm VDMOSmPTable[] = { /* model parameters */
 
 /* body diode */
  IOP("bv",    VDMOS_MOD_BV,    IF_REAL   ,"Vds breakdown voltage"),
- IOP("ibv",   VDMOS_MOD_IBV,   IF_REAL   ,"Current at Vds=bv "),
+ IOP("ibv",   VDMOS_MOD_IBV,   IF_REAL   ,"Current at Vds=bv"),
  IOP("nbv",   VDMOS_MOD_NBV,   IF_REAL   ,"Vds breakdown emission coefficient"),
  IOP("rds",   VDMOS_MOD_RDS,   IF_REAL   ,"Drain-source shunt resistance"),
  IOP("rb",    VDMOS_MOD_RB,    IF_REAL   ,"Body diode ohmic resistance"),
@@ -105,7 +105,7 @@ IFparm VDMOSmPTable[] = { /* model parameters */
  IOP("eg",    VDMOS_MOD_EG,    IF_REAL   ,"Body diode activation energy for temperature effect on Is"),
  IOP("Xti",   VDMOS_MOD_XTI,   IF_REAL   ,"Body diode saturation current temperature exponent"),
 
- IOP("is",    VDMOS_MOD_IS,    IF_REAL   ,"Body diode sat. current"),
+ IOP("is",    VDMOS_MOD_IS,    IF_REAL   ,"Body diode saturation current"),
  IOP("vj",    VDMOS_MOD_VJ,    IF_REAL   ,"Body diode junction potential"),
  IOP("fc",    VDMOS_MOD_FC,    IF_REAL   ,"Body diode coefficient for forward-bias depletion capacitance formula"),
  IOPA("cjo",  VDMOS_MOD_CJ,    IF_REAL   ,"Zero-bias body diode junction capacitance"),
