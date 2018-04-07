@@ -47,37 +47,35 @@ VDMOSmParam(int param, IFvalue *value, GENmodel *inModel)
             model->VDMOSgateResistance = value->rValue;
             model->VDMOSgateResistanceGiven = TRUE;
             break;
+        case VDMOS_MOD_RB:
+            model->VDIOresistance = value->rValue;
+            model->VDIOresistanceGiven = TRUE;
+            model->VDIOresistTemp1 = 0;
+            model->VDIOresistTemp2 = 0;
+            break;
         case VDMOS_MOD_IS:
-            model->VDMOSjctSatCur = value->rValue;
-            model->VDMOSjctSatCurGiven = TRUE;
+            model->VDIOjctSatCur = value->rValue;
+            model->VDIOjctSatCur = TRUE;
             break;
         case VDMOS_MOD_VJ:
-            model->VDMOSbulkJctPotential = value->rValue;
-            model->VDMOSbulkJctPotentialGiven = TRUE;
+            model->VDIOjunctionPot = value->rValue;
+            model->VDIOjunctionPotGiven = TRUE;
             break;
         case VDMOS_MOD_CJ:
-            model->VDMOSbulkCapFactor = value->rValue;
-            model->VDMOSbulkCapFactorGiven = TRUE;
+            model->VDIOjunctionPot = value->rValue;
+            model->VDIOjunctionPotGiven = TRUE;
             break;
         case VDMOS_MOD_MJ:
             model->VDMOSbulkJctBotGradingCoeff = value->rValue;
             model->VDMOSbulkJctBotGradingCoeffGiven = TRUE;
-            break;
-        case VDMOS_MOD_JS:
-            model->VDMOSjctSatCurDensity = value->rValue;
-            model->VDMOSjctSatCurDensityGiven = TRUE;
             break;
         case VDMOS_MOD_TOX:
             model->VDMOSoxideThickness = value->rValue;
             model->VDMOSoxideThicknessGiven = TRUE;
             break;
         case VDMOS_MOD_FC:
-            model->VDMOSfwdCapDepCoeff = value->rValue;
-            model->VDMOSfwdCapDepCoeffGiven = TRUE;
-            break;
-        case VDMOS_MOD_TPG:
-            model->VDMOSgateType = value->iValue;
-            model->VDMOSgateTypeGiven = TRUE;
+            model->VDIOdepletionCapCoeff = value->rValue;
+            model->VDIOdepletionCapCoeffGiven = TRUE;
             break;
         case VDMOS_MOD_NMOS:
             if(value->iValue) {
@@ -137,8 +135,8 @@ VDMOSmParam(int param, IFvalue *value, GENmodel *inModel)
             model->VDMOSDibvGiven = TRUE;
             break;
         case VDMOS_MOD_NBV:
-            model->VDMOSDnbv = value->rValue;
-            model->VDMOSDnbvGiven = TRUE;
+            model->VDIObrkdEmissionCoeff = value->rValue;
+            model->VDIObrkdEmissionCoeffGiven = TRUE;
             break;
         case VDMOS_MOD_RDS:
             model->VDMOSrds = value->rValue;
@@ -149,8 +147,10 @@ VDMOSmParam(int param, IFvalue *value, GENmodel *inModel)
             model->VDMOSDnGiven = TRUE;
             break;
         case VDMOS_MOD_TT:
-            model->VDMOSDtt = value->rValue;
-            model->VDMOSDttGiven = TRUE;
+            model->VDIOtransitTime = value->rValue;
+            model->VDIOtransitTimeGiven = TRUE;
+            model->VDIOtranTimeTemp1 = 0;
+            model->VDIOtranTimeTemp2 = 0;
             break;
         case VDMOS_MOD_EG:
             model->VDMOSDeg = value->rValue;
