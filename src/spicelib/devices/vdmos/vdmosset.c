@@ -42,8 +42,8 @@ VDMOSsetup(SMPmatrix *matrix, GENmodel *inModel, CKTcircuit *ckt,
         if (!model->VDIOjunctionPotGiven) {
             model->VDIOjunctionPot = .8;
         }
-        if (!model->VDMOSbulkJctBotGradingCoeffGiven) {
-            model->VDMOSbulkJctBotGradingCoeff = .5;
+        if (!model->VDIOgradCoeffGiven) {
+            model->VDIOgradCoeff = .5;
         }
         if (!model->VDIOdepletionCapCoeffGiven) {
             model->VDIOdepletionCapCoeff = .5;
@@ -280,6 +280,11 @@ do { if((here->ptr = SMPmakeElt(matrix, here->first, here->second)) == NULL){\
             TSTALLOC(VDMOSGgpPtr, VDMOSgNode, VDMOSgNodePrime);
             TSTALLOC(VDMOSGPgPtr, VDMOSgNodePrime, VDMOSgNode);
 
+            TSTALLOC(VDIORPdPtr, VDIOposPrimeNode, VDMOSdNode);
+            TSTALLOC(VDIODrpPtr, VDMOSdNode, VDIOposPrimeNode);
+            TSTALLOC(VDIOSrpPtr, VDMOSsNode, VDIOposPrimeNode);
+            TSTALLOC(VDIORPsPtr, VDIOposPrimeNode, VDMOSsNode);
+            TSTALLOC(VDIORPrpPtr, VDIOposPrimeNode, VDIOposPrimeNode);
         }
     }
     return(OK);
