@@ -45,20 +45,26 @@ VDMOSmAsk(CKTcircuit *ckt, GENmodel *inst, int which, IFvalue *value)
         case VDMOS_MOD_RG:
             value->rValue = model->VDMOSgateResistance;
             return(OK);
+        case VDMOS_MOD_RB:
+            value->rValue = model->VDIOresistance;
+            return(OK);
         case VDMOS_MOD_IS:
-            value->rValue = model->VDMOSjctSatCur;
+            value->rValue = model->VDIOjctSatCur;
+                return(OK);
+        case VDMOS_MOD_N:
+            value->rValue = model->VDMOSDn;
             return(OK);
         case VDMOS_MOD_VJ:
-            value->rValue = model->VDMOSbulkJctPotential;
+            value->rValue = model->VDIOjunctionPot;
             return(OK);
         case VDMOS_MOD_CJ:
-            value->rValue = model->VDMOSbulkCapFactor;
+            value->rValue = model->VDIOjunctionCap;
             return(OK);
         case VDMOS_MOD_MJ:
             value->rValue = model->VDMOSbulkJctBotGradingCoeff;
             return(OK);
         case VDMOS_MOD_FC:
-            value->rValue = model->VDMOSfwdCapDepCoeff;
+            value->rValue = model->VDIOdepletionCapCoeff;
             return(OK);
         case VDMOS_MOD_TYPE:
             if (model->VDMOStype > 0)
