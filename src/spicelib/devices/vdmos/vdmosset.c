@@ -201,7 +201,7 @@ VDMOSsetup(SMPmatrix *matrix, GENmodel *inModel, CKTcircuit *ckt,
 
             if (model->VDIOresistance != 0 ) {
                 if (here->VDIOposPrimeNode == 0) {
-                    error = CKTmkVolt(ckt, &tmp, here->VDMOSname, "gate");
+                    error = CKTmkVolt(ckt, &tmp, here->VDMOSname, "bulk diode");
                     if (error) return(error);
                     here->VDIOposPrimeNode = tmp->number;
 

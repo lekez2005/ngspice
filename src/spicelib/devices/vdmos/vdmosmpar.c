@@ -55,7 +55,7 @@ VDMOSmParam(int param, IFvalue *value, GENmodel *inModel)
             break;
         case VDMOS_MOD_IS:
             model->VDIOjctSatCur = value->rValue;
-            model->VDIOjctSatCur = TRUE;
+            model->VDIOjctSatCurGiven = TRUE;
             break;
         case VDMOS_MOD_VJ:
             model->VDIOjunctionPot = value->rValue;
