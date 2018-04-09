@@ -318,7 +318,7 @@ VDMOSunsetup(GENmodel *inModel, CKTcircuit *ckt)
             here->VDMOSgNodePrime = 0;
 
             if (here->VDIOposPrimeNode > 0
-                && here->VDIOposPrimeNode != here->VDMOSgNode)
+                && here->VDIOposPrimeNode != here->VDMOSdNode)
                 CKTdltNNum(ckt, here->VDIOposPrimeNode);
             here->VDIOposPrimeNode = 0;
         }
