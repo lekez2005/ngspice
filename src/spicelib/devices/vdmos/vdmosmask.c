@@ -87,6 +87,9 @@ VDMOSmAsk(CKTcircuit *ckt, GENmodel *inst, int which, IFvalue *value)
         case VDMOS_MOD_CGS:
             value->rValue = model->VDMOScgs;
             return(OK);
+        case VDMOS_MOD_RDS:
+            value->rValue = model->VDMOSrds;
+            return(OK);
         default:
             return(E_BADPARM);
     }
