@@ -164,7 +164,7 @@ VDMOSload(GENmodel *inModel, CKTcircuit *ckt)
 #endif /* PREDICTOR */
 
                 /* now some common crunching for some more useful quantities */
-
+                vbs = 0;
                 vbd = vbs - vds;
                 vgd = vgs - vds;
                 vgdo = *(ckt->CKTstate0 + here->VDMOSvgs) -
@@ -325,7 +325,7 @@ VDMOSload(GENmodel *inModel, CKTcircuit *ckt)
                         ((ckt->CKTmode &
                         (MODETRAN | MODEDCOP | MODEDCTRANCURVE)) ||
                             (!(ckt->CKTmode & MODEUIC)))) {
-                        vbs = -1;
+                        vbs = 0;
                         vgs = model->VDMOStype * here->VDMOStVto;
                         vds = 0;
                     }
@@ -668,7 +668,7 @@ VDMOSload(GENmodel *inModel, CKTcircuit *ckt)
                    double vd;      /* current diode voltage */
                    double vdtemp;
                    double vte;
-                   double vtebrk;
+                   double vtebrk, vbrknp;
                    double cd, cdb, csat, cdeq;
                    double czero;
                    double czof2;
@@ -687,8 +687,10 @@ VDMOSload(GENmodel *inModel, CKTcircuit *ckt)
                    gdb = 0.0;
                    csat = here->VDIOtSatCur;
                    gspr = here->VDIOtConductance;
+
                    vte = model->VDMOSDn * vt;
                    vtebrk = model->VDIObrkdEmissionCoeff * vt;
+                   vbrknp = model->VDMOStype * here->VDIOtBrkdwnV;
 
                    Check = 1;
                    if (ckt->CKTmode & MODEINITSMSIG) {
@@ -717,8 +719,8 @@ VDMOSload(GENmodel *inModel, CKTcircuit *ckt)
                        }
                        else {
 #endif /* PREDICTOR */
-                           vd = *(ckt->CKTrhsOld + here->VDIOposPrimeNode) -
-                               *(ckt->CKTrhsOld + here->VDMOSdNode);
+                           vd = model->VDMOStype * (*(ckt->CKTrhsOld + here->VDIOposPrimeNode) -
+                               *(ckt->CKTrhsOld + here->VDMOSdNode));
 #ifndef PREDICTOR
                        }
 #endif /* PREDICTOR */
@@ -750,13 +752,13 @@ VDMOSload(GENmodel *inModel, CKTcircuit *ckt)
                        *   limit new junction voltage
                        */
                        if ((model->VDMOSDbvGiven) &&
-                           (vd < MIN(0, -here->VDIOtBrkdwnV + 10 * vtebrk))) {
-                           vdtemp = -(vd + here->VDIOtBrkdwnV);
+                           (vd < MIN(0, -vbrknp + 10 * vtebrk))) {
+                           vdtemp = -(vd + vbrknp);
                            vdtemp = DEVpnjlim(vdtemp,
                                -(*(ckt->CKTstate0 + here->VDIOvoltage) +
-                                   here->VDIOtBrkdwnV), vtebrk,
+                                   vbrknp), vtebrk,
                                here->VDIOtVcrit, &Check);
-                           vd = -(vdtemp + here->VDIOtBrkdwnV);
+                           vd = -(vdtemp + vbrknp);
                        }
                        else {
                            vd = DEVpnjlim(vd, *(ckt->CKTstate0 + here->VDIOvoltage),
@@ -774,7 +776,7 @@ VDMOSload(GENmodel *inModel, CKTcircuit *ckt)
 
                            }
                            else if ((!(model->VDMOSDbvGiven)) ||
-                               vd >= -here->VDIOtBrkdwnV) { /* reverse */
+                               vd >= -vbrknp) { /* reverse */
 
                                arg = 3 * vte / (vd*CONSTe);
                                arg = arg * arg * arg;
@@ -784,7 +786,7 @@ VDMOSload(GENmodel *inModel, CKTcircuit *ckt)
                            }
                            else {                            /* breakdown */
 
-                               evrev = exp(-(here->VDIOtBrkdwnV + vd) / vtebrk);
+                               evrev = exp(-(vbrknp + vd) / vtebrk);
                                cdb = -csat*evrev;
                                gdb = csat*evrev / vtebrk;
 
@@ -868,32 +870,30 @@ VDMOSload(GENmodel *inModel, CKTcircuit *ckt)
                            *(ckt->CKTstate0 + here->VDIOconduct) = gd;
 
 #ifndef NOBYPASS
-                           load :
+load :
 #endif
                                 /*
                                 *   load current vector
                                 */
                                 cdeq = cd - gd*vd;
-                                *(ckt->CKTrhs + here->VDMOSdNode) += cdeq;
-                                *(ckt->CKTrhs + here->VDIOposPrimeNode) -= cdeq;
+                                if (model->VDMOStype == 1) {
+                                    *(ckt->CKTrhs + here->VDMOSdNode) += cdeq;
+                                    *(ckt->CKTrhs + here->VDIOposPrimeNode) -= cdeq;
+                                }
+                                else {
+                                    *(ckt->CKTrhs + here->VDMOSdNode) -= cdeq;
+                                    *(ckt->CKTrhs + here->VDIOposPrimeNode) += cdeq;
+                                }
+
                                 /*
                                 *   load matrix
-                                */
-                                /*
-                                *(here->DIOposPosPtr) += gspr;
-                                *(here->DIOnegNegPtr) += gd;
-                                *(here->DIOposPrimePosPrimePtr) += (gd + gspr);
-                                *(here->DIOposPosPrimePtr) -= gspr;
-                                *(here->DIOnegPosPrimePtr) -= gd;
-                                *(here->DIOposPrimePosPtr) -= gspr;
-                                *(here->DIOposPrimeNegPtr) -= gd;
                                 */
                                 *(here->VDMOSSsPtr) += gspr;
                                 *(here->VDMOSDdPtr) += gd;
                                 *(here->VDIORPrpPtr) += (gd + gspr);
                                 *(here->VDIOSrpPtr) -= gspr;
                                 *(here->VDIODrpPtr) -= gd;
-                                *(here->VDIOSrpPtr) -= gspr;
+                                *(here->VDIORPsPtr) -= gspr;
                                 *(here->VDIORPdPtr) -= gd;
         }
     }
