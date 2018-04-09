@@ -220,7 +220,7 @@ VDMOStemp(GENmodel *inModel, CKTcircuit *ckt)
                 (1 - exp((1 - here->VDIOtGradingCoeff)*xfc)) /
                 (1 - here->VDIOtGradingCoeff);
             /* same for Depletion Capacitance */
-            here->VDIOtDepCap = model->VDIOdepletionCapCoeff*
+            here->VDIOtDepCap = model->VDIOdepletionCapCoeff *
                 here->VDIOtJctPot;
 
             /* and Vcrit */
