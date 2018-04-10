@@ -6047,9 +6047,12 @@ inp_quote_params(struct card *c, struct card *end_c, struct dependency *deps, in
 }
 
 /* VDMOS special:
-Check for 'vdmos' in .model line
-check if 'pchan', then add p to vdmos and delete 'pchan'
-
+Check for 'vdmos' in .model line.
+check if 'pchan', then add p to vdmos and ignore 'pchan'.
+If no 'pchan' is found, add n to vdmos.
+Ignore annotations on Vds, Ron, Qg, and mfg.
+Assemble all other tokens in a wordlist, and flatten it
+to become the new .model line.
 */
 static void 
 inp_vdmos_model(struct card *deck)
@@ -6059,7 +6062,6 @@ inp_vdmos_model(struct card *deck)
 
         char *curr_line, *cut_line, *token, *new_line;
         wordlist *wl = NULL, *wlb;
-        int paren = 0;
 
         curr_line = cut_line = card->line;
 
@@ -6077,10 +6079,7 @@ inp_vdmos_model(struct card *deck)
 
             cut_line = skip_ws(cut_line);
             if (*cut_line == '(')
-            {
                 cut_line = cut_line + 1;
-                paren = 1;
-            }
             new_line = NULL;
             while (cut_line && *cut_line) {
                 token = gettok_noparens(&cut_line);
