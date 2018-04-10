@@ -6082,7 +6082,7 @@ inp_vdmos_model(struct card *deck)
                 paren = 1;
             }
             new_line = NULL;
-            while (cut_line) {
+            while (cut_line && *cut_line) {
                 token = gettok_noparens(&cut_line);
                 if(!ciprefix("pchan", token) && !ciprefix("ron=", token) && !ciprefix("vds=", token) && !ciprefix("qg=", token) && !ciprefix("mfg=", token))
                     wl_append_word(NULL, &wl, token);
