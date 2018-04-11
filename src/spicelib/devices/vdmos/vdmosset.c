@@ -285,6 +285,9 @@ do { if((here->ptr = SMPmakeElt(matrix, here->first, here->second)) == NULL){\
             TSTALLOC(VDMOSGgpPtr, VDMOSgNode, VDMOSgNodePrime);
             TSTALLOC(VDMOSGPgPtr, VDMOSgNodePrime, VDMOSgNode);
 
+            TSTALLOC(VDMOSDsPtr, VDMOSdNode, VDMOSsNode);
+            TSTALLOC(VDMOSSdPtr, VDMOSsNode, VDMOSdNode);
+
             TSTALLOC(VDIORPdPtr, VDIOposPrimeNode, VDMOSdNode);
             TSTALLOC(VDIODrpPtr, VDMOSdNode, VDIOposPrimeNode);
             TSTALLOC(VDIOSrpPtr, VDMOSsNode, VDIOposPrimeNode);
