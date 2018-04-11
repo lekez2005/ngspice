@@ -42,6 +42,7 @@ typedef struct sVDMOSinstance {
     double VDMOSsourceConductance;   /*conductance of source(or 0):set in setup*/
     double VDMOSdrainConductance;    /*conductance of drain(or 0):set in setup*/
     double VDMOSgateConductance;    /*conductance of gate(or 0):set in setup*/
+    double VDMOSdsConductance;    /*conductance of drain to source:set in setup*/
     double VDMOStemp;    /* operating temperature of this instance */
     double VDMOSdtemp;   /* operating temperature of the instance relative to circuit temperature*/
 
@@ -241,6 +242,10 @@ typedef struct sVDMOSinstance {
                              * (gate node, gate prime node) */
     double *VDMOSGPgPtr;    /* pointer to sparse matrix element at
                              * (gate prime node, gate node) */
+    double *VDMOSDsPtr;    /* pointer to sparse matrix element at
+                             * (source node, drain node) */
+    double *VDMOSSdPtr;    /* pointer to sparse matrix element at
+                             * (drain node, source node) */
     /* bulk diode */
     double *VDIORPdPtr;    /* pointer to sparse matrix element at
                              * (diode prime node, drain node) */
