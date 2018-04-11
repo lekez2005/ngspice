@@ -41,8 +41,6 @@ VDMOSload(GENmodel *inModel, CKTcircuit *ckt)
     double delvds;
     double delvgd;
     double delvgs;
-    double evbd;
-    double evbs;
     double gcgb;
     double gcgd;
     double gcgs;
@@ -190,9 +188,7 @@ VDMOSload(GENmodel *inModel, CKTcircuit *ckt)
                     here->VDMOScbd +
                     here->VDMOSgbd * delvbd +
                     here->VDMOSgbs * delvbs;
-                /*
 
-                */
 
 #ifndef NOBYPASS
                 /* now lets see if we can bypass (ugh) */
@@ -259,9 +255,6 @@ VDMOSload(GENmodel *inModel, CKTcircuit *ckt)
                 }
 #endif /*NOBYPASS*/
 
-                /*
-
-                */
 
                 /* ok - bypass is out, do it the hard way */
 
@@ -300,9 +293,7 @@ VDMOSload(GENmodel *inModel, CKTcircuit *ckt)
                     vbs = vbd + vds;
                 }
 #endif /*NODELIMITING*/
-                /*
 
-                */
 
             } else {
 
@@ -327,9 +318,7 @@ VDMOSload(GENmodel *inModel, CKTcircuit *ckt)
                     vbs = vgs = vds = 0;
                 }
             }
-            /*
 
-            */
 
             /*
              * now all the preliminaries are over - we can start doing the
@@ -341,27 +330,14 @@ VDMOSload(GENmodel *inModel, CKTcircuit *ckt)
 
 
             /*
-             * bulk-source and bulk-drain diodes
-             *   here we just evaluate the ideal diode current and the
-             *   corresponding derivative (conductance).
+             * bulk-source and bulk-drain diodes are not available in vdmos
              */
 
-            if (vbs <= -3 * vt) {
-                here->VDMOSgbs = ckt->CKTgmin;
-                here->VDMOScbs = here->VDMOSgbs*vbs - SourceSatCur;
-            } else {
-                evbs = exp(MIN(MAX_EXP_ARG, vbs / vt));
-                here->VDMOSgbs = SourceSatCur*evbs / vt + ckt->CKTgmin;
-                here->VDMOScbs = SourceSatCur*(evbs - 1) + ckt->CKTgmin*vbs;
-            }
-            if (vbd <= -3 * vt) {
-                here->VDMOSgbd = ckt->CKTgmin;
-                here->VDMOScbd = here->VDMOSgbd*vbd - DrainSatCur;
-            } else {
-                evbd = exp(MIN(MAX_EXP_ARG, vbd / vt));
-                here->VDMOSgbd = DrainSatCur*evbd / vt + ckt->CKTgmin;
-                here->VDMOScbd = DrainSatCur*(evbd - 1) + ckt->CKTgmin*vbd;
-            }
+            here->VDMOSgbs = 0;
+            here->VDMOScbs = 0;
+            here->VDMOSgbd = 0;
+            here->VDMOScbd = 0;
+
             /* now to determine whether the user was able to correctly
              * identify the source and drain of his device
              */
@@ -372,9 +348,6 @@ VDMOSload(GENmodel *inModel, CKTcircuit *ckt)
                 /* inverse mode */
                 here->VDMOSmode = -1;
             }
-            /*
-
-            */
 
             {
                 /*
@@ -430,19 +403,14 @@ VDMOSload(GENmodel *inModel, CKTcircuit *ckt)
                         here->VDMOSgmbs = here->VDMOSgm * arg;
                     }
                 }
-                /*
-                 *     finished
-                 */
-            }
-            /*
+            } /* end of drain current block */
 
-            */
 
             /* now deal with n vs p polarity */
 
             here->VDMOSvon = model->VDMOStype * von;
             here->VDMOSvdsat = model->VDMOStype * vdsat;
-            /* line 490 */
+
             /*
              *  COMPUTE EQUIVALENT DRAIN CURRENT SOURCE
              */
@@ -457,12 +425,7 @@ VDMOSload(GENmodel *inModel, CKTcircuit *ckt)
 
                 *(ckt->CKTstate0 + here->VDMOSqbd) = 0;
                 here->VDMOScapbd = 0;
-                /*
-
-                */
-
             }
-
 
 
             /* save things away for next time */
@@ -472,27 +435,22 @@ VDMOSload(GENmodel *inModel, CKTcircuit *ckt)
             *(ckt->CKTstate0 + here->VDMOSvgs) = vgs;
             *(ckt->CKTstate0 + here->VDMOSvds) = vds;
 
-            /*
-
-            */
 
             /*
-             *     new capacitor model
+             *     new vdmos capacitor model
              */
             if (ckt->CKTmode & (MODETRAN | MODETRANOP | MODEINITSMSIG)) {
                 /*
-                 *     calculate meyer's capacitors
-                 */
+                 * calculate gate - drain, gate - source capacitors
+                 *. drain-source capacitor is evaluated with the bulk diode below
+                */
                 /*
-                 * according to new cmeyer - this just evaluates at the current time,
+                 * this just evaluates at the current time,
                  * expects you to remember values from previous time
                  * returns 1/2 of non-constant portion of capacitance
                  * you must add in the other half from previous time
                  * and the constant part
                  */
-                /*
-                *     VDMOS capacitor model
-                */
                 DevCapVDMOS(vgd, cgdmin, cgdmax, a, cgs,
                             (ckt->CKTstate0 + here->VDMOScapgs),
                             (ckt->CKTstate0 + here->VDMOScapgd),
@@ -524,7 +482,7 @@ VDMOSload(GENmodel *inModel, CKTcircuit *ckt)
                 */
 
                 /*
-                 *     store small-signal parameters (for meyer's model)
+                 *     store small-signal parameters (for vdmos capacitor model)
                  *  all parameters already stored, so done...
                  */
 #ifndef PREDICTOR
