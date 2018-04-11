@@ -9,7 +9,6 @@ extern int VDMOSask(CKTcircuit*,GENinstance*,int,IFvalue*,IFvalue*);
 extern int VDMOSgetic(GENmodel*,CKTcircuit*);
 extern int VDMOSload(GENmodel*,CKTcircuit*);
 extern int VDMOSmAsk(CKTcircuit *,GENmodel *,int,IFvalue*);
-extern int VDMOSmDelete(GENmodel*);
 extern int VDMOSmParam(int,IFvalue*,GENmodel*);
 extern int VDMOSparam(int,IFvalue*,GENinstance*,IFvalue*);
 extern int VDMOSpzLoad(GENmodel*,CKTcircuit*,SPcomplex*);
