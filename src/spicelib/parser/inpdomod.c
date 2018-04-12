@@ -213,9 +213,9 @@ char *INPdomodel(CKTcircuit *ckt, struct card *image, INPtables * tab)
     }
 
     /*  ------  Check if model is a VDMOS FET ------- */
-    else if ((strcmp(type_name, "vdmos") == 0)
-        || (strcmp(type_name, "vdmosn") == 0)
-        || (strcmp(type_name, "vdmosp") == 0)) {
+    else if ((strcmp(type_name, "vdmos") == 0) ||
+             (strcmp(type_name, "vdmosn") == 0) ||
+             (strcmp(type_name, "vdmosp") == 0)) {
         type = INPtypelook("VDMOS");
         if (type < 0) {
             err =
