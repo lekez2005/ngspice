@@ -6046,15 +6046,17 @@ inp_quote_params(struct card *c, struct card *end_c, struct dependency *deps, in
     }
 }
 
+
 /* VDMOS special:
-Check for 'vdmos' in .model line.
-check if 'pchan', then add p to vdmos and ignore 'pchan'.
-If no 'pchan' is found, add n to vdmos.
-Ignore annotations on Vds, Ron, Qg, and mfg.
-Assemble all other tokens in a wordlist, and flatten it
-to become the new .model line.
+   Check for 'vdmos' in .model line.
+   check if 'pchan', then add p to vdmos and ignore 'pchan'.
+   If no 'pchan' is found, add n to vdmos.
+   Ignore annotations on Vds, Ron, Qg, and mfg.
+   Assemble all other tokens in a wordlist, and flatten it
+   to become the new .model line.
 */
-static void 
+
+static void
 inp_vdmos_model(struct card *deck)
 {
     struct card *card;
@@ -6083,7 +6085,7 @@ inp_vdmos_model(struct card *deck)
             new_line = NULL;
             while (cut_line && *cut_line) {
                 token = gettok_noparens(&cut_line);
-                if(!ciprefix("pchan", token) && !ciprefix("ron=", token) && !ciprefix("vds=", token) && !ciprefix("qg=", token) && !ciprefix("mfg=", token))
+                if (!ciprefix("pchan", token) && !ciprefix("ron=", token) && !ciprefix("vds=", token) && !ciprefix("qg=", token) && !ciprefix("mfg=", token))
                     wl_append_word(NULL, &wl, token);
                 if (*cut_line == ')') {
                     wl_append_word(NULL, &wl, ")");
