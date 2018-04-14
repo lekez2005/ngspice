@@ -258,10 +258,6 @@ typedef struct sVDMOSinstance {
     double *VDIORPsPtr;    /* pointer to sparse matrix element at
                             * (diode prime node, source node) */
 
-    double VDMOScgs;
-    double VDMOScgd;
-    double VDMOScgb;
-
 } VDMOSinstance ;
 
 #define VDMOSvbd VDMOSstates+ 0   /* bulk-drain voltage */
@@ -459,7 +455,6 @@ typedef struct sVDMOSmodel {       /* model structure for a resistor */
 #define VDMOS_MOD_TT 165
 #define VDMOS_MOD_EG 166
 #define VDMOS_MOD_XTI 167
-
 
 /* device questions */
 #define VDMOS_CGS                201

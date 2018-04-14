@@ -245,11 +245,6 @@ VDMOSload(GENmodel *inModel, CKTcircuit *ckt)
                         capgb = (*(ckt->CKTstate0 + here->VDMOScapgb) +
                                  *(ckt->CKTstate1 + here->VDMOScapgb));
 
-                        if (ckt->CKTsenInfo) {
-                            here->VDMOScgs = capgs;
-                            here->VDMOScgd = capgd;
-                            here->VDMOScgb = capgb;
-                        }
                     }
                     goto bypass;
                 }
@@ -471,11 +466,6 @@ VDMOSload(GENmodel *inModel, CKTcircuit *ckt)
                              *(ckt->CKTstate1 + here->VDMOScapgd));
                     capgb = (*(ckt->CKTstate0 + here->VDMOScapgb) +
                              *(ckt->CKTstate1 + here->VDMOScapgb));
-                }
-                if (ckt->CKTsenInfo) {
-                    here->VDMOScgs = capgs;
-                    here->VDMOScgd = capgd;
-                    here->VDMOScgb = capgb;
                 }
                 /*
 
