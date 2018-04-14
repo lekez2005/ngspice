@@ -398,7 +398,7 @@ VDMOSload(GENmodel *inModel, CKTcircuit *ckt)
                         here->VDMOSgmbs = here->VDMOSgm * arg;
                     }
                 }
-            } /* end of drain current block */
+            }
 
 
             /* now deal with n vs p polarity */
@@ -432,12 +432,12 @@ VDMOSload(GENmodel *inModel, CKTcircuit *ckt)
 
 
             /*
-             *     new vdmos capacitor model
+             * vdmos capacitor model
              */
             if (ckt->CKTmode & (MODETRAN | MODETRANOP | MODEINITSMSIG)) {
                 /*
                  * calculate gate - drain, gate - source capacitors
-                 *. drain-source capacitor is evaluated with the bulk diode below
+                 * drain-source capacitor is evaluated with the bulk diode below
                 */
                 /*
                  * this just evaluates at the current time,
@@ -471,10 +471,6 @@ VDMOSload(GENmodel *inModel, CKTcircuit *ckt)
 
                 */
 
-                /*
-                 *     store small-signal parameters (for vdmos capacitor model)
-                 *  all parameters already stored, so done...
-                 */
 #ifndef PREDICTOR
                 if (ckt->CKTmode & (MODEINITPRED | MODEINITTRAN)) {
                     *(ckt->CKTstate0 + here->VDMOSqgs) =
@@ -833,7 +829,7 @@ load :
             *(here->VDIORPsPtr) -= gspr;
             *(here->VDIORPdPtr) -= gd;
 
-        } /* end of looping through all the instances of the model */
+        }
     }
     return(OK);
 }

@@ -149,20 +149,17 @@ VDMOStemp(GENmodel *inModel, CKTcircuit *ckt)
                 } else {
                     here->VDMOSsourceConductance = 0;
                 }
-            } 
-            else {
+            } else {
                 here->VDMOSsourceConductance = 0;
             }
             if (model->VDMOSgateResistanceGiven) {
                 if (model->VDMOSgateResistance != 0) {
                     here->VDMOSgateConductance = here->VDMOSm /
                         model->VDMOSgateResistance;
-                }
-                else {
+                } else {
                     here->VDMOSgateConductance = 0;
                 }
-            }
-            else {
+            } else {
                 here->VDMOSgateConductance = 0;
             }
             if (model->VDMOSrdsGiven) {
