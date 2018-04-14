@@ -100,8 +100,6 @@ VDMOSsetup(SMPmatrix *matrix, GENmodel *inModel, CKTcircuit *ckt,
             model->VDMOSDeg = 1.11;
         }
 
-
-
         /* loop through all the instances of the model */
         for (here = VDMOSinstances(model); here != NULL;
             here = VDMOSnextInstance(here)) {
@@ -159,7 +157,7 @@ VDMOSsetup(SMPmatrix *matrix, GENmodel *inModel, CKTcircuit *ckt,
                 here->VDMOSdNodePrime = here->VDMOSdNode;
             }
 
-            if (model->VDMOSsourceResistance != 0 ) {
+            if (model->VDMOSsourceResistance != 0) {
                 if (here->VDMOSsNodePrime == 0) {
                     error = CKTmkVolt(ckt, &tmp, here->VDMOSname, "source");
                     if (error) return(error);

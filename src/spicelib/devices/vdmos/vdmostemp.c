@@ -81,7 +81,6 @@ VDMOStemp(GENmodel *inModel, CKTcircuit *ckt)
         xfc = log(1 - model->VDIOdepletionCapCoeffGiven);
         xfcs = log(1 - model->VDIOdepletionCapCoeffGiven);
 
-
         /* loop through all instances of the model */
         for(here = VDMOSinstances(model); here!= NULL; 
                 here = VDMOSnextInstance(here)) {

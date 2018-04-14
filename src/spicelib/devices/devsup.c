@@ -615,7 +615,7 @@ DEVcmeyer(double vgs0,		/* initial voltage gate-source */
 }
 
 /* model according to
-http://ltwiki.org/index.php5?title=Undocumented_LTspice#VDMOS:_Breakdown_and_Sub-threshold_Enhancements 
+http://ltwiki.org/index.php5?title=Undocumented_LTspice#VDMOS:_Breakdown_and_Sub-threshold_Enhancements
 */
 void
 DevCapVDMOS(double vgd, double cgdmin,

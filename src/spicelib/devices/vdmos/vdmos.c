@@ -12,7 +12,7 @@ VDMOS Model: 2018 Holger Vogt
 #include "ngspice/suffix.h"
 
 IFparm VDMOSpTable[] = { /* parameters */ 
- IOPU("mu",            VDMOS_M,          IF_REAL   , "Multiplier"),
+ IOPU("mu",           VDMOS_M,          IF_REAL   , "Multiplier"),
  IOPU("l",            VDMOS_L,          IF_REAL   , "Length"),
  IOPU("w",            VDMOS_W,          IF_REAL   , "Width"),
  IP("off",            VDMOS_OFF,        IF_FLAG   , "Device initially off"),
@@ -109,7 +109,7 @@ IFparm VDMOSmPTable[] = { /* model parameters */
  IOP("vj",    VDMOS_MOD_VJ,    IF_REAL   ,"Body diode junction potential"),
  IOP("fc",    VDMOS_MOD_FC,    IF_REAL   ,"Body diode coefficient for forward-bias depletion capacitance formula"),
  IOPA("cjo",  VDMOS_MOD_CJ,    IF_REAL   ,"Zero-bias body diode junction capacitance"),
- IOP("m",    VDMOS_MOD_MJ,    IF_REAL   ,"Body diode grading coefficient"),
+ IOP("m",     VDMOS_MOD_MJ,    IF_REAL   ,"Body diode grading coefficient"),
 
 /* capacitance */
  IOPA("cgdmin", VDMOS_MOD_CGDMIN, IF_REAL ,"Minimum non-linear G-D capacitance"),
@@ -124,14 +124,11 @@ IFparm VDMOSmPTable[] = { /* model parameters */
  IP("vdmosp", VDMOS_MOD_PMOS,  IF_FLAG   ,"P type DMOSfet model"),
  IP("vdmos",  VDMOS_MOD_DMOS,  IF_REAL   ,"DMOS transistor"),
 
-
 /* MOS1 */
-
  IOP("js",    VDMOS_MOD_JS,    IF_REAL   ,"Bulk jct. sat. current density"),
  IOP("tox",   VDMOS_MOD_TOX,   IF_REAL   ,"Oxide thickness"),
  IOP("u0",    VDMOS_MOD_U0,    IF_REAL   ,"Surface mobility"),
  IOPR("uo",   VDMOS_MOD_U0,    IF_REAL   ,"Surface mobility"),
-
 
  IOP("nsub",  VDMOS_MOD_NSUB,  IF_REAL   ,"Substrate doping"),
  IOP("nss",   VDMOS_MOD_NSS,   IF_REAL   ,"Surface state density")

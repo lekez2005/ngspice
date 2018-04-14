@@ -102,6 +102,7 @@ VDMOSload(GENmodel *inModel, CKTcircuit *ckt)
             SourceSatCur = here->VDMOSm * here->VDMOStSatCur;
             Beta = here->VDMOStTransconductance * here->VDMOSm *
                    here->VDMOSw / here->VDMOSl;
+
             /*
              * ok - now to do the start-up operations
              *
@@ -379,7 +380,7 @@ VDMOSload(GENmodel *inModel, CKTcircuit *ckt)
                     /* scale vds with mtr */
                     double mtr = model->VDMOSmtr;
                     betap = Beta*(1 + model->VDMOSlambda*(vds*here->VDMOSmode));
-                    if (vgst <= (vds*here->VDMOSmode) * mtr) {
+                    if (vgst <= (vds * here->VDMOSmode) * mtr) {
                         cdrain = betap*vgst*vgst*.5;
                         here->VDMOSgm = betap*vgst;
                         here->VDMOSgds = model->VDMOSlambda*Beta*vgst*vgst*.5;
@@ -391,7 +392,7 @@ VDMOSload(GENmodel *inModel, CKTcircuit *ckt)
                         cdrain = betap * (vds * here->VDMOSmode) * mtr *
                                  (vgst - .5 * (vds*here->VDMOSmode) * mtr);
                         here->VDMOSgm = betap * (vds * here->VDMOSmode) * mtr;
-                        here->VDMOSgds = betap * (vgst - (vds  *here->VDMOSmode) * mtr) +
+                        here->VDMOSgds = betap * (vgst - (vds * here->VDMOSmode) * mtr) +
                                          model->VDMOSlambda * Beta *
                                          (vds * here->VDMOSmode) * mtr *
                                          (vgst - .5 * (vds * here->VDMOSmode) * mtr);
@@ -438,7 +439,7 @@ VDMOSload(GENmodel *inModel, CKTcircuit *ckt)
                 /*
                  * calculate gate - drain, gate - source capacitors
                  * drain-source capacitor is evaluated with the bulk diode below
-                */
+                 */
                 /*
                  * this just evaluates at the current time,
                  * expects you to remember values from previous time
@@ -450,7 +451,6 @@ VDMOSload(GENmodel *inModel, CKTcircuit *ckt)
                             (ckt->CKTstate0 + here->VDMOScapgs),
                             (ckt->CKTstate0 + here->VDMOScapgd),
                             (ckt->CKTstate0 + here->VDMOScapgb));
-
 
                 vgs1 = *(ckt->CKTstate1 + here->VDMOSvgs);
                 vgd1 = vgs1 - *(ckt->CKTstate1 + here->VDMOSvds);
@@ -538,7 +538,6 @@ bypass :
                 ceqgb = ceqgb - gcgb*vgb + ckt->CKTag[0] *
                         *(ckt->CKTstate0 + here->VDMOSqgb);
             }
-
 
             /*
              *  load current vector
@@ -828,7 +827,6 @@ load :
             *(here->VDIODrpPtr) -= gd;
             *(here->VDIORPsPtr) -= gspr;
             *(here->VDIORPdPtr) -= gd;
-
         }
     }
     return(OK);
