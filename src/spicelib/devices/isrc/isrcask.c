@@ -92,9 +92,11 @@ ISRCask(CKTcircuit *ckt, GENinstance *inst, int which, IFvalue *value, IFvalue *
                         *(ckt->CKTrhsOld + here->ISRCnegNode));
             }
             return(OK);
+#ifdef XSPICE
         case ISRC_CURRENT:
             value->rValue = here->ISRCcurrent;
             return (OK);
+#endif
         default:
             return (E_BADPARM);
     }
