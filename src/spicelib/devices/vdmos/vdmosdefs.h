@@ -15,6 +15,20 @@ Modified: 2000 AlansFixes
 
 /* declarations for VDMOSFETs */
 
+/* indices to the array of MOSFET(1) noise sources */
+
+enum {
+    VDMOSRDNOIZ = 0,
+    VDMOSRSNOIZ,
+    VDMOSIDNOIZ,
+    VDMOSFLNOIZ,
+    VDMOSTOTNOIZ,
+    /* finally, the number of noise sources */
+    VDMOSNSRCS
+};
+
+     /* the number of VDMOSFET noise sources*/
+
 /* information needed for each instance */
 
 typedef struct sVDMOSinstance {
@@ -144,14 +158,6 @@ typedef struct sVDMOSinstance {
 #define	capgd3		VDMOSdCoeffs[29]
 
 #endif
-
-#define VDMOSRDNOIZ	0
-#define VDMOSRSNOIZ   1
-#define VDMOSIDNOIZ       2
-#define VDMOSFLNOIZ 3
-#define VDMOSTOTNOIZ    4
-
-#define VDMOSNSRCS     5     /* the number of VDMOSFET noise sources*/
 
 #ifndef NONOISE
     double VDMOSnVar[NSTATVARS][VDMOSNSRCS];
@@ -397,102 +403,107 @@ typedef struct sVDMOSmodel {       /* model structure for a resistor */
 #endif /*NMOS*/
 
 /* device parameters */
-#define VDMOS_W 1
-#define VDMOS_L 2
-#define VDMOS_OFF 9
-#define VDMOS_IC 10
-#define VDMOS_IC_VBS 11
-#define VDMOS_IC_VDS 12
-#define VDMOS_IC_VGS 13
-#define VDMOS_CB 16
-#define VDMOS_CG 17
-#define VDMOS_CS 18
-#define VDMOS_POWER 19
-#define VDMOS_TEMP 20
-#define VDMOS_M 21
-#define VDMOS_DTEMP 22
+enum {
+    VDMOS_W = 1,
+    VDMOS_L,
+    VDMOS_OFF,
+    VDMOS_IC,
+    VDMOS_IC_VBS,
+    VDMOS_IC_VDS,
+    VDMOS_IC_VGS,
+    VDMOS_CB,
+    VDMOS_CG,
+    VDMOS_CS,
+    VDMOS_POWER,
+    VDMOS_TEMP,
+    VDMOS_M,
+    VDMOS_DTEMP,
+};
+
 /* model paramerers */
-#define VDMOS_MOD_VTO 101
-#define VDMOS_MOD_KP 102
-#define VDMOS_MOD_PHI 104
-#define VDMOS_MOD_LAMBDA 105
-#define VDMOS_MOD_RD 106
-#define VDMOS_MOD_RS 107
-#define VDMOS_MOD_RG 108
-#define VDMOS_MOD_IS 110
-#define VDMOS_MOD_VJ 111
-#define VDMOS_MOD_CJ 115
-#define VDMOS_MOD_MJ 116
-#define VDMOS_MOD_JS 119
-#define VDMOS_MOD_TOX 120
-#define VDMOS_MOD_U0 121
-#define VDMOS_MOD_FC 122
-#define VDMOS_MOD_FCT1 123
-#define VDMOS_MOD_FCT2 124
-#define VDMOS_MOD_NSUB 125
-#define VDMOS_MOD_NSS 127
-#define VDMOS_MOD_NMOS 128
-#define VDMOS_MOD_PMOS 129
-#define VDMOS_MOD_TNOM 130
-#define VDMOS_MOD_KF 131
-#define VDMOS_MOD_AF 132
-#define VDMOS_MOD_TYPE 133
-#define VDMOS_MOD_DMOS 134
-
-#define VDMOS_MOD_CGDMIN 150
-#define VDMOS_MOD_CGDMAX 151
-#define VDMOS_MOD_A 152
-#define VDMOS_MOD_CGS 153
-#define VDMOS_MOD_RB 154
-#define VDMOS_MOD_MTRIODE 155
-#define VDMOS_MOD_SUBTHRES 156
-
-#define VDMOS_MOD_BV 160
-#define VDMOS_MOD_IBV 161
-#define VDMOS_MOD_NBV 162
-#define VDMOS_MOD_RDS 163
-#define VDMOS_MOD_N 164
-#define VDMOS_MOD_TT 165
-#define VDMOS_MOD_EG 166
-#define VDMOS_MOD_XTI 167
+enum {
+    VDMOS_MOD_VTO = 101,
+    VDMOS_MOD_KP,
+    VDMOS_MOD_PHI,
+    VDMOS_MOD_LAMBDA,
+    VDMOS_MOD_RD,
+    VDMOS_MOD_RS,
+    VDMOS_MOD_RG,
+    VDMOS_MOD_IS,
+    VDMOS_MOD_VJ,
+    VDMOS_MOD_CJ,
+    VDMOS_MOD_MJ,
+    VDMOS_MOD_JS,
+    VDMOS_MOD_TOX,
+    VDMOS_MOD_U0,
+    VDMOS_MOD_FC,
+    VDMOS_MOD_FCT1,
+    VDMOS_MOD_FCT2,
+    VDMOS_MOD_NSUB,
+    VDMOS_MOD_NSS,
+    VDMOS_MOD_NMOS,
+    VDMOS_MOD_PMOS,
+    VDMOS_MOD_TNOM,
+    VDMOS_MOD_KF,
+    VDMOS_MOD_AF,
+    VDMOS_MOD_TYPE,
+    VDMOS_MOD_DMOS,
+    VDMOS_MOD_CGDMIN,
+    VDMOS_MOD_CGDMAX,
+    VDMOS_MOD_A,
+    VDMOS_MOD_CGS,
+    VDMOS_MOD_RB,
+    VDMOS_MOD_MTRIODE,
+    VDMOS_MOD_SUBTHRES,
+    VDMOS_MOD_BV,
+    VDMOS_MOD_IBV,
+    VDMOS_MOD_NBV,
+    VDMOS_MOD_RDS,
+    VDMOS_MOD_N,
+    VDMOS_MOD_TT,
+    VDMOS_MOD_EG,
+    VDMOS_MOD_XTI,
+};
 
 /* device questions */
-#define VDMOS_CGS                201
-#define VDMOS_CGD                202
-#define VDMOS_DNODE              203
-#define VDMOS_GNODE              204
-#define VDMOS_SNODE              205
-#define VDMOS_BNODE              206
-#define VDMOS_DNODEPRIME         207
-#define VDMOS_SNODEPRIME         208
-#define VDMOS_SOURCECONDUCT      209
-#define VDMOS_DRAINCONDUCT       210
-#define VDMOS_VON                211
-#define VDMOS_VDSAT              212
-#define VDMOS_SOURCEVCRIT        213
-#define VDMOS_DRAINVCRIT         214
-#define VDMOS_CD                 215
-#define VDMOS_CBS                216
-#define VDMOS_CBD                217
-#define VDMOS_GMBS               218
-#define VDMOS_GM                 219
-#define VDMOS_GDS                220
-#define VDMOS_GBD                221
-#define VDMOS_GBS                222
-#define VDMOS_VGS                231
-#define VDMOS_VDS                232
-#define VDMOS_QGS                234
-#define VDMOS_CQGS               235
-#define VDMOS_QGD                237
-#define VDMOS_CQGD               238
-#define VDMOS_QGB                240
-#define VDMOS_CQGB               241
-#define VDMOS_QBD                242
-#define VDMOS_CQBD               243
-#define VDMOS_QBS                244
-#define VDMOS_CQBS               245
-#define VDMOS_SOURCERESIST      258
-#define VDMOS_DRAINRESIST       259
+enum {
+    VDMOS_CGS = 201,
+    VDMOS_CGD,
+    VDMOS_DNODE,
+    VDMOS_GNODE,
+    VDMOS_SNODE,
+    VDMOS_BNODE,
+    VDMOS_DNODEPRIME,
+    VDMOS_SNODEPRIME,
+    VDMOS_SOURCECONDUCT,
+    VDMOS_DRAINCONDUCT,
+    VDMOS_VON,
+    VDMOS_VDSAT,
+    VDMOS_SOURCEVCRIT,
+    VDMOS_DRAINVCRIT,
+    VDMOS_CD,
+    VDMOS_CBS,
+    VDMOS_CBD,
+    VDMOS_GMBS,
+    VDMOS_GM,
+    VDMOS_GDS,
+    VDMOS_GBD,
+    VDMOS_GBS,
+    VDMOS_VGS,
+    VDMOS_VDS,
+    VDMOS_QGS,
+    VDMOS_CQGS,
+    VDMOS_QGD,
+    VDMOS_CQGD,
+    VDMOS_QGB,
+    VDMOS_CQGB,
+    VDMOS_QBD,
+    VDMOS_CQBD,
+    VDMOS_QBS,
+    VDMOS_CQBS,
+    VDMOS_SOURCERESIST,
+    VDMOS_DRAINRESIST,
+};
 
 /* model questions */
 
