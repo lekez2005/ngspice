@@ -328,7 +328,6 @@ typedef struct sVDMOSmodel {       /* model structure for a resistor */
     double VDMOSvt0; /* input - use tVto */
     double VDMOSphi; /* input - use tPhi */
     double VDMOSlambda;
-    int VDMOSgateType;
     double VDMOSoxideThickness;
     double VDMOSfNcoef;
     double VDMOSfNexp;
