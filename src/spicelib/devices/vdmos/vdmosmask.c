@@ -45,9 +45,6 @@ VDMOSmAsk(CKTcircuit *ckt, GENmodel *inst, int which, IFvalue *value)
         case VDMOS_MOD_RG:
             value->rValue = model->VDMOSgateResistance;
             return(OK);
-        case VDMOS_MOD_TOX:
-            value->rValue = model->VDMOSoxideThickness;
-            return(OK);
         case VDMOS_MOD_MTRIODE:
             value->rValue = model->VDMOSmtr;
             return(OK);

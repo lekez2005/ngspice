@@ -328,7 +328,6 @@ typedef struct sVDMOSmodel {       /* model structure for a resistor */
     double VDMOSvt0; /* input - use tVto */
     double VDMOSphi; /* input - use tPhi */
     double VDMOSlambda;
-    double VDMOSoxideThickness;
     double VDMOSfNcoef;
     double VDMOSfNexp;
     double VDMOScgdmin;
@@ -432,14 +431,10 @@ enum {
     VDMOS_MOD_VJ,
     VDMOS_MOD_CJ,
     VDMOS_MOD_MJ,
-    VDMOS_MOD_JS,
     VDMOS_MOD_TOX,
-    VDMOS_MOD_U0,
     VDMOS_MOD_FC,
     VDMOS_MOD_FCT1,
     VDMOS_MOD_FCT2,
-    VDMOS_MOD_NSUB,
-    VDMOS_MOD_NSS,
     VDMOS_MOD_NMOS,
     VDMOS_MOD_PMOS,
     VDMOS_MOD_TNOM,

@@ -69,10 +69,6 @@ VDMOSmParam(int param, IFvalue *value, GENmodel *inModel)
             model->VDIOgradCoeff = value->rValue;
             model->VDIOgradCoeffGiven = TRUE;
             break;
-        case VDMOS_MOD_TOX:
-            model->VDMOSoxideThickness = value->rValue;
-            model->VDMOSoxideThicknessGiven = TRUE;
-            break;
         case VDMOS_MOD_FC:
             model->VDIOdepletionCapCoeff = value->rValue;
             model->VDIOdepletionCapCoeffGiven = TRUE;
