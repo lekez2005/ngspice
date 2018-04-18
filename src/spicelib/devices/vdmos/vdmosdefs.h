@@ -370,7 +370,6 @@ typedef struct sVDMOSmodel {       /* model structure for a resistor */
     unsigned VDIOdepletionCapCoeffGiven :1;
     unsigned VDMOSphiGiven : 1;
     unsigned VDMOSlambdaGiven    :1;
-    unsigned VDMOSoxideThicknessGiven    :1;
     unsigned VDMOStnomGiven  :1;
     unsigned VDMOSfNcoefGiven  :1;
     unsigned VDMOSfNexpGiven   :1;
@@ -431,7 +430,6 @@ enum {
     VDMOS_MOD_VJ,
     VDMOS_MOD_CJ,
     VDMOS_MOD_MJ,
-    VDMOS_MOD_TOX,
     VDMOS_MOD_FC,
     VDMOS_MOD_FCT1,
     VDMOS_MOD_FCT2,
