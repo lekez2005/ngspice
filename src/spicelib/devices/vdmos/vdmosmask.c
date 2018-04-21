@@ -73,7 +73,7 @@ VDMOSmAsk(CKTcircuit *ckt, GENmodel *inst, int which, IFvalue *value)
             return(OK);
         case VDMOS_MOD_IS:
             value->rValue = model->VDIOjctSatCur;
-                return(OK);
+            return(OK);
         case VDMOS_MOD_N:
             value->rValue = model->VDMOSDn;
             return(OK);
@@ -110,7 +110,6 @@ VDMOSmAsk(CKTcircuit *ckt, GENmodel *inst, int which, IFvalue *value)
         case VDMOS_MOD_XTI:
             value->rValue = model->VDMOSDxti;
             return(OK);
-
         default:
             return(E_BADPARM);
     }

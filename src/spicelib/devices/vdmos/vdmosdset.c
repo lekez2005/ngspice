@@ -63,10 +63,10 @@ VDMOSdSetup(GENmodel *inModel, CKTcircuit *ckt)
     double lcapgs3;
     double lcapgd2;
     double lcapgd3;
-    double lcapbs2=0;
-    double lcapbs3=0;
-    double lcapbd2=0;
-    double lcapbd3=0;
+    double lcapbs2 = 0;
+    double lcapbs3 = 0;
+    double lcapbd2 = 0;
+    double lcapbd3 = 0;
     double gmbds = 0.0;
 
 
@@ -255,7 +255,6 @@ VDMOSdSetup(GENmodel *inModel, CKTcircuit *ckt)
                  *
                  *.. bulk-drain and bulk-source depletion capacitances
                  */
-
             /*
              *     meyer's capacitor model
              */

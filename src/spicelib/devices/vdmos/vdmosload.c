@@ -159,6 +159,7 @@ VDMOSload(GENmodel *inModel, CKTcircuit *ckt)
 #endif /* PREDICTOR */
 
                 /* now some common crunching for some more useful quantities */
+
                 vbs = 0;
                 vbd = vbs - vds;
                 vgd = vgs - vds;
@@ -657,7 +658,6 @@ bypass :
             gdb = 0.0;
             csat = here->VDIOtSatCur;
             gspr = here->VDIOtConductance;
-
             vte = model->VDMOSDn * vt;
             vtebrk = model->VDIObrkdEmissionCoeff * vt;
             vbrknp = model->VDMOStype * here->VDIOtBrkdwnV;
