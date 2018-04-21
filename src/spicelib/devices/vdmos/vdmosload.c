@@ -76,18 +76,13 @@ VDMOSload(GENmodel *inModel, CKTcircuit *ckt)
 #endif /*NOBYPASS*/
     int error;
 
-    double cgdmin;
-    double cgdmax;
-    double a;
-    double cgs;
-
     /*  loop through all the VDMOS device models */
     for (; model != NULL; model = VDMOSnextModel(model)) {
         /* VDMOS capacitance parameters */
-        cgdmin = model->VDMOScgdmin;
-        cgdmax = model->VDMOScgdmax;
-        a = model->VDMOSa;
-        cgs = model->VDMOScgs;
+        const double cgdmin = model->VDMOScgdmin;
+        const double cgdmax = model->VDMOScgdmax;
+        const double a = model->VDMOSa;
+        const double cgs = model->VDMOScgs;
 
         /* loop through all the instances of the model */
         for (here = VDMOSinstances(model); here != NULL;
