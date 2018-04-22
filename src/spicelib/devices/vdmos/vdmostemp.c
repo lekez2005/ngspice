@@ -25,7 +25,7 @@ VDMOStemp(GENmodel *inModel, CKTcircuit *ckt)
     double phio;
     double pbfact1,pbfact;
     double vt,vtnom;
-    double xfc, xfcs;
+    double xfc;
 
     /* loop through all the resistor models */
     for( ; model != NULL; model = VDMOSnextModel(model)) {
@@ -78,8 +78,7 @@ VDMOStemp(GENmodel *inModel, CKTcircuit *ckt)
         else {
             model->VDIOconductance = 1 / model->VDIOresistance;
         }
-        xfc = log(1 - model->VDIOdepletionCapCoeffGiven);
-        xfcs = log(1 - model->VDIOdepletionCapCoeffGiven);
+        xfc = log(1 - model->VDIOdepletionCapCoeff);
 
         /* loop through all instances of the model */
         for(here = VDMOSinstances(model); here!= NULL; 
@@ -233,7 +232,7 @@ VDMOStemp(GENmodel *inModel, CKTcircuit *ckt)
                 (1 - exp((1 - here->VDIOtGradingCoeff)*xfc)) /
                 (1 - here->VDIOtGradingCoeff);
             /* same for Depletion Capacitance */
-            here->VDIOtDepCap = model->VDMOSDn*
+            here->VDIOtDepCap = model->VDIOdepletionCapCoeff *
                 here->VDIOtJctPot;
 
             /* and Vcrit */
