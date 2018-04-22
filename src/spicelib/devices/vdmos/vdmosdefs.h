@@ -383,6 +383,7 @@ typedef struct sVDMOSmodel {       /* model structure for a resistor */
 
     unsigned VDMOSDbvGiven   :1;
     unsigned VDMOSDibvGiven   :1;
+    unsigned VDIOjunctionCapGiven :1;
     unsigned VDIOjunctionPotGiven :1;
     unsigned VDIObrkdEmissionCoeffGiven :1;
     unsigned VDIOresistanceGiven :1;
@@ -431,8 +432,6 @@ enum {
     VDMOS_MOD_CJ,
     VDMOS_MOD_MJ,
     VDMOS_MOD_FC,
-    VDMOS_MOD_FCT1,
-    VDMOS_MOD_FCT2,
     VDMOS_MOD_NMOS,
     VDMOS_MOD_PMOS,
     VDMOS_MOD_TNOM,
@@ -461,6 +460,7 @@ enum {
 enum {
     VDMOS_CGS = 201,
     VDMOS_CGD,
+    VDMOS_CDS,
     VDMOS_DNODE,
     VDMOS_GNODE,
     VDMOS_SNODE,
