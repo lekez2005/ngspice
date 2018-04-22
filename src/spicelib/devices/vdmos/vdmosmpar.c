@@ -62,12 +62,14 @@ VDMOSmParam(int param, IFvalue *value, GENmodel *inModel)
             model->VDIOjunctionPotGiven = TRUE;
             break;
         case VDMOS_MOD_CJ:
-            model->VDIOjunctionPot = value->rValue;
-            model->VDIOjunctionPotGiven = TRUE;
+            model->VDIOjunctionCap = value->rValue;
+            model->VDIOjunctionCapGiven = TRUE;
             break;
         case VDMOS_MOD_MJ:
             model->VDIOgradCoeff = value->rValue;
             model->VDIOgradCoeffGiven = TRUE;
+            model->VDIOgradCoeffTemp1 = 0;
+            model->VDIOgradCoeffTemp2 = 0;
             break;
         case VDMOS_MOD_FC:
             model->VDIOdepletionCapCoeff = value->rValue;
