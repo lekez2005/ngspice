@@ -81,19 +81,19 @@ VDMOSask(CKTcircuit *ckt, GENinstance *inst, int which, IFvalue *value,
             value->rValue = here->VDMOSsourceConductance;
             return(OK);
         case VDMOS_SOURCERESIST:
-	    if (here->VDMOSsNodePrime != here->VDMOSsNode)
-		value->rValue = 1.0 / here->VDMOSsourceConductance;
-	    else
-		value->rValue = 0.0;
+            if (here->VDMOSsNodePrime != here->VDMOSsNode)
+                value->rValue = 1.0 / here->VDMOSsourceConductance;
+            else
+                value->rValue = 0.0;
             return(OK);
         case VDMOS_DRAINCONDUCT:
             value->rValue = here->VDMOSdrainConductance;
             return(OK);
         case VDMOS_DRAINRESIST:
-	    if (here->VDMOSdNodePrime != here->VDMOSdNode)
-		value->rValue = 1.0 / here->VDMOSdrainConductance;
-	    else
-		value->rValue = 0.0;
+            if (here->VDMOSdNodePrime != here->VDMOSdNode)
+                value->rValue = 1.0 / here->VDMOSdrainConductance;
+            else
+                value->rValue = 0.0;
             return(OK);
         case VDMOS_VON:
             value->rValue = here->VDMOSvon;
@@ -109,12 +109,6 @@ VDMOSask(CKTcircuit *ckt, GENinstance *inst, int which, IFvalue *value,
             return(OK);
         case VDMOS_CD:
             value->rValue = here->VDMOScd;
-            return(OK);
-        case VDMOS_CBS:
-            value->rValue = here->VDMOScbs;
-            return(OK);
-        case VDMOS_CBD:
-            value->rValue = here->VDMOScbd;
             return(OK);
         case VDMOS_GMBS:
             value->rValue = here->VDMOSgmbs;
@@ -166,17 +160,6 @@ VDMOSask(CKTcircuit *ckt, GENinstance *inst, int which, IFvalue *value,
             return(OK);
         case VDMOS_CQBS:
             value->rValue = *(ckt->CKTstate0 + here->VDMOScqbs);
-            return(OK);
-        case VDMOS_CB :
-            if (ckt->CKTcurrentAnalysis & DOING_AC) {
-                errMsg = TMALLOC(char, strlen(msg) + 1);
-                errRtn = "VDMOSask.c";
-                strcpy(errMsg,msg);
-                return(E_ASKCURRENT);
-            } else {
-                value->rValue = here->VDMOScbd + here->VDMOScbs - *(ckt->CKTstate0
-                        + here->VDMOScqgb);
-            }
             return(OK);
         case VDMOS_CG :
             if (ckt->CKTcurrentAnalysis & DOING_AC) {
