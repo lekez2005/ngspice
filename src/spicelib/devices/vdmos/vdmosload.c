@@ -76,18 +76,13 @@ VDMOSload(GENmodel *inModel, CKTcircuit *ckt)
 #endif /*NOBYPASS*/
     int error;
 
-    double cgdmin;
-    double cgdmax;
-    double a;
-    double cgs;
-
     /*  loop through all the VDMOS device models */
     for (; model != NULL; model = VDMOSnextModel(model)) {
         /* VDMOS capacitance parameters */
-        cgdmin = model->VDMOScgdmin;
-        cgdmax = model->VDMOScgdmax;
-        a = model->VDMOSa;
-        cgs = model->VDMOScgs;
+        const double cgdmin = model->VDMOScgdmin;
+        const double cgdmax = model->VDMOScgdmax;
+        const double a = model->VDMOSa;
+        const double cgs = model->VDMOScgs;
 
         /* loop through all the instances of the model */
         for (here = VDMOSinstances(model); here != NULL;
@@ -159,6 +154,7 @@ VDMOSload(GENmodel *inModel, CKTcircuit *ckt)
 #endif /* PREDICTOR */
 
                 /* now some common crunching for some more useful quantities */
+
                 vbs = 0;
                 vbd = vbs - vds;
                 vgd = vgs - vds;
@@ -657,7 +653,6 @@ bypass :
             gdb = 0.0;
             csat = here->VDIOtSatCur;
             gspr = here->VDIOtConductance;
-
             vte = model->VDMOSDn * vt;
             vtebrk = model->VDIObrkdEmissionCoeff * vt;
             vbrknp = model->VDMOStype * here->VDIOtBrkdwnV;

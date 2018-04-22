@@ -318,7 +318,6 @@ typedef struct sVDMOSmodel {       /* model structure for a resistor */
 
     int VDMOStype;       /* device type : 1 = nmos,  -1 = pmos */
     double VDMOStnom;        /* temperature at which parameters measured */
-
     double VDMOSdrainResistance;
     double VDMOSsourceResistance;
     double VDMOSgateResistance;
@@ -336,6 +335,7 @@ typedef struct sVDMOSmodel {       /* model structure for a resistor */
     double VDMOScgs;
     double VDMOSsubth;
     double VDMOSmtr;
+
     /* bulk diode */
     double VDIOjunctionCap;   /* input - use tCj */
     double VDIOjunctionPot;    /* input - use tBulkPot */
