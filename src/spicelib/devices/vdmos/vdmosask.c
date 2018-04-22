@@ -40,7 +40,7 @@ VDMOSask(CKTcircuit *ckt, GENinstance *inst, int which, IFvalue *value,
             return(OK);
         case VDMOS_M:
             value->rValue = here->VDMOSm;
-            return(OK);    
+            return(OK);
         case VDMOS_L:
             value->rValue = here->VDMOSl;
                 return(OK);
