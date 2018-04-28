@@ -209,16 +209,15 @@ VDMOStemp(GENmodel *inModel, CKTcircuit *ckt)
             fact1 = model->VDMOStnom / REFTEMP;
             pbfact1 = -2 * vtnom*(1.5*log(fact1) + CHARGE*arg1);
 
-                pbo = (model->VDIOjunctionPot - pbfact1) / fact1;
-                gmaold = (model->VDIOjunctionPot - pbo) / pbo;
-                here->VDIOtJctCap = model->VDIOjunctionCap /
-                    (1 + here->VDIOtGradingCoeff*
-                    (400e-6*(model->VDMOStnom - REFTEMP) - gmaold));
-                here->VDIOtJctPot = pbfact + fact2*pbo;
-                gmanew = (here->VDIOtJctPot - pbo) / pbo;
-                here->VDIOtJctCap *= 1 + here->VDIOtGradingCoeff*
-                    (400e-6*(here->VDMOStemp - REFTEMP) - gmanew);
-
+            pbo = (model->VDIOjunctionPot - pbfact1) / fact1;
+            gmaold = (model->VDIOjunctionPot - pbo) / pbo;
+            here->VDIOtJctCap = model->VDIOjunctionCap /
+                (1 + here->VDIOtGradingCoeff*
+                (400e-6*(model->VDMOStnom - REFTEMP) - gmaold));
+            here->VDIOtJctPot = pbfact + fact2*pbo;
+            gmanew = (here->VDIOtJctPot - pbo) / pbo;
+            here->VDIOtJctCap *= 1 + here->VDIOtGradingCoeff*
+                (400e-6*(here->VDMOStemp - REFTEMP) - gmanew);
 
             here->VDIOtSatCur = model->VDIOjctSatCur * exp(
                 ((here->VDMOStemp / model->VDMOStnom) - 1) *
