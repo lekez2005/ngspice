@@ -858,28 +858,30 @@ load :
 
 
 /* scaling function, sine function interpolating between 0 and 1
- * nf2: empirical setting of sine 'speed' */
+ * nf2: empirical setting of sine 'speed'
+ */
+
 static double
 scalef(double nf2, double vgst)
 {
     double vgstsin = vgst / nf2;
-    if (vgstsin > 1.)
-        return 1.;
+    if (vgstsin > 1)
+        return 1;
     else if (vgstsin < -1)
-        return 0.;
+        return 0;
     else
-        return (0.5 * sin(vgstsin * M_PI / 2.) + 0.5);
+        return 0.5 * sin(vgstsin * M_PI / 2) + 0.5;
 }
 
 
 /* Calculate D/S current including weak inversion.
-   Uses a single function covering weak-moderate-stong inversion, as well
-   as linear and saturation regions, with an interpolation method according to
-   Tvividis, McAndrew: "Operation and Modeling of the MOS Transistor", Oxford, 2011, p. 209.
-   A single parameter n sets the slope of the weak inversion current. The weak inversion
-   current is independent from vds, as in long channel devices.
-   The following modification has been added for VDMOS compatibility:
-   n and lambda are depending on vgst with a sine function interpolating between 0 and 1.
+ * Uses a single function covering weak-moderate-stong inversion, as well
+ * as linear and saturation regions, with an interpolation method according to
+ * Tvividis, McAndrew: "Operation and Modeling of the MOS Transistor", Oxford, 2011, p. 209.
+ * A single parameter n sets the slope of the weak inversion current. The weak inversion
+ * current is independent from vds, as in long channel devices.
+ * The following modification has been added for VDMOS compatibility:
+ * n and lambda are depending on vgst with a sine function interpolating between 0 and 1.
  */
 
 static double
@@ -887,11 +889,11 @@ cweakinv(double slope, double shift, double vgst, double vds, double lambda, dou
 {
     vgst += shift * (1 - scalef(0.5, vgst));
     double n = slope / 2.3 / 0.0256; /* Tsividis, p. 208 */
-    double n1 = n + (1. - n) * scalef(0.7, vgst); /* n < n1 < 1 */
-    double first = log(1 + exp(vgst / (2. * n1 * vt)));
-    double second = log(1 + exp((vgst - vds * mtr * n1) / (2. * n1 * vt)));
+    double n1 = n + (1 - n) * scalef(0.7, vgst); /* n < n1 < 1 */
+    double first = log(1 + exp(vgst / (2 * n1 * vt)));
+    double second = log(1 + exp((vgst - vds * mtr * n1) / (2 * n1 * vt)));
     double cds =
-        beta * n1 * 2. * vt * vt * (1. + scalef(1., vgst) * lambda * vds) *
+        beta * n1 * 2 * vt * vt * (1 + scalef(1, vgst) * lambda * vds) *
         (first * first - second * second);
     return cds;
 }
