@@ -82,9 +82,10 @@ IFparm VDMOSmPTable[] = { /* model parameters */
  IOP("rq",    VDMOS_MOD_RQ,    IF_REAL   ,"Quasi saturation resistance fitting parameter"),
  IOP("vq",    VDMOS_MOD_VQ,    IF_REAL   ,"Quasi saturation voltage fitting parameter"),
 
- IOP("mtriode", VDMOS_MOD_MTRIODE,   IF_REAL ,"Conductance multiplier in triode region"),
- IOP("subslope",VDMOS_MOD_SUBSLOPE,  IF_REAL ,"Slope of weak inversion log current versus vgs - vth "),
- IOP("subshift",VDMOS_MOD_SUBSHIFT,  IF_REAL ,"Shift of weak inversion plot on the vgs axis "),
+ IOP("mtriode", VDMOS_MOD_MTRIODE,    IF_REAL ,"Conductance multiplier in triode region"),
+ IOP("subslope",VDMOS_MOD_SUBSLOPE,   IF_REAL ,"Slope of weak inversion log current versus vgs - vth "),
+ IOP("subshift",VDMOS_MOD_SUBSHIFT,   IF_REAL ,"Shift of weak inversion plot on the vgs axis "),
+ IOP("ksubthres",VDMOS_MOD_KSUBTHRES, IF_REAL ,"Shift of weak inversion plot on the vgs axis "),
 
 /* body diode */
  IOP("bv",    VDMOS_MOD_BV,    IF_REAL   ,"Vds breakdown voltage"),
