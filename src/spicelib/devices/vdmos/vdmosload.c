@@ -17,6 +17,7 @@ VDMOS: 2018 Holger Vogt
 static double
 cweakinv(double sl, double shift, double vgst, double vds, double lambda, double beta, double vt, double mtr);
 
+
 int
 VDMOSload(GENmodel *inModel, CKTcircuit *ckt)
 /* actually load the current value into the
@@ -855,7 +856,8 @@ load :
     return(OK);
 }
 
-/* scaling function, sine function interpolating between 0 and 1 
+
+/* scaling function, sine function interpolating between 0 and 1
  * nf2: empirical setting of sine 'speed' */
 static double
 scalef(double nf2, double vgst)
@@ -869,6 +871,7 @@ scalef(double nf2, double vgst)
         return (0.5 * sin(vgstsin * M_PI / 2.) + 0.5);
 }
 
+
 /* Calculate D/S current including weak inversion.
    Uses a single function covering weak-moderate-stong inversion, as well
    as linear and saturation regions, with an interpolation method according to
@@ -877,7 +880,8 @@ scalef(double nf2, double vgst)
    current is independent from vds, as in long channel devices.
    The following modification has been added for VDMOS compatibility:
    n and lambda are depending on vgst with a sine function interpolating between 0 and 1.
-  */
+ */
+
 static double
 cweakinv(double slope, double shift, double vgst, double vds, double lambda, double beta, double vt, double mtr)
 {

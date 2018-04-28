@@ -18,7 +18,7 @@ Vs s 0 0
 .control
 save @d1[id] @m1[id] all
 run
-plot mag(i(Vs)) mag (i(Vk)) 
+plot mag(i(Vs)) mag (i(Vk))
 plot ph(i(Vs)) ph(i(Vk))
 .endc
 
