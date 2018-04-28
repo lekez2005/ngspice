@@ -647,7 +647,11 @@ bypass :
             *(here->VDMOSDsPtr) += (-here->VDMOSdsConductance);
             *(here->VDMOSSdPtr) += (-here->VDMOSdsConductance);
 
-            /* bulk diode model */
+
+            /* bulk diode model
+             * Delivers reverse conduction and forward breakdown
+             * of VDMOS transistor
+             */
 
             double vd;      /* current diode voltage */
             double vdtemp;
