@@ -20,8 +20,8 @@ IFparm VDMOSpTable[] = { /* parameters */
  IOPU("icvgs",        VDMOS_IC_VGS,     IF_REAL   , "Initial G-S voltage"),
  IOPU("icvbs",        VDMOS_IC_VBS,     IF_REAL   , "Initial B-S voltage"),
  IOPU("temp",         VDMOS_TEMP,       IF_REAL,    "Instance temperature"),
- IOPU("dtemp",         VDMOS_DTEMP,       IF_REAL,    "Instance temperature difference"),
- IP( "ic",           VDMOS_IC,  IF_REALVEC, "Vector of D-S, G-S, B-S voltages"),
+ IOPU("dtemp",        VDMOS_DTEMP,       IF_REAL,    "Instance temperature difference"),
+ IP( "ic",            VDMOS_IC,  IF_REALVEC, "Vector of D-S, G-S, B-S voltages"),
 
  OP( "id",           VDMOS_CD,         IF_REAL,    "Drain current"),
  OP( "is",           VDMOS_CS,         IF_REAL,    "Source current"),
@@ -39,21 +39,21 @@ IFparm VDMOSpTable[] = { /* parameters */
  OPU( "dnodeprime", VDMOS_DNODEPRIME, IF_INTEGER, "Number of int. drain node"),
  OPU( "snodeprime", VDMOS_SNODEPRIME, IF_INTEGER, "Number of int. source node "),
 
- OP( "von",          VDMOS_VON,        IF_REAL,    " "),
- OP( "vdsat",        VDMOS_VDSAT,      IF_REAL,    "Saturation drain voltage"),
- OPU( "sourcevcrit",  VDMOS_SOURCEVCRIT,IF_REAL,    "Critical source voltage"),
- OPU( "drainvcrit",   VDMOS_DRAINVCRIT, IF_REAL,    "Critical drain voltage"),
- OP( "rs", VDMOS_SOURCERESIST, IF_REAL, "Source resistance"),
+ OP( "von",               VDMOS_VON,        IF_REAL,    " "),
+ OP( "vdsat",             VDMOS_VDSAT,      IF_REAL,    "Saturation drain voltage"),
+ OPU( "sourcevcrit",      VDMOS_SOURCEVCRIT,IF_REAL,    "Critical source voltage"),
+ OPU( "drainvcrit",       VDMOS_DRAINVCRIT, IF_REAL,    "Critical drain voltage"),
+ OP( "rs",                VDMOS_SOURCERESIST, IF_REAL, "Source resistance"),
  OPU("sourceconductance", VDMOS_SOURCECONDUCT, IF_REAL, "Conductance of source"),
- OP( "rd",  VDMOS_DRAINRESIST,  IF_REAL, "Drain conductance"),
+ OP( "rd",                VDMOS_DRAINRESIST,  IF_REAL, "Drain conductance"),
  OPU("drainconductance",  VDMOS_DRAINCONDUCT,  IF_REAL, "Conductance of drain"),
 
- OP( "gm",           VDMOS_GM,         IF_REAL,    "Transconductance"),
- OP( "gds",          VDMOS_GDS,        IF_REAL,    "Drain-Source conductance"),
- OP( "gmb",     VDMOS_GMBS,   IF_REAL,    "Bulk-Source transconductance"),
- OPR( "gmbs",     VDMOS_GMBS,   IF_REAL,    ""),
- OPU( "gbd",          VDMOS_GBD,        IF_REAL,    "Bulk-Drain conductance"),
- OPU( "gbs",          VDMOS_GBS,        IF_REAL,    "Bulk-Source conductance"),
+ OP( "gm",        VDMOS_GM,         IF_REAL,    "Transconductance"),
+ OP( "gds",       VDMOS_GDS,        IF_REAL,    "Drain-Source conductance"),
+ OP( "gmb",       VDMOS_GMBS,       IF_REAL,    "Bulk-Source transconductance"),
+ OPR( "gmbs",     VDMOS_GMBS,       IF_REAL,    ""),
+ OPU( "gbd",      VDMOS_GBD,        IF_REAL,    "Bulk-Drain conductance"),
+ OPU( "gbs",      VDMOS_GBS,        IF_REAL,    "Bulk-Source conductance"),
 
  OPU( "cqgs",VDMOS_CQGS,IF_REAL,"Capacitance due to gate-source charge storage"),
  OPU( "cqgd",VDMOS_CQGD,IF_REAL,"Capacitance due to gate-drain charge storage"),
@@ -66,10 +66,11 @@ IFparm VDMOSpTable[] = { /* parameters */
  OPU( "qgb",         VDMOS_QGB,        IF_REAL,    "Gate-Bulk charge storage"),
  OPU( "qbd",         VDMOS_QBD,        IF_REAL,    "Bulk-Drain charge storage"),
  OPU( "qbs",         VDMOS_QBS,        IF_REAL,    "Bulk-Source charge storage"),
- OPU( "p",            VDMOS_POWER,      IF_REAL,    "Instaneous power"),
+ OPU( "p",           VDMOS_POWER,      IF_REAL,    "Instaneous power"),
 };
 
 IFparm VDMOSmPTable[] = { /* model parameters */
+ /* basic device */
  OP("type",   VDMOS_MOD_TYPE,  IF_STRING, "N-channel or P-channel MOS"),
  IOP("vto",   VDMOS_MOD_VTO,   IF_REAL   ,"Threshold voltage"),
  IOP("kp",    VDMOS_MOD_KP,    IF_REAL   ,"Transconductance parameter"),
@@ -78,11 +79,19 @@ IFparm VDMOSmPTable[] = { /* model parameters */
  IOP("rd",    VDMOS_MOD_RD,    IF_REAL   ,"Drain ohmic resistance"),
  IOP("rs",    VDMOS_MOD_RS,    IF_REAL   ,"Source ohmic resistance"),
  IOP("rg",    VDMOS_MOD_RG,    IF_REAL   ,"Gate ohmic resistance"),
+ IOP("tnom",  VDMOS_MOD_TNOM,  IF_REAL   ,"Parameter measurement temperature"),
+ IOP("kf",    VDMOS_MOD_KF,    IF_REAL   ,"Flicker noise coefficient"),
+ IOP("af",    VDMOS_MOD_AF,    IF_REAL   ,"Flicker noise exponent"),
+ IP("vdmosn", VDMOS_MOD_NMOS,  IF_FLAG   ,"N type DMOSfet model"),
+ IP("vdmosp", VDMOS_MOD_PMOS,  IF_FLAG   ,"P type DMOSfet model"),
+ IP("vdmos",  VDMOS_MOD_DMOS,  IF_REAL   ,"DMOS transistor"),
 
- IOP("rq",    VDMOS_MOD_RQ,    IF_REAL   ,"Quasi saturation resistance fitting parameter"),
- IOP("vq",    VDMOS_MOD_VQ,    IF_REAL   ,"Quasi saturation voltage fitting parameter"),
+ /* quasi saturation */
+ IOP("rq",      VDMOS_MOD_RQ,      IF_REAL   ,"Quasi saturation resistance fitting parameter"),
+ IOP("vq",      VDMOS_MOD_VQ,      IF_REAL   ,"Quasi saturation voltage fitting parameter"),
+ IOP("mtriode", VDMOS_MOD_MTRIODE, IF_REAL ,"Conductance multiplier in triode region"),
 
- IOP("mtriode", VDMOS_MOD_MTRIODE,    IF_REAL ,"Conductance multiplier in triode region"),
+ /* weak inversion */
  IOP("subslope",VDMOS_MOD_SUBSLOPE,   IF_REAL ,"Slope of weak inversion log current versus vgs - vth "),
  IOP("subshift",VDMOS_MOD_SUBSHIFT,   IF_REAL ,"Shift of weak inversion plot on the vgs axis "),
  IOP("ksubthres",VDMOS_MOD_KSUBTHRES, IF_REAL ,"Shift of weak inversion plot on the vgs axis "),
@@ -97,25 +106,19 @@ IFparm VDMOSmPTable[] = { /* model parameters */
  IOP("tt",    VDMOS_MOD_TT,    IF_REAL   ,"Body diode transit time"),
  IOP("eg",    VDMOS_MOD_EG,    IF_REAL   ,"Body diode activation energy for temperature effect on Is"),
  IOP("Xti",   VDMOS_MOD_XTI,   IF_REAL   ,"Body diode saturation current temperature exponent"),
-
  IOP("is",    VDMOS_MOD_IS,    IF_REAL   ,"Body diode saturation current"),
  IOP("vj",    VDMOS_MOD_VJ,    IF_REAL   ,"Body diode junction potential"),
+
+ /* body diode capacitance (e.g. source-drain capacitance) */
  IOP("fc",    VDMOS_MOD_FC,    IF_REAL   ,"Body diode coefficient for forward-bias depletion capacitance formula"),
  IOPA("cjo",  VDMOS_MOD_CJ,    IF_REAL   ,"Zero-bias body diode junction capacitance"),
  IOP("m",     VDMOS_MOD_MJ,    IF_REAL   ,"Body diode grading coefficient"),
 
-/* capacitance */
+ /* gate-source and gate-drain capacitances */
  IOPA("cgdmin", VDMOS_MOD_CGDMIN, IF_REAL ,"Minimum non-linear G-D capacitance"),
  IOPA("cgdmax", VDMOS_MOD_CGDMAX, IF_REAL ,"Maximum non-linear G-D capacitance"),
  IOPA("a",    VDMOS_MOD_A,     IF_REAL   ,"Non-linear Cgd capacitance parameter"),
  IOPA("cgs",  VDMOS_MOD_CGS,   IF_REAL   ,"Gate-source capacitance"),
-
- IOP("tnom",  VDMOS_MOD_TNOM,  IF_REAL   ,"Parameter measurement temperature"),
- IOP("kf",    VDMOS_MOD_KF,    IF_REAL   ,"Flicker noise coefficient"),
- IOP("af",    VDMOS_MOD_AF,    IF_REAL   ,"Flicker noise exponent"),
- IP("vdmosn", VDMOS_MOD_NMOS,  IF_FLAG   ,"N type DMOSfet model"),
- IP("vdmosp", VDMOS_MOD_PMOS,  IF_FLAG   ,"P type DMOSfet model"),
- IP("vdmos",  VDMOS_MOD_DMOS,  IF_REAL   ,"DMOS transistor"),
 };
 
 char *VDMOSnames[] = {
