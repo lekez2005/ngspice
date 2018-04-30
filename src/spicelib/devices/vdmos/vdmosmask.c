@@ -31,8 +31,8 @@ VDMOSmAsk(CKTcircuit *ckt, GENmodel *inst, int which, IFvalue *value)
             value->rValue = model->VDMOStransconductance;
             return(OK);
         case VDMOS_MOD_PHI:
-             value->rValue = model->VDMOSphi;
-             return(OK);
+            value->rValue = model->VDMOSphi;
+            return(OK);
         case VDMOS_MOD_LAMBDA:
             value->rValue = model->VDMOSlambda;
             return(OK);

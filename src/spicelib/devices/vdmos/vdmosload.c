@@ -19,6 +19,7 @@ cweakinv(double sl, double shift, double vgst, double vds, double lambda, double
 static double
 cweakinv2(double sl, double shift, double vgst, double vds, double lambda, double beta, double vt, double mtr);
 
+
 int
 VDMOSload(GENmodel *inModel, CKTcircuit *ckt)
 /* actually load the current value into the

@@ -59,7 +59,7 @@ IFparm VDMOSpTable[] = { /* parameters */
  OPU( "cqgd", VDMOS_CQGD, IF_REAL, "Capacitance due to gate-drain charge storage"),
  OPU( "cqgb", VDMOS_CQGB, IF_REAL, "Capacitance due to gate-bulk charge storage"),
  OPU( "cqbd", VDMOS_CQBD, IF_REAL, "Capacitance due to bulk-drain charge storage"),
- OPU( "cqbs" ,VDMOS_CQBS, IF_REAL, "Capacitance due to bulk-source charge storage"),
+ OPU( "cqbs", VDMOS_CQBS, IF_REAL, "Capacitance due to bulk-source charge storage"),
 
  OPU( "qgs",      VDMOS_QGS,        IF_REAL,    "Gate-Source charge storage"),
  OPU( "qgd",      VDMOS_QGD,        IF_REAL,    "Gate-Drain charge storage"),

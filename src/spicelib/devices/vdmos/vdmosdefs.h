@@ -374,7 +374,7 @@ typedef struct sVDMOSmodel {       /* model structure for a resistor */
     unsigned VDMOSvt0Given   :1;
     unsigned VDIOgradCoeffGiven    :1;
     unsigned VDIOdepletionCapCoeffGiven :1;
-    unsigned VDMOSphiGiven : 1;
+    unsigned VDMOSphiGiven   :1;
     unsigned VDMOSlambdaGiven    :1;
     unsigned VDMOStnomGiven  :1;
     unsigned VDMOSfNcoefGiven  :1;
