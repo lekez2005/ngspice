@@ -9,6 +9,8 @@ Modified: 2000  AlansFixes
 #include "ngspice/sperror.h"
 #include "ngspice/ifsim.h"
 
+#include "time_bsim.h"
+
 #ifdef XSPICE
 /* gtri - add - wbk - 12/19/90 - Add headers */
 #include "ngspice/mif.h"
@@ -82,6 +84,7 @@ DCop(CKTcircuit *ckt, int notused)
             (ckt->CKTmode & MODEUIC) | MODEDCOP | MODEINITJCT,
             (ckt->CKTmode & MODEUIC) | MODEDCOP | MODEINITFLOAT,
             ckt->CKTdcMaxIter);
+    time_bsim(ckt);
 	    
      if(converged != 0) {
      	fprintf(stdout,"\nDC solution failed -\n");

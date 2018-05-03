@@ -9,6 +9,15 @@
 
 #include "ngspice/ngspice.h"
 
+#include <string.h>
+#include <stdlib.h>
+#include <limits.h>
+#include <errno.h>
+#include "time_bsim.h"
+
+long number_loops;
+char *timing_outfile;
+
 #include <setjmp.h>
 #include <signal.h>
 
@@ -908,19 +917,40 @@ main(int argc, char **argv)
             {"rawfile",      required_argument, NULL, 'r'},
             {"server",       no_argument,       NULL, 's'},
             {"terminal",     required_argument, NULL, 't'},
+            {"loops",        required_argument, NULL, 'l'},
+            {"timingfile",   required_argument, NULL, 'f'},
             {"soa-log",      required_argument, NULL, soa_log},
             {NULL,           0,                 NULL, 0}
         };
 
         int option_index = 0;
 
-        int c = getopt_long(argc, argv, "hvbac:ino:pqr:st:",
+        int c = getopt_long(argc, argv, "hvbac:ino:pqr:stl:f:",
                             long_options, &option_index);
 
         if (c == -1)
             break;
 
         switch (c) {
+        case 'l':
+            {
+                char *parser_p;
+                errno = 0;
+                
+                number_loops = strtol(optarg, &parser_p, 10);
+                
+                if (errno != 0 || *parser_p != '\0' || number_loops > LONG_MAX){
+                    printf("Invalid number of loops: input is %s\n", optarg);
+                    sp_shutdown(EXIT_INFO);
+                }
+            }
+            break;
+        case 'f':
+            if(optarg){
+                timing_outfile = (char *) malloc(strlen(optarg));
+                strcpy(timing_outfile, optarg);
+            }
+            break;
         case 'h':       /* Help */
             show_help();
             sp_shutdown(EXIT_INFO);
@@ -1346,10 +1376,11 @@ main(int argc, char **argv)
                 sp_shutdown(EXIT_BAD);
         } else if (ft_savedotargs()) {
             /* all dot card data to be put into dbs */
-            int error2 = ft_dorun(NULL);
-            /* Execute the .whatever lines found in the deck, after we are done running. */
-            if (ft_cktcoms(FALSE) || error2)
-                sp_shutdown(EXIT_BAD);
+            // disable second run
+            // int error2 = ft_dorun(NULL);
+            // /* Execute the .whatever lines found in the deck, after we are done running. */
+            // if (ft_cktcoms(FALSE) || error2)
+            //     sp_shutdown(EXIT_BAD);
         } else {
             fprintf(stderr,
                     "Note: No \".plot\", \".print\", or \".fourier\" lines; "
