@@ -23,7 +23,7 @@ void time_bsim(CKTcircuit *ckt){
     int i;
     for (i = 0; i < DEVmaxnum; i++) {
         if (DEVices[i] && DEVices[i]->DEVload && ckt->CKThead[i]) {
-            if( strcmp(DEVices[i]->DEVpublic.name, "BSIM4v7")){
+            if( strcmp(DEVices[i]->DEVpublic.name, "BSIM4v7")==0){
                 FILE *fp = fopen(timing_outfile, "a");
                 if (fp == NULL){
                     printf("Error opening file %s\n", timing_outfile);
@@ -41,7 +41,7 @@ void time_bsim(CKTcircuit *ckt){
                 gettimeofday(&end_t, NULL);
                 double elapsed = (double) (end_t.tv_usec - start_t.tv_usec)/1000000 +
                     (double) (end_t.tv_sec - start_t.tv_sec);
-                fprintf(fp, "%d, %8g\n", -1, elapsed);
+                fprintf(fp, "%f, %8g\n", 0.1, elapsed);
                 printf("Elapsed %8g\n", elapsed);
             }
         }
